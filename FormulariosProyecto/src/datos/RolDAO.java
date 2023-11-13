@@ -77,7 +77,7 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
         try {
             ps = CON.conectar().prepareStatement("UPDATE rol\n"
                     + "SET nombre = ?, id_empresa = ?\n"
-                    + "WHERE id_rol = ?; ");
+                    + "WHERE id_rol = ?");
             ps.setInt(1, obj.getId_empresa());
             ps.setString(2, obj.getNombre());
             ps.setInt(3, obj.getId_rol());
@@ -96,22 +96,88 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
 
     @Override
     public boolean desactivar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        respuesta = false;
+        try {
+            ps = CON.conectar().prepareStatement("UPDATE rol\n"
+                    + "SET activo = 0\n"
+                    + "WHERE id_rol = ?");
+            ps.setInt(1, id);
+            if (ps.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            CON.desconectar();
+        }
+        return respuesta;
     }
 
     @Override
     public boolean activar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        respuesta = false;
+        try {
+            ps = CON.conectar().prepareStatement("UPDATE rol\n"
+                    + "SET activo = 1\n"
+                    + "WHERE id_rol = ?");
+            ps.setInt(1, id);
+            if (ps.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            CON.desconectar();
+        }
+        return respuesta;
     }
 
     @Override
     public int total() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        int totalRegistros = 0;
+        try {
+            ps = CON.conectar().prepareStatement("SELECT COUNT (id_rol) from rol");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                totalRegistros = rs.getInt("COUNT(id_rol)");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return totalRegistros;
     }
 
     @Override
     public boolean existe(String texto) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        respuesta = false;
+        try {
+            ps = CON.conectar().prepareStatement("select nombre from rol where nombre=?");
+            ps.setString(1, texto);
+            rs = ps.executeQuery();
+            rs.last();
+            if (rs.getRow() > 0) {
+                respuesta = true;
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return respuesta;
     }
 
 }
