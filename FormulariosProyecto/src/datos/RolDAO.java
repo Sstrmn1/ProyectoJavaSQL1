@@ -25,6 +25,8 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
 
     @Override
     public List<Rol> listar(String texto) {
+        /*Este metodo/clase usa patron singleton
+        Investigar patron singleton*/
         List<Rol> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("select * from rol where nombre like ?");
