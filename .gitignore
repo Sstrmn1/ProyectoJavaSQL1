@@ -33,9 +33,9 @@ src/tests/antunit/core/output
 lib/optional/license.txt
 /release/distrib/
 # Ignorar directorios
-FormulariosProyecto/Drivers/
-FormulariosProyecto/nbproject/
+ProyectoGenolab/Drivers/
+ProyectoGenolab/nbproject/
 
 # Ignorar archivos
-FormulariosProyecto/build.xml
-FormulariosProyecto/manifest.mf
+ProyectoGenolab/build.xml
+ProyectoGenolab/manifest.mf
