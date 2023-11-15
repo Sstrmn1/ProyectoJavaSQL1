@@ -142,7 +142,7 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
     public int total() {
         int totalRegistros = 0;
         try {
-            ps = CON.conectar().prepareStatement("SELECT COUNT (id_rol) from rol");
+            ps = CON.conectar().prepareStatement("SELECT COUNT(id_rol) from rol");
             rs = ps.executeQuery();
             while (rs.next()) {
                 totalRegistros = rs.getInt("COUNT(id_rol)");
