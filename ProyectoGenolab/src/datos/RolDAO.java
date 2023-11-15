@@ -52,7 +52,7 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
         respuesta = false;
         try {
             ps = CON.conectar().prepareStatement("insert into rol(id_empresa, nombre, activo) values(?,?,1)");
-            ps.setInt(1, obj.getId_empresa());
+            ps.setInt(1, obj.getIdEmpresa());
             ps.setString(2, obj.getNombre());
             if (ps.executeUpdate() > 0) {
                 /*Para INSERT o UPDATE no se puede utilizar execute query
@@ -80,9 +80,9 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
             ps = CON.conectar().prepareStatement("UPDATE rol\n"
                     + "SET nombre = ?, id_empresa = ?\n"
                     + "WHERE id_rol = ?");
-            ps.setInt(1, obj.getId_empresa());
+            ps.setInt(1, obj.getIdEmpresa());
             ps.setString(2, obj.getNombre());
-            ps.setInt(3, obj.getId_rol());
+            ps.setInt(3, obj.getIdRol());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
             }
