@@ -1,5 +1,6 @@
 package presentacion;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.RolControl;
 
@@ -15,13 +16,34 @@ public class FrmiRol extends javax.swing.JInternalFrame {
         initComponents();
         this.CONTROL = new RolControl();
         this.listado("");
+        tabGeneral.setEnabledAt(1, false);
+        this.accion = "guardar";
+        txtId.setEnabled(false);
     }
 
     private void listado(String texto) {
         tblListado.setModel(this.CONTROL.listar(texto));
         TableRowSorter orden = new TableRowSorter(tblListado.getModel());
         tblListado.setRowSorter(orden);
-        lblTotalRegistros.setText("Mostrando "+this.CONTROL.totalMostrados()+" de un total de "+this.CONTROL.total()+" registros.");
+        lblTotalRegistros.setText("Mostrando " + this.CONTROL.totalMostrados() + " de un total de " + this.CONTROL.total() + " registros.");
+    }
+
+    private void limpiar() {
+        txtId.setText("");
+        txtNombre.setText("");
+        this.accion = "guardar";
+    }
+
+    private void mensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mensajeInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void mensajeAdvertencia(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.WARNING_MESSAGE);
     }
 
     @SuppressWarnings("unchecked")
@@ -29,7 +51,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        tabGeneral = new javax.swing.JTabbedPane();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
@@ -43,17 +65,17 @@ public class FrmiRol extends javax.swing.JInternalFrame {
         lblTotalRegistros = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtId = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnGuardar = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
         setTitle("Roles de usuario");
-        setPreferredSize(new java.awt.Dimension(600, 650));
+        setPreferredSize(new java.awt.Dimension(680, 650));
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Roles"));
 
@@ -70,6 +92,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
             }
         });
 
+        brnBuscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Find.png"))); // NOI18N
         brnBuscar.setText("Buscar");
         brnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -77,6 +100,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
             }
         });
 
+        btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Create.png"))); // NOI18N
         btnNuevo.setText("Nuevo");
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -84,6 +108,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,9 +126,21 @@ public class FrmiRol extends javax.swing.JInternalFrame {
         ));
         jScrollPane1.setViewportView(tblListado);
 
+        btnActivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Apply.png"))); // NOI18N
         btnActivar.setText("Activar");
+        btnActivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActivarActionPerformed(evt);
+            }
+        });
 
+        btnDesactivar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Erase.png"))); // NOI18N
         btnDesactivar.setText("Desactivar");
+        btnDesactivar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDesactivarActionPerformed(evt);
+            }
+        });
 
         lblTotalRegistros.setText("Registros");
 
@@ -125,7 +162,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
                         .addComponent(btnNuevo)
                         .addGap(26, 26, 26)
                         .addComponent(btnEditar)
-                        .addGap(0, 28, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(btnActivar)
                         .addGap(26, 26, 26)
@@ -155,7 +192,7 @@ public class FrmiRol extends javax.swing.JInternalFrame {
                 .addGap(31, 31, 31))
         );
 
-        jTabbedPane1.addTab("Listado", jPanel2);
+        tabGeneral.addTab("Listado", jPanel2);
 
         jLabel2.setText("Nombre(*)");
 
@@ -164,14 +201,19 @@ public class FrmiRol extends javax.swing.JInternalFrame {
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Info.png"))); // NOI18N
         jLabel4.setText("(*) Indica campo obligatorio");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Save.png"))); // NOI18N
-        jButton1.setText("Guardar");
-
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Back.png"))); // NOI18N
-        jButton2.setText("Cancelar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Save.png"))); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Redo.png"))); // NOI18N
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
             }
         });
 
@@ -186,16 +228,16 @@ public class FrmiRol extends javax.swing.JInternalFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(btnGuardar)
                         .addGap(58, 58, 58)
-                        .addComponent(jButton2)))
-                .addContainerGap(179, Short.MAX_VALUE))
+                        .addComponent(btnCancelar)))
+                .addContainerGap(209, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -203,19 +245,19 @@ public class FrmiRol extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnCancelar))
                 .addContainerGap(397, Short.MAX_VALUE))
         );
 
-        jTabbedPane1.addTab("Mantenimiento", jPanel3);
+        tabGeneral.addTab("Mantenimiento", jPanel3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -223,13 +265,13 @@ public class FrmiRol extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabGeneral)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jTabbedPane1)
+                .addComponent(tabGeneral)
                 .addContainerGap())
         );
 
@@ -254,11 +296,34 @@ public class FrmiRol extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-        // TODO add your handling code here:
+        tabGeneral.setEnabledAt(1, true);
+        tabGeneral.setEnabledAt(0, false);
+        tabGeneral.setSelectedIndex(1);
+        this.accion = "guardar";
+        btnGuardar.setText("Guardar");
+
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if (tblListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 0));
+            String nombre = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 1));
+            this.nombreAnt = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 1));
+
+            txtId.setText(id);
+            txtNombre.setText(nombre);
+
+            tabGeneral.setEnabledAt(1, true);
+            tabGeneral.setEnabledAt(0, false);
+            tabGeneral.setSelectedIndex(1);
+
+            this.accion = "editar";
+            btnGuardar.setText("Editar");
+
+        } else {
+            mensajeError("Seleccione un registro para editar.");
+
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void brnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnBuscarActionPerformed
@@ -274,19 +339,103 @@ public class FrmiRol extends javax.swing.JInternalFrame {
         this.listado(cadena);
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        tabGeneral.setEnabledAt(1, false);
+        tabGeneral.setEnabledAt(0, true);
+        tabGeneral.setSelectedIndex(0);
+        limpiar();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (txtNombre.getText().isEmpty() || txtNombre.getText().length() > 20) {
+            mensajeAdvertencia("Debe ingresar un nombre y debe ser menor a 20 caracteres");
+            txtNombre.requestFocus();
+            return;
+        }
+
+        String resp = "";
+
+        if (this.accion.equals("editar")) {
+            resp = this.CONTROL.actualizar(Integer.parseInt(txtId.getText()), txtNombre.getText(), nombreAnt);
+            if (resp.equals("OK")) {
+                this.mensajeInformacion("Actualizado Correctamente.");
+                this.limpiar();
+                this.listado("");
+                tabGeneral.setEnabledAt(1, false);
+                tabGeneral.setEnabledAt(0, true);
+                tabGeneral.setSelectedIndex(0);
+            } else {
+                this.mensajeError(resp);
+            }
+        } else {
+            resp = this.CONTROL.insertar(txtNombre.getText());
+            if (resp.equals("OK")) {
+                this.mensajeInformacion("Registrado Correctamente.");
+                this.limpiar();
+                this.listado("");
+                txtNombre.requestFocus();
+
+            } else {
+                this.mensajeError(resp);
+            }
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnActivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActivarActionPerformed
+        if (tblListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 0));
+            String nombre = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 1));
+
+            if (JOptionPane.showConfirmDialog(this, "Desea activar este rol? ", " Sistema", JOptionPane.YES_NO_OPTION) == 0) {
+                String resp = this.CONTROL.activar(Integer.parseInt(id));
+                if (resp == "OK") {
+                    this.mensajeInformacion("Registro activado");
+                    this.listado("");
+
+                } else {
+                    this.mensajeAdvertencia(resp);
+                }
+
+            }
+
+        } else {
+            mensajeError("Seleccione un registro para activar.");
+
+        }
+    }//GEN-LAST:event_btnActivarActionPerformed
+
+    private void btnDesactivarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDesactivarActionPerformed
+        if (tblListado.getSelectedRowCount() == 1) {
+            String id = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 0));
+            String nombre = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 1));
+
+            if (JOptionPane.showConfirmDialog(this, "Desea activar este rol? ", " Sistema", JOptionPane.YES_NO_OPTION) == 0) {
+                String resp = this.CONTROL.desactivar(Integer.parseInt(id));
+                if (resp == "OK") {
+                    this.mensajeInformacion("Registro desactivado");
+                    this.listado("");
+
+                } else {
+                    this.mensajeAdvertencia(resp);
+                }
+
+            }
+
+        } else {
+            mensajeError("Seleccione un registro para desactivar.");
+
+        }
+    }//GEN-LAST:event_btnDesactivarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnBuscar;
     private javax.swing.JButton btnActivar;
+    private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnDesactivar;
     private javax.swing.JButton btnEditar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -295,11 +444,11 @@ public class FrmiRol extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel lblTotalRegistros;
+    private javax.swing.JTabbedPane tabGeneral;
     private javax.swing.JTable tblListado;
     private javax.swing.JTextField txtBuscar;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
