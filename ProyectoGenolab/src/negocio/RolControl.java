@@ -16,6 +16,8 @@ public class RolControl {
 
     public RolControl() {
         this.DATOS = new RolDAO();
+        //Se usa el constructor vacio para ir agregando datos despues 
+        //si se requiere
         this.obj = new Rol();
         this.registrosMostrados = 0;
 
@@ -49,13 +51,18 @@ public class RolControl {
     public String insertar(String nombre) {
         //Analizar procedimiento almacenado para determinar parametros de metodos similares a este
         //Por ejemplo en insertar, el procedimiento es insert into rol( nombre, activo) values(?,1)
-        //Y como no se necesita un campo activo por defecto no es necesario pasar un valor de activo como parametro
+        //Y como el campo activo es definido por defecto no es necesario pasar un valor de activo como parametro
         if (DATOS.existe(nombre)) {
             return "El registro ya existe";
 
         } else {
-            obj.setNombre(nombre);
 
+            //Se setea el atributo nombre en el objeto creado por
+            //el constructor vacio
+            obj.setNombre(nombre);
+            
+            //Luego se intenta insertar el objeto y dependiendo el resultado
+            //del intento se devuelve un mensaje
             if (DATOS.insertar(obj)) {
                 return "OK";
             } else {
@@ -93,28 +100,28 @@ public class RolControl {
         }
 
     }
-    
-    public String activar(int id){
+
+    public String activar(int id) {
         if (DATOS.activar(id)) {
             return "OK";
         } else {
             return "No se puede activar el registro.";
         }
     }
-    
-    public String desactivar(int id){
+
+    public String desactivar(int id) {
         if (DATOS.desactivar(id)) {
             return "OK";
         } else {
-            return "No se puede activar el registro.";
+            return "No se puede desactivar el registro.";
         }
     }
-    
-    public int total(){
+
+    public int total() {
         return DATOS.total();
     }
-    
-    public int totalMostrados(){
+
+    public int totalMostrados() {
         return this.registrosMostrados;
     }
 
