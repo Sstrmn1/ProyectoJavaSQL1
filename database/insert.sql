@@ -11,7 +11,6 @@ INSERT INTO `bd_genolab`.`cliente` (`nombre`, `tipo_documento`, `numero_document
 ('Jose Perez', 'NIT', '987654321', '555-5678', 'jose.perez@example.com', 1),
 ('Ana Fernandez', 'NIT', '456789012', '555-9012', 'ana.fernandez@example.com', 1);
 
-INSERT INTO `bd_genolab`.`empresa` (`nombre`, `nit`) VALUES ('GenoLab', '5624634');
 
 INSERT INTO `bd_genolab`.`distrito` (`nombre`) VALUES 
 ('Cochabamba'),
@@ -40,11 +39,11 @@ INSERT INTO `bd_genolab`.`direccion` (`id_distrito`, `id_cliente`, `calle`, `num
 (2, 2, 'Avenida B', '456', 'Oficina 2', 1),
 (3, 3, 'Calle C', '789', 'Oficina 3', 1);
 
-INSERT INTO `bd_genolab`.`rol` (`id_empresa`, `nombre`, `activo`) VALUES 
-(1, 'Administrador', 1),
-(1, 'Ventas', 1),
-(1, 'Regencia Farmaceutica', 1),
-(1, 'Almacenes', 1);
+INSERT INTO `bd_genolab`.`rol` (`nombre`, `activo`) VALUES 
+('Administrador', 1),
+('Ventas', 1),
+('Regencia Farmaceutica', 1),
+('Almacenes', 1);
 
 INSERT INTO `bd_genolab`.`usuario` (`id_rol`, `password`, `nombre`, `apellido`, `ci`, `email`, `fecha_nacimiento`, `activo`) VALUES 
 (1, 'password_admin', 'Carlos', 'López', '123456', 'carlos.lopez@example.com', '1990-01-01', 1),

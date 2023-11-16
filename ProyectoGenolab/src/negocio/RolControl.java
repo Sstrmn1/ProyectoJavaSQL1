@@ -24,11 +24,11 @@ public class RolControl {
     public DefaultTableModel listar(String texto) {
         List<Rol> lista = new ArrayList();
         lista.addAll(DATOS.listar(texto));
-        String[] titulos = {"ID", "id_empresa", "Nombre", "Estado"};
+        String[] titulos = {"ID", "Nombre", "Estado"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
 
         String estado;
-        String[] registro = new String[4];
+        String[] registro = new String[3];
         this.registrosMostrados = 0;
 
         for (Rol item : lista) {
@@ -38,25 +38,23 @@ public class RolControl {
                 estado = "Inactivo";
             }
             registro[0] = Integer.toString(item.getIdRol());
-            registro[1] = Integer.toString(item.getIdEmpresa());
-            registro[2] = item.getNombre();
-            registro[3] = estado;
+            registro[1] = item.getNombre();
+            registro[2] = estado;
             this.modeloTabla.addRow(registro);
             this.registrosMostrados++;
         }
         return this.modeloTabla;
     }
 
-    public String insertar(String nombre, int idEmpresa) {
+    public String insertar(String nombre) {
         //Analizar procedimiento almacenado para determinar parametros de metodos similares a este
-        //Por ejemplo en insertar, el procedimiento es insert into rol(id_empresa, nombre, activo) values(?,?,1)
+        //Por ejemplo en insertar, el procedimiento es insert into rol( nombre, activo) values(?,1)
         //Y como no se necesita un campo activo por defecto no es necesario pasar un valor de activo como parametro
         if (DATOS.existe(nombre)) {
             return "El registro ya existe";
 
         } else {
             obj.setNombre(nombre);
-            obj.setIdEmpresa(idEmpresa);
 
             if (DATOS.insertar(obj)) {
                 return "OK";
@@ -68,11 +66,10 @@ public class RolControl {
 
     }
 
-    public String actualizar(int idRol, int idEmpresa, String nombre, String nombreAnterior) {
+    public String actualizar(int idRol, String nombre, String nombreAnterior) {
 
         if (nombre.equals(nombreAnterior)) {
             obj.setIdRol(idRol);
-            obj.setIdEmpresa(idEmpresa);
             obj.setNombre(nombre);
             if (DATOS.actualizar(obj)) {
                 return "OK";
@@ -85,7 +82,6 @@ public class RolControl {
                 return "El registro ya existe";
             } else {
                 obj.setIdRol(idRol);
-                obj.setIdEmpresa(idEmpresa);
                 obj.setNombre(nombre);
                 if (DATOS.actualizar(obj)) {
                     return "OK";

@@ -92,32 +92,13 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `bd_genolab`.`empresa`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `bd_genolab`.`empresa` (
-  `idempresa` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(70) NOT NULL,
-  `nit` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`idempresa`),
-  UNIQUE INDEX `idempresa_UNIQUE` (`idempresa` ASC) VISIBLE)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `bd_genolab`.`rol`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `bd_genolab`.`rol` (
   `id_rol` INT NOT NULL AUTO_INCREMENT,
-  `id_empresa` INT NOT NULL,
   `nombre` VARCHAR(60) NOT NULL,
   `activo` BIT(1) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id_rol`),
-  INDEX `fk_rol_empresa_idx` (`id_empresa` ASC) VISIBLE,
-  CONSTRAINT `fk_rol_empresa`
-    FOREIGN KEY (`id_empresa`)
-    REFERENCES `bd_genolab`.`empresa` (`idempresa`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  PRIMARY KEY (`id_rol`))
 ENGINE = InnoDB;
 
 

@@ -57,7 +57,6 @@ SELECT
   c.nombre AS nombre_cliente,
   c.tipo_documento AS tipo_documento_cliente,
   c.numero_documento AS numero_documento_cliente,
-  e.nit AS nit_empresa,
   f.codigo_autorizacion,
   f.fecha_hora,
   r.nombre AS nombre_rol,
@@ -67,7 +66,6 @@ FROM bd_genolab.factura f
 JOIN bd_genolab.orden_de_venta o ON f.id_orden = o.id_orden
 JOIN bd_genolab.cliente c ON o.id_cliente = c.id_cliente
 JOIN bd_genolab.usuario u ON o.id_usuario = u.id_usuario
-JOIN bd_genolab.rol r ON u.id_rol = r.id_rol
-JOIN bd_genolab.empresa e ON r.id_empresa = e.idempresa;
+JOIN bd_genolab.rol r ON u.id_rol = r.id_rol;
 
 

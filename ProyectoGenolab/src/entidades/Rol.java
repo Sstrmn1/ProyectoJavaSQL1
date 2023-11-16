@@ -1,17 +1,16 @@
 package entidades;
 
 public class Rol {
+
     private int idRol;
-    private int idEmpresa;
     private String nombre;
     private boolean activo;
 
     public Rol() {
     }
 
-    public Rol(int idRol, int idEmpresa, String nombre, boolean activo) {
+    public Rol(int idRol, String nombre, boolean activo) {
         this.idRol = idRol;
-        this.idEmpresa = idEmpresa;
         this.nombre = nombre;
         this.activo = activo;
     }
@@ -22,14 +21,6 @@ public class Rol {
 
     public void setIdRol(int idRol) {
         this.idRol = idRol;
-    }
-
-    public int getIdEmpresa() {
-        return idEmpresa;
-    }
-
-    public void setIdEmpresa(int idEmpresa) {
-        this.idEmpresa = idEmpresa;
     }
 
     public String getNombre() {
@@ -50,8 +41,7 @@ public class Rol {
 
     @Override
     public String toString() {
-        return "Rol{" + "idRol=" + idRol + ", idEmpresa=" + idEmpresa + ", nombre=" + nombre + ", activo=" + activo + '}';
+        return "Rol{" + "idRol=" + idRol + ", nombre=" + nombre + ", activo=" + activo + '}';
     }
-    
-    
+
 }
