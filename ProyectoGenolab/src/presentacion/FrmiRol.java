@@ -409,10 +409,10 @@ public class FrmiRol extends javax.swing.JInternalFrame {
             String id = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 0));
             String nombre = String.valueOf(tblListado.getValueAt(tblListado.getSelectedRow(), 1));
 
-            if (JOptionPane.showConfirmDialog(this, "Desea activar este rol? ", " Sistema", JOptionPane.YES_NO_OPTION) == 0) {
+            if (JOptionPane.showConfirmDialog(this, "Desea desactivar este rol? ", " Sistema", JOptionPane.YES_NO_OPTION) == 0) {
                 String resp = this.CONTROL.desactivar(Integer.parseInt(id));
                 if (resp == "OK") {
-                    this.mensajeInformacion("Registro desactivado");
+                    this.mensajeInformacion("Registro desactivado.");
                     this.listado("");
 
                 } else {
