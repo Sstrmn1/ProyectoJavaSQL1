@@ -1,7 +1,6 @@
 package negocio;
 
 import datos.LaboratorioDAO;
-import datos.RolDAO;
 import entidades.Laboratorio;
 import java.util.ArrayList;
 import java.util.List;
