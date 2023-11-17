@@ -25,7 +25,7 @@ public class FormaFarmaceuticaDAO implements CrudSimpleInterface<FormaFarmaceuti
     public List<FormaFarmaceutica> listar(String texto) {
         List<FormaFarmaceutica> registros = new ArrayList();
         try {
-            ps = CON.conectar().prepareStatement("select * from forma_farmaceutica where nombre like ?");
+            ps = CON.conectar().prepareStatement("select * from forma_farmaceutica where descripcion like ?");
             ps.setString(1, "%" + texto + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
@@ -48,9 +48,9 @@ public class FormaFarmaceuticaDAO implements CrudSimpleInterface<FormaFarmaceuti
         respuesta = false;
         try {
             ps = CON.conectar().prepareStatement("insert into forma_farmaceutica(descripcion, activo)\n"
-                    + "values(?,?,?)");
+                    + "values(?,?)");
             ps.setString(1, obj.getDescripcion());
-            ps.setBoolean(2, obj.isActivo());
+            ps.setInt(2, obj.isActivo() ? 1 : 0);
 
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
@@ -69,11 +69,9 @@ public class FormaFarmaceuticaDAO implements CrudSimpleInterface<FormaFarmaceuti
     public boolean actualizar(FormaFarmaceutica obj) {
         respuesta = false;
         try {
-            ps = CON.conectar().prepareStatement("UPDATE forma_farmaceutica\n"
-                    + "SET descripcion = ?, activo = ?\n"
-                    + "WHERE id_ffarmaceutica = ?");
+            ps = CON.conectar().prepareStatement("UPDATE forma_farmaceutica SET descripcion = ?, activo = ? WHERE id_ffarmaceutica = ?");
             ps.setString(1, obj.getDescripcion());
-            ps.setBoolean(2, obj.isActivo());
+            ps.setInt(2, obj.isActivo() ? 1 : 0);
             ps.setInt(3, obj.getIdFFarmaceutica());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
@@ -123,7 +121,7 @@ public class FormaFarmaceuticaDAO implements CrudSimpleInterface<FormaFarmaceuti
     public boolean existe(String texto) {
         respuesta = false;
         try {
-            ps = CON.conectar().prepareStatement("select descripcion from forma_farmaceutica where nombre=?");
+            ps = CON.conectar().prepareStatement("select descripcion from forma_farmaceutica where descripcion=?");
             ps.setString(1, texto);
             rs = ps.executeQuery();
             rs.last();

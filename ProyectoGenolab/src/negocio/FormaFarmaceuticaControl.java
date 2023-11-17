@@ -46,11 +46,12 @@ public class FormaFarmaceuticaControl {
         return this.modeloTabla;
     }
 
-    public String insertar(String descripcion) {
+    public String insertar(String descripcion, boolean estado) {
         if (DATOS.existe(descripcion)) {
             return "El registro ya existe";
         } else {
             obj.setDescripcion(descripcion);
+            obj.setActivo(estado);
 
             if (DATOS.insertar(obj)) {
                 return "OK";
@@ -61,21 +62,23 @@ public class FormaFarmaceuticaControl {
 
     }
 
-    public String actualizar(int idFFarmaceutica, String descripcion, boolean estado) {
-        obj.setIdFFarmaceutica(idFFarmaceutica);
+    public String actualizar(int id, String descripcion, boolean estado) {
+        obj.setIdFFarmaceutica(id);
         obj.setDescripcion(descripcion);
         obj.setActivo(estado);
+        if (DATOS.actualizar(obj)) {
+            return "OK";
+        } else {
+            return "Error en la insercion";
+        }
 
-        return "OK";
     }
-    
-    public int total ()
-    {
+
+    public int total() {
         return DATOS.total();
     }
-    
-    public int totalMostrados()
-    {
+
+    public int totalMostrados() {
         return this.registrosMostrados;
     }
 
