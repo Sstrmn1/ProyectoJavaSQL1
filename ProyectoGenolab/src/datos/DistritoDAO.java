@@ -43,6 +43,26 @@ public class DistritoDAO implements CrudSimpleInterface<Distrito> {
         return registros;
     }
 
+    public List<Distrito> listarNombres() {
+        List<Distrito> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("select id_distrito, nombre from distrito order by nombre asc");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Distrito(rs.getInt(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean insertar(Distrito obj) {
         respuesta = false;
@@ -141,4 +161,3 @@ public class DistritoDAO implements CrudSimpleInterface<Distrito> {
     }
 
 }
-

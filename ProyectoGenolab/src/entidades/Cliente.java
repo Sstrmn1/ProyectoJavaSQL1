@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Objects;
+
 public class Cliente {
 
     private int idCliente;
@@ -11,6 +13,11 @@ public class Cliente {
     private boolean activo;
 
     public Cliente() {
+    }
+
+    public Cliente(int idCliente, String nombre) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
     }
 
     public Cliente(int idCliente, String nombre, String tipoDocumento, String numeroDocumento, String telefono, String email, boolean activo) {
@@ -81,8 +88,55 @@ public class Cliente {
 
     @Override
     public String toString() {
-        return "Cliente{" + "idCliente=" + idCliente + ", nombre=" + nombre + ", tipoDocumento=" + tipoDocumento + ", numeroDocumento=" + numeroDocumento + ", telefono=" + telefono + ", email=" + email + ", activo=" + activo + '}';
+        return nombre;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 29 * hash + this.idCliente;
+        hash = 29 * hash + Objects.hashCode(this.nombre);
+        hash = 29 * hash + Objects.hashCode(this.tipoDocumento);
+        hash = 29 * hash + Objects.hashCode(this.numeroDocumento);
+        hash = 29 * hash + Objects.hashCode(this.telefono);
+        hash = 29 * hash + Objects.hashCode(this.email);
+        hash = 29 * hash + (this.activo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Cliente other = (Cliente) obj;
+        if (this.idCliente != other.idCliente) {
+            return false;
+        }
+        if (this.activo != other.activo) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        if (!Objects.equals(this.tipoDocumento, other.tipoDocumento)) {
+            return false;
+        }
+        if (!Objects.equals(this.numeroDocumento, other.numeroDocumento)) {
+            return false;
+        }
+        if (!Objects.equals(this.telefono, other.telefono)) {
+            return false;
+        }
+        return Objects.equals(this.email, other.email);
     }
     
     
+
 }

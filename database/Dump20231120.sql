@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS `direccion`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `direccion` (
-  `id_direccion` int NOT NULL,
+  `id_direccion` int NOT NULL ,
   `id_distrito` int NOT NULL,
   `id_cliente` int NOT NULL,
   `calle` varchar(55) COLLATE utf8mb3_spanish_ci NOT NULL,
