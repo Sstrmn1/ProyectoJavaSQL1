@@ -392,7 +392,7 @@ public class FrmCliente extends javax.swing.JFrame {
             mensajeError("Error insertando el registro");
         }
         limpiar();
-        this.listado("");        // TODO add your handling code here:
+        this.listado("");  
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed

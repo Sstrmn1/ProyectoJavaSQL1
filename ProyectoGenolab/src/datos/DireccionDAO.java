@@ -88,7 +88,7 @@ public class DireccionDAO implements CrudSimpleInterface<Direccion> {
     public boolean actualizar(Direccion obj) {
         respuesta = false;
         try {
-            ps = CON.conectar().prepareStatement("UPDATE cliente SET id_distrito = ?, id_cliente = ?, "
+            ps = CON.conectar().prepareStatement("UPDATE direccion SET id_distrito = ?, id_cliente = ?, "
                     + "calle = ?, numero = ?, oficina = ?, activo = ?"
                     + " WHERE id_direccion = ?");
             ps.setInt(1, obj.getIdDistrito());

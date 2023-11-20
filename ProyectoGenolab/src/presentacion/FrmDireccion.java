@@ -93,6 +93,8 @@ public class FrmDireccion extends javax.swing.JFrame {
         rbtnInactivo = new javax.swing.JRadioButton();
         jLabel8 = new javax.swing.JLabel();
         txtIdCliente = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txtIdDireccion = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDireccion = new javax.swing.JTable();
@@ -147,6 +149,11 @@ public class FrmDireccion extends javax.swing.JFrame {
         });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Estado de direccion");
 
@@ -164,6 +171,15 @@ public class FrmDireccion extends javax.swing.JFrame {
         jLabel8.setText("Id cliente");
 
         txtIdCliente.setEnabled(false);
+
+        jLabel9.setText("Id");
+
+        txtIdDireccion.setEnabled(false);
+        txtIdDireccion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtIdDireccionActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -191,16 +207,16 @@ public class FrmDireccion extends javax.swing.JFrame {
                                 .addComponent(rbtnActivo)
                                 .addGap(18, 18, 18)
                                 .addComponent(rbtnInactivo)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(0, 59, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jLabel2))
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
                                 .addComponent(cboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(36, 36, 36))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(57, 57, 57)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,8 +225,9 @@ public class FrmDireccion extends javax.swing.JFrame {
                                 .addGap(38, 38, 38)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel9))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -243,16 +260,23 @@ public class FrmDireccion extends javax.swing.JFrame {
                     .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(rbtnActivo)
-                    .addComponent(rbtnInactivo))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel7)
+                            .addComponent(rbtnActivo)
+                            .addComponent(rbtnInactivo))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -359,7 +383,8 @@ public class FrmDireccion extends javax.swing.JFrame {
 
     private void tblDireccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDireccionMouseClicked
         int fila = tblDireccion.getSelectedRow();
-
+        
+        String direccionId = String.valueOf(tblDireccion.getValueAt(fila, 0));
         int clienteId = Integer.parseInt(String.valueOf(tblDireccion.getValueAt(fila, 2)));
         String clienteNombre = String.valueOf(tblDireccion.getValueAt(fila, 3));
         int distritoId = Integer.parseInt(String.valueOf(tblDireccion.getValueAt(fila, 1)));
@@ -374,6 +399,7 @@ public class FrmDireccion extends javax.swing.JFrame {
         Cliente clienteSeleccionado = new Cliente(clienteId, clienteNombre);
         Distrito distritoSeleccionado = new Distrito(distritoId, distritoNombre);
 
+        txtIdDireccion.setText(direccionId);
         cboCliente.setSelectedItem(clienteSeleccionado);
         cboDistrito.setSelectedItem(distritoSeleccionado);
         txtIdCliente.setText(String.valueOf(clienteId));
@@ -432,6 +458,44 @@ public class FrmDireccion extends javax.swing.JFrame {
 
      }//GEN-LAST:event_btnRegistrarActionPerformed
 
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (mensajeConfirmacion("Desea editar este registro") == 0) {
+            String respuesta = "";
+            //Realizar refundicion a las clases cliente y distrito con los objetos seleccionados
+            //en los combobox para luego capturar las ID cliente, distrito
+            int direccionId = Integer.parseInt(txtIdDireccion.getText());
+            Cliente clienteSeleccionado = (Cliente) cboCliente.getSelectedItem();
+            Distrito distritoSeleccionado = (Distrito) cboDistrito.getSelectedItem();
+            int clienteId = clienteSeleccionado.getIdCliente();
+
+            int distritoId = distritoSeleccionado.getIdDistrito();
+            String calle = txtCalle.getText();
+            String numeroCalle = txtNumeroCalle.getText();
+            String oficina = txtOficina.getText();
+            boolean estado;
+            if (rbtnActivo.isSelected()) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            respuesta = this.CONTROL.actualizar(direccionId, distritoId, clienteId, calle, numeroCalle, oficina, estado);
+            if (respuesta.equals("OK")) {
+                mensajeInformacion("Registro actualizado");
+            } else {
+                mensajeError("Error actualizando el registro");
+            }
+            limpiar();
+            this.listado("");
+        } else {
+            limpiar();
+        }
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void txtIdDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdDireccionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtIdDireccionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -481,6 +545,7 @@ public class FrmDireccion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JRadioButton jRadioButton3;
@@ -493,6 +558,7 @@ public class FrmDireccion extends javax.swing.JFrame {
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtIdCliente;
+    private javax.swing.JTextField txtIdDireccion;
     private javax.swing.JTextField txtNumeroCalle;
     private javax.swing.JTextField txtOficina;
     // End of variables declaration//GEN-END:variables
