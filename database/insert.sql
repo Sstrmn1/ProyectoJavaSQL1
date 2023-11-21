@@ -34,7 +34,7 @@ INSERT INTO `bd_genolab`.`lote` (`id_articulo`, `id_laboratorio`, `fecha_fabrica
 (3, 1, '2023-11-01', '2024-11-01', 500000, 0.3, 1, 'LOTE003'),
 (4, 3, '2023-11-01', '2024-11-01', 500000, 0.2, 1, 'LOTE004');
 
-INSERT INTO `bd_genolab`.`direccion` (`id_distrito`, `id_cliente`, `calle`, `numero`, `oficina`, `activo`) VALUES 
+INSERT INTO `bd_genolab`.`sucursal` (`id_distrito`, `id_cliente`, `calle`, `numero`, `oficina`, `activo`) VALUES 
 (1, 1, 'Calle A', '123', 'Oficina 1', 1),
 (2, 2, 'Avenida B', '456', 'Oficina 2', 1),
 (3, 3, 'Calle C', '789', 'Oficina 3', 1);
@@ -51,7 +51,7 @@ INSERT INTO `bd_genolab`.`usuario` (`id_rol`, `password`, `nombre`, `apellido`, 
 (3, 'password_regencia', 'Miguel', 'Martínez', '345678', 'miguel.martinez@example.com', '1985-08-20', 1),
 (4, 'password_almacenes', 'Laura', 'Ruiz', '901234', 'laura.ruiz@example.com', '1988-11-10', 1);
 
-INSERT INTO `bd_genolab`.`orden_de_venta` (`id_cliente`, `id_usuario`, `fecha_hora`) VALUES 
+INSERT INTO `bd_genolab`.`orden_de_venta` (`id_sucursal`, `id_usuario`, `fecha_hora`) VALUES 
 (1, 2, NOW()),
 (2, 2, NOW()),
 (3, 2, NOW());
