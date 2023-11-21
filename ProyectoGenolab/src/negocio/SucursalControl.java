@@ -1,36 +1,36 @@
 package negocio;
 
 import datos.ClienteDAO;
-import datos.DireccionDAO;
+import datos.SucursalDAO;
 import datos.DistritoDAO;
 import entidades.Cliente;
-import entidades.Direccion;
+import entidades.Sucursal;
 import entidades.Distrito;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-public class DireccionControl {
+public class SucursalControl {
 
-    private final DireccionDAO DATOSDIRECCION;
+    private final SucursalDAO DATOSSUCURSAL;
     private final ClienteDAO DATOSCLIENTE;
     private final DistritoDAO DATOSDISTRITO;
-    private Direccion obj;
+    private Sucursal obj;
     private DefaultTableModel modeloTabla;
     public int registrosMostrados;
 
-    public DireccionControl() {
-        this.DATOSDIRECCION = new DireccionDAO();
+    public SucursalControl() {
+        this.DATOSSUCURSAL = new SucursalDAO();
         this.DATOSCLIENTE = new ClienteDAO();
         this.DATOSDISTRITO = new DistritoDAO();
-        this.obj = new Direccion();
+        this.obj = new Sucursal();
         this.registrosMostrados = 0;
     }
 
     public DefaultTableModel listar(String texto) {
-        List<Direccion> lista = new ArrayList();
-        lista.addAll(DATOSDIRECCION.listar(texto));
+        List<Sucursal> lista = new ArrayList();
+        lista.addAll(DATOSSUCURSAL.listar(texto));
         String[] titulos = {"ID", "IDDistrito", "IDCliente", "Nom Cliente", "Nom Distrito", "Calle",
             "Numero", "Oficina", "Estado"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
@@ -39,14 +39,14 @@ public class DireccionControl {
         String[] registro = new String[9];
         this.registrosMostrados = 0;
 
-        for (Direccion item : lista) {
+        for (Sucursal item : lista) {
             if (item.isActivo()) {
                 estado = "Activo";
             } else {
                 estado = "Inactivo";
             }
 
-            registro[0] = Integer.toString(item.getIdDireccion());
+            registro[0] = Integer.toString(item.getIdSucursal());
             registro[1] = Integer.toString(item.getIdDistrito());
             registro[2] = Integer.toString(item.getIdCliente());
             registro[3] = item.getNombreCliente();
@@ -95,7 +95,7 @@ public class DireccionControl {
         obj.setOficina(oficina);
         obj.setActivo(estado);
 
-        if (DATOSDIRECCION.insertar(obj)) {
+        if (DATOSSUCURSAL.insertar(obj)) {
             return "OK";
         } else {
             return "Error en la insercion.";
@@ -103,15 +103,15 @@ public class DireccionControl {
 
     }
 
-    public String actualizar(int idDireccion, int idDistrito, int idCliente, String calle, String numeroCalle, String oficina, boolean estado) {
-        obj.setIdDireccion(idDireccion);
+    public String actualizar(int idSucursal, int idDistrito, int idCliente, String calle, String numeroCalle, String oficina, boolean estado) {
+        obj.setIdSucursal(idSucursal);
         obj.setIdDistrito(idDistrito);
         obj.setIdCliente(idCliente);
         obj.setCalle(calle);
         obj.setNumeroCalle(numeroCalle);
         obj.setOficina(oficina);
         obj.setActivo(estado);
-        if (DATOSDIRECCION.actualizar(obj)) {
+        if (DATOSSUCURSAL.actualizar(obj)) {
             return "OK";
         } else {
             return "Error en la insercion";
@@ -120,7 +120,7 @@ public class DireccionControl {
     }
 
     public int total() {
-        return DATOSDIRECCION.total();
+        return DATOSSUCURSAL.total();
     }
 
     public int totalMostrados() {

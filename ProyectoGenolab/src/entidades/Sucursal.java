@@ -1,8 +1,8 @@
 package entidades;
 
-public class Direccion {
+public class Sucursal {
 
-    private int idDireccion;
+    private int idSucursal;
     private int idDistrito;
     private int idCliente;
     private String nombreDistrito;
@@ -14,12 +14,12 @@ public class Direccion {
     
 
 
-    public Direccion() {
+    public Sucursal() {
     }
 
-    public Direccion(int idDireccion, int idDistrito, int idCliente, String nombreDistrito,
+    public Sucursal(int idSucursal, int idDistrito, int idCliente, String nombreDistrito,
             String nombreCliente, String calle, String numeroCalle, String oficina, boolean activo) {
-        this.idDireccion = idDireccion;
+        this.idSucursal = idSucursal;
         this.idDistrito = idDistrito;
         this.idCliente = idCliente;
         this.nombreDistrito = nombreDistrito;
@@ -30,12 +30,12 @@ public class Direccion {
         this.activo = activo;
     }
 
-    public int getIdDireccion() {
-        return idDireccion;
+    public int getIdSucursal() {
+        return idSucursal;
     }
 
-    public void setIdDireccion(int idDireccion) {
-        this.idDireccion = idDireccion;
+    public void setIdSucursal(int idSucursal) {
+        this.idSucursal = idSucursal;
     }
 
     public int getIdDistrito() {
@@ -104,7 +104,7 @@ public class Direccion {
 
     @Override
     public String toString() {
-        return "Direccion{" + "idDireccion=" + idDireccion + ", idDistrito=" + idDistrito + ", idCliente=" + idCliente + ", nombreDistrito=" + nombreDistrito + ", nombreCliente=" + nombreCliente + ", calle=" + calle + ", numeroCalle=" + numeroCalle + ", oficina=" + oficina + ", activo=" + activo + '}';
+        return "Sucursal{" + "idSucursal=" + idSucursal + ", idDistrito=" + idDistrito + ", idCliente=" + idCliente + ", nombreDistrito=" + nombreDistrito + ", nombreCliente=" + nombreCliente + ", calle=" + calle + ", numeroCalle=" + numeroCalle + ", oficina=" + oficina + ", activo=" + activo + '}';
     }
     
     

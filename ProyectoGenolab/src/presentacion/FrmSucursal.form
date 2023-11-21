@@ -54,7 +54,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Registrar direccion de cliente"/>
+            <TitledBorder title="Registrar sucursal de cliente"/>
           </Border>
         </Property>
       </Properties>
@@ -87,11 +87,8 @@
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="txtIdDireccion" max="32767" attributes="0"/>
-                              <Component id="txtOficina" pref="79" max="32767" attributes="0"/>
-                          </Group>
-                          <EmptySpace min="0" pref="59" max="32767" attributes="0"/>
+                          <Component id="txtIdSucursal" min="-2" pref="79" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="65" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
@@ -118,17 +115,20 @@
                               </Group>
                           </Group>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="1" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                                   <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="txtIdCliente" min="-2" pref="46" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                      <Component id="txtOficina" min="-2" pref="79" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <Component id="txtIdCliente" min="-2" pref="46" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -165,7 +165,7 @@
                       <Component id="rbtnActivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="rbtnInactivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="txtIdDireccion" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtIdSucursal" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -297,15 +297,15 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Id direccion"/>
+            <Property name="text" type="java.lang.String" value="Id sucursal"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtIdDireccion">
+        <Component class="javax.swing.JTextField" name="txtIdSucursal">
           <Properties>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdDireccionActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtIdSucursalActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
@@ -314,7 +314,7 @@
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-            <TitledBorder title="Direcciones registradas"/>
+            <TitledBorder title="Sucursales registradas"/>
           </Border>
         </Property>
       </Properties>
@@ -366,14 +366,14 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="tblDireccion">
+            <Component class="javax.swing.JTable" name="tblSucursal">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="0" rowCount="0"/>
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblDireccionMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSucursalMouseClicked"/>
               </Events>
             </Component>
           </SubComponents>

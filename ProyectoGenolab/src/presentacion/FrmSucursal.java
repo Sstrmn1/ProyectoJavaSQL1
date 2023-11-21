@@ -2,19 +2,19 @@ package presentacion;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
-import negocio.DireccionControl;
+import negocio.SucursalControl;
 import entidades.Cliente;
 import entidades.Distrito;
 
-public class FrmDireccion extends javax.swing.JFrame {
+public class FrmSucursal extends javax.swing.JFrame {
 
     //atributos
-    private final DireccionControl CONTROL;
+    private final SucursalControl CONTROL;
 
     //constructor
-    public FrmDireccion() {
+    public FrmSucursal() {
         initComponents();
-        this.CONTROL = new DireccionControl();
+        this.CONTROL = new SucursalControl();
         this.listado("");
         this.listarCombobox();
         desactivar();
@@ -24,9 +24,9 @@ public class FrmDireccion extends javax.swing.JFrame {
 
     //metodos
     private void listado(String texto) {
-        tblDireccion.setModel(this.CONTROL.listar(texto));
-        TableRowSorter orden = new TableRowSorter(tblDireccion.getModel());
-        tblDireccion.setRowSorter(orden);
+        tblSucursal.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tblSucursal.getModel());
+        tblSucursal.setRowSorter(orden);
     }
     
     private void listarCombobox() {
@@ -49,11 +49,12 @@ public class FrmDireccion extends javax.swing.JFrame {
         cboDistrito.setSelectedItem(null);
         txtCalle.setText("");
         txtNumeroCalle.setText("");
+        txtIdCliente.setText("");
         txtOficina.setText("");
         rbtnActivo.setSelected(true);
         txtBuscar.setText("");
         cboCliente.requestFocus();
-        txtIdDireccion.setText("");
+        txtIdSucursal.setText("");
         
         desactivar();
     }
@@ -95,10 +96,10 @@ public class FrmDireccion extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtIdCliente = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        txtIdDireccion = new javax.swing.JTextField();
+        txtIdSucursal = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblDireccion = new javax.swing.JTable();
+        tblSucursal = new javax.swing.JTable();
         jLabel6 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
         jRadioButton3 = new javax.swing.JRadioButton();
@@ -106,7 +107,7 @@ public class FrmDireccion extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar direccion de cliente"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar sucursal de cliente"));
 
         jLabel1.setText("Nombre de cliente");
 
@@ -173,12 +174,12 @@ public class FrmDireccion extends javax.swing.JFrame {
 
         txtIdCliente.setEnabled(false);
 
-        jLabel9.setText("Id direccion");
+        jLabel9.setText("Id sucursal");
 
-        txtIdDireccion.setEnabled(false);
-        txtIdDireccion.addActionListener(new java.awt.event.ActionListener() {
+        txtIdSucursal.setEnabled(false);
+        txtIdSucursal.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIdDireccionActionPerformed(evt);
+                txtIdSucursalActionPerformed(evt);
             }
         });
 
@@ -208,10 +209,8 @@ public class FrmDireccion extends javax.swing.JFrame {
                                 .addGap(50, 50, 50)
                                 .addComponent(jLabel9)))
                         .addGap(38, 38, 38)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIdDireccion)
-                            .addComponent(txtOficina, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
-                        .addGap(0, 59, Short.MAX_VALUE))
+                        .addComponent(txtIdSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 65, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
@@ -232,13 +231,15 @@ public class FrmDireccion extends javax.swing.JFrame {
                                     .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel5)
-                                .addGap(36, 36, 36))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
                                 .addComponent(jLabel8)
-                                .addGap(18, 18, 18)))
-                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -268,7 +269,7 @@ public class FrmDireccion extends javax.swing.JFrame {
                     .addComponent(rbtnActivo)
                     .addComponent(rbtnInactivo)
                     .addComponent(jLabel9)
-                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtIdSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
@@ -277,9 +278,9 @@ public class FrmDireccion extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Direcciones registradas"));
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Sucursales registradas"));
 
-        tblDireccion.setModel(new javax.swing.table.DefaultTableModel(
+        tblSucursal.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -287,12 +288,12 @@ public class FrmDireccion extends javax.swing.JFrame {
 
             }
         ));
-        tblDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblSucursal.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblDireccionMouseClicked(evt);
+                tblSucursalMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblDireccion);
+        jScrollPane1.setViewportView(tblSucursal);
 
         jLabel6.setText("Buscar");
 
@@ -389,25 +390,25 @@ public class FrmDireccion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jRadioButton3ActionPerformed
 
-    private void tblDireccionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDireccionMouseClicked
-        int fila = tblDireccion.getSelectedRow();
+    private void tblSucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSucursalMouseClicked
+        int fila = tblSucursal.getSelectedRow();
         
-        String direccionId = String.valueOf(tblDireccion.getValueAt(fila, 0));
-        int clienteId = Integer.parseInt(String.valueOf(tblDireccion.getValueAt(fila, 2)));
-        String clienteNombre = String.valueOf(tblDireccion.getValueAt(fila, 3));
-        int distritoId = Integer.parseInt(String.valueOf(tblDireccion.getValueAt(fila, 1)));
-        String distritoNombre = String.valueOf(tblDireccion.getValueAt(fila, 4));
-        String calle = String.valueOf(tblDireccion.getValueAt(fila, 5));
-        String numeroCalle = String.valueOf(tblDireccion.getValueAt(fila, 6));
-        String oficina = String.valueOf(tblDireccion.getValueAt(fila, 7));
-        String estado = String.valueOf(tblDireccion.getValueAt(fila, 8));
+        String sucursalId = String.valueOf(tblSucursal.getValueAt(fila, 0));
+        int clienteId = Integer.parseInt(String.valueOf(tblSucursal.getValueAt(fila, 2)));
+        String clienteNombre = String.valueOf(tblSucursal.getValueAt(fila, 3));
+        int distritoId = Integer.parseInt(String.valueOf(tblSucursal.getValueAt(fila, 1)));
+        String distritoNombre = String.valueOf(tblSucursal.getValueAt(fila, 4));
+        String calle = String.valueOf(tblSucursal.getValueAt(fila, 5));
+        String numeroCalle = String.valueOf(tblSucursal.getValueAt(fila, 6));
+        String oficina = String.valueOf(tblSucursal.getValueAt(fila, 7));
+        String estado = String.valueOf(tblSucursal.getValueAt(fila, 8));
 
         //Instanciar nuevos objetos cliente y distrito para determinar
         //el objeto seleccionado en la tabla
         Cliente clienteSeleccionado = new Cliente(clienteId, clienteNombre);
         Distrito distritoSeleccionado = new Distrito(distritoId, distritoNombre);
         
-        txtIdDireccion.setText(direccionId);
+        txtIdSucursal.setText(sucursalId);
         cboCliente.setSelectedItem(clienteSeleccionado);
         cboDistrito.setSelectedItem(distritoSeleccionado);
         txtIdCliente.setText(String.valueOf(clienteId));
@@ -421,7 +422,7 @@ public class FrmDireccion extends javax.swing.JFrame {
             rbtnInactivo.setSelected(true);
         }
         activar();
-    }//GEN-LAST:event_tblDireccionMouseClicked
+    }//GEN-LAST:event_tblSucursalMouseClicked
 
     private void cboClienteItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboClienteItemStateChanged
         //Realizar refundicion a las clases cliente y distrito con los objetos seleccionados
@@ -471,7 +472,7 @@ public class FrmDireccion extends javax.swing.JFrame {
             String respuesta = "";
             //Realizar refundicion a las clases cliente y distrito con los objetos seleccionados
             //en los combobox para luego capturar las ID cliente, distrito
-            int direccionId = Integer.parseInt(txtIdDireccion.getText());
+            int sucursalId = Integer.parseInt(txtIdSucursal.getText());
             Cliente clienteSeleccionado = (Cliente) cboCliente.getSelectedItem();
             Distrito distritoSeleccionado = (Distrito) cboDistrito.getSelectedItem();
             int clienteId = clienteSeleccionado.getIdCliente();
@@ -487,7 +488,7 @@ public class FrmDireccion extends javax.swing.JFrame {
                 estado = false;
             }
             
-            respuesta = this.CONTROL.actualizar(direccionId, distritoId, clienteId, calle, numeroCalle, oficina, estado);
+            respuesta = this.CONTROL.actualizar(sucursalId, distritoId, clienteId, calle, numeroCalle, oficina, estado);
             
             if (respuesta.equals("OK")) {
                 mensajeInformacion("Registro actualizado");
@@ -501,9 +502,9 @@ public class FrmDireccion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
-    private void txtIdDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdDireccionActionPerformed
+    private void txtIdSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdSucursalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtIdDireccionActionPerformed
+    }//GEN-LAST:event_txtIdSucursalActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         // TODO add your handling code here:
@@ -530,20 +531,21 @@ public class FrmDireccion extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FrmDireccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FrmDireccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FrmDireccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FrmDireccion.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FrmDireccion().setVisible(true);
+                new FrmSucursal().setVisible(true);
             }
         });
     }
@@ -571,11 +573,11 @@ public class FrmDireccion extends javax.swing.JFrame {
     private javax.swing.JRadioButton rbtnActivo;
     private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.ButtonGroup rbtngEstado;
-    private javax.swing.JTable tblDireccion;
+    private javax.swing.JTable tblSucursal;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCalle;
     private javax.swing.JTextField txtIdCliente;
-    private javax.swing.JTextField txtIdDireccion;
+    private javax.swing.JTextField txtIdSucursal;
     private javax.swing.JTextField txtNumeroCalle;
     private javax.swing.JTextField txtOficina;
     // End of variables declaration//GEN-END:variables
