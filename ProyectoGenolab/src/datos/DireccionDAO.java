@@ -57,6 +57,41 @@ public class DireccionDAO implements CrudSimpleInterface<Direccion> {
         return registros;
     }
 
+    public List<Direccion> listar(String texto, String campo) {
+        List<Direccion> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("SELECT \n"
+                    + "    d.id_direccion AS idDireccion,\n"
+                    + "    d.id_distrito AS idDistrito,\n"
+                    + "    d.id_cliente AS idCliente,\n"
+                    + "    dis.nombre AS nombreDistrito,\n"
+                    + "    c.nombre AS nombreCliente,\n"
+                    + "    d.calle,\n"
+                    + "    d.numero,\n"
+                    + "    d.oficina,\n"
+                    + "    d.activo\n"
+                    + "FROM bd_genolab.direccion d\n"
+                    + "INNER JOIN bd_genolab.distrito dis ON d.id_distrito = dis.id_distrito\n"
+                    + "INNER JOIN bd_genolab.cliente c ON d.id_cliente = c.id_cliente where " + campo + " like ?");
+            ps.setString(1, "%" + texto + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Direccion(rs.getInt(1), rs.getInt(2), rs.getInt(3),
+                        rs.getString(4), rs.getString(5), rs.getString(6),
+                        rs.getString(7), rs.getString(8), rs.getBoolean(9)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean insertar(Direccion obj) {
         respuesta = false;
@@ -98,7 +133,7 @@ public class DireccionDAO implements CrudSimpleInterface<Direccion> {
             ps.setString(5, obj.getOficina());
             ps.setInt(6, obj.isActivo() ? 1 : 0);
 
-            ps.setInt(7, obj.getIdCliente());
+            ps.setInt(7, obj.getIdDireccion());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
             }

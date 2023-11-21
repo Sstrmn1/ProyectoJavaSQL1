@@ -28,22 +28,22 @@ public class FrmDireccion extends javax.swing.JFrame {
         TableRowSorter orden = new TableRowSorter(tblDireccion.getModel());
         tblDireccion.setRowSorter(orden);
     }
-
+    
     private void listarCombobox() {
         cboCliente.setModel(this.CONTROL.listarClientes());
         cboDistrito.setModel(this.CONTROL.listarDistritos());
     }
-
+    
     private void activar() {
         btnEditar.setEnabled(true);
         btnRegistrar.setEnabled(false);
     }
-
+    
     private void desactivar() {
         btnEditar.setEnabled(false);
         btnRegistrar.setEnabled(true);
     }
-
+    
     private void limpiar() {
         cboCliente.setSelectedItem(null);
         cboDistrito.setSelectedItem(null);
@@ -53,22 +53,23 @@ public class FrmDireccion extends javax.swing.JFrame {
         rbtnActivo.setSelected(true);
         txtBuscar.setText("");
         cboCliente.requestFocus();
-
+        txtIdDireccion.setText("");
+        
         desactivar();
     }
-
+    
     private void mensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
     }
-
+    
     private void mensajeInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
-
+    
     private static int mensajeConfirmacion(String mensaje) {
         return JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -172,7 +173,7 @@ public class FrmDireccion extends javax.swing.JFrame {
 
         txtIdCliente.setEnabled(false);
 
-        jLabel9.setText("Id");
+        jLabel9.setText("Id direccion");
 
         txtIdDireccion.setEnabled(false);
         txtIdDireccion.addActionListener(new java.awt.event.ActionListener() {
@@ -197,16 +198,19 @@ public class FrmDireccion extends javax.swing.JFrame {
                         .addContainerGap())
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(277, 277, 277)
-                                .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(rbtnActivo)
                                 .addGap(18, 18, 18)
-                                .addComponent(rbtnInactivo)))
+                                .addComponent(rbtnInactivo)
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel9)))
+                        .addGap(38, 38, 38)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtIdDireccion)
+                            .addComponent(txtOficina, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))
                         .addGap(0, 59, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,9 +229,7 @@ public class FrmDireccion extends javax.swing.JFrame {
                                 .addGap(38, 38, 38)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel4)
-                                    .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9))))
+                                    .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
@@ -260,23 +262,18 @@ public class FrmDireccion extends javax.swing.JFrame {
                     .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7)
-                            .addComponent(rbtnActivo)
-                            .addComponent(rbtnInactivo))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel9)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(rbtnActivo)
+                    .addComponent(rbtnInactivo)
+                    .addComponent(jLabel9)
+                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnLimpiar)
-                    .addComponent(btnEditar)
-                    .addComponent(txtIdDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnEditar))
                 .addContainerGap())
         );
 
@@ -298,6 +295,17 @@ public class FrmDireccion extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblDireccion);
 
         jLabel6.setText("Buscar");
+
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+        });
 
         jRadioButton3.setText("Cliente");
         jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -398,7 +406,7 @@ public class FrmDireccion extends javax.swing.JFrame {
         //el objeto seleccionado en la tabla
         Cliente clienteSeleccionado = new Cliente(clienteId, clienteNombre);
         Distrito distritoSeleccionado = new Distrito(distritoId, distritoNombre);
-
+        
         txtIdDireccion.setText(direccionId);
         cboCliente.setSelectedItem(clienteSeleccionado);
         cboDistrito.setSelectedItem(distritoSeleccionado);
@@ -406,7 +414,7 @@ public class FrmDireccion extends javax.swing.JFrame {
         txtCalle.setText(calle);
         txtNumeroCalle.setText(numeroCalle);
         txtOficina.setText(oficina);
-
+        
         if (estado.equals("Activo")) {
             rbtnActivo.setSelected(true);
         } else {
@@ -446,7 +454,7 @@ public class FrmDireccion extends javax.swing.JFrame {
         } else {
             estado = false;
         }
-
+        
         respuesta = this.CONTROL.insertar(distritoId, clienteId, calle, numeroCalle, oficina, estado);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Registro insertado");
@@ -467,7 +475,7 @@ public class FrmDireccion extends javax.swing.JFrame {
             Cliente clienteSeleccionado = (Cliente) cboCliente.getSelectedItem();
             Distrito distritoSeleccionado = (Distrito) cboDistrito.getSelectedItem();
             int clienteId = clienteSeleccionado.getIdCliente();
-
+            
             int distritoId = distritoSeleccionado.getIdDistrito();
             String calle = txtCalle.getText();
             String numeroCalle = txtNumeroCalle.getText();
@@ -478,8 +486,9 @@ public class FrmDireccion extends javax.swing.JFrame {
             } else {
                 estado = false;
             }
-
+            
             respuesta = this.CONTROL.actualizar(direccionId, distritoId, clienteId, calle, numeroCalle, oficina, estado);
+            
             if (respuesta.equals("OK")) {
                 mensajeInformacion("Registro actualizado");
             } else {
@@ -495,6 +504,14 @@ public class FrmDireccion extends javax.swing.JFrame {
     private void txtIdDireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdDireccionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdDireccionActionPerformed
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarKeyReleased
 
     /**
      * @param args the command line arguments
