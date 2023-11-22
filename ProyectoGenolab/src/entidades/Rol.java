@@ -15,6 +15,12 @@ public class Rol {
         this.activo = activo;
     }
 
+    public Rol(int idRol, String nombre) {
+        this.idRol = idRol;
+        this.nombre = nombre;
+    }   
+    
+
     public int getIdRol() {
         return idRol;
     }

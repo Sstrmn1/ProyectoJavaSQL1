@@ -46,6 +46,26 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
         }
         return registros;
     }
+    
+        public List<Rol> seleccionarRoles() {
+        List<Rol> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("select id_rol, nombre from rol order by nombre asc");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Rol(rs.getInt(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
 
     @Override
     public boolean insertar(Rol obj) {
