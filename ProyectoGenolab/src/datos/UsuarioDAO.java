@@ -25,8 +25,8 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
     public List<Usuario> listar(String texto) {
         List<Usuario> registros = new ArrayList();
         try {
-            ps = CON.conectar().prepareStatement("SELECT u.id_usuario, u.id_rol, r.nombre AS rol_nombre, u.nombre, u.apellido, \n"
-                    + "u.ci, u.email, u.password, u.fecha_nacimiento, u.foto, u .activo\n"
+            ps = CON.conectar().prepareStatement("SELECT u.id_usuario, u.id_rol, r.nombre AS rol_nombre, u.password, u.nombre, u.apellido, \n"
+                    + "u.ci, u.email,  u.fecha_nacimiento, u.foto, u .activo\n"
                     + "FROM usuario u INNER JOIN rol r ON u.id_rol=r.id_rol WHERE u.nombre LIKE ? ORDER BY u.id_usuario DESC");
             ps.setString(1, "%" + texto + "%");
             rs = ps.executeQuery();

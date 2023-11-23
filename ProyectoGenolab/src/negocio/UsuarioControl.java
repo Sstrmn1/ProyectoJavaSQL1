@@ -49,9 +49,10 @@ public class UsuarioControl {
             registro[4] = item.getApellido();
             registro[5] = item.getPassword();
             registro[6] = item.getCi();
-            registro[7] = String.valueOf(item.getFechaNac());
-            registro[8] = item.getFoto();
-            registro[9] = estado;
+            registro[7] = item.getEmail();
+            registro[8] = String.valueOf(item.getFechaNac());
+            registro[9] = item.getFoto();
+            registro[10] = estado;
 
             this.modeloTabla.addRow(registro);
             registrosMostrados++;
@@ -59,7 +60,7 @@ public class UsuarioControl {
         return this.modeloTabla;
     }
 
-    public DefaultComboBoxModel listarRoles() {
+    public DefaultComboBoxModel cargarRoles() {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
         List<Rol> lista = new ArrayList();
         lista = DATOSROL.seleccionarRoles();
