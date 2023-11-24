@@ -6,7 +6,6 @@ import negocio.UsuarioControl;
 import java.sql.Date;
 import java.util.Calendar;
 import entidades.Rol;
-import entidades.Usuario;
 
 public class FrmUsuario extends javax.swing.JFrame {
 
@@ -19,9 +18,11 @@ public class FrmUsuario extends javax.swing.JFrame {
         this.CONTROL = new UsuarioControl();
         this.listado("");
         this.listarCombobox();
-//        this.listarCombobox();
-//        desactivar();
-        dcFechaNac.setDate(new Date(1900, 00, 01));
+
+        dcFechaNac.setDate(new Date(1970 - 1900, 00, 01));
+
+        txtIdUsuario.setEnabled(false);
+        btnGuardar.setEnabled(false);
     }
 
     //metodos
@@ -33,6 +34,16 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void listarCombobox() {
         cboRol.setModel(this.CONTROL.cargarRoles());
+    }
+
+    private void activar() {
+        btnGuardar.setEnabled(true);
+        btnRegistrar.setEnabled(false);
+    }
+
+    private void desactivar() {
+        btnGuardar.setEnabled(false);
+        btnRegistrar.setEnabled(true);
     }
 
     private void mensajeError(String mensaje) {
@@ -57,8 +68,9 @@ public class FrmUsuario extends javax.swing.JFrame {
         txtContraseña.setText("");
         txtFoto.setText("");
         rbtnActivo.setSelected(true);
-        dcFechaNac.setDate(new Date(1900, 00, 01));
+        dcFechaNac.setDate(new Date(1970 - 1900, 00, 01));
         txtNombre.requestFocus();
+        desactivar();
 
     }
 
@@ -103,6 +115,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         dcFechaNac = new com.toedter.calendar.JDateChooser();
         txtIdUsuario = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
+        btnLimpiar = new javax.swing.JButton();
 
         jTextField4.setText("jTextField4");
 
@@ -113,6 +126,11 @@ public class FrmUsuario extends javax.swing.JFrame {
         txtBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
             }
         });
 
@@ -138,8 +156,18 @@ public class FrmUsuario extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblUsuario);
 
         btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -203,20 +231,38 @@ public class FrmUsuario extends javax.swing.JFrame {
         jLabel9.setText("Cargar foto");
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Estado");
 
         rbtgEstado.add(rbtnActivo);
+        rbtnActivo.setSelected(true);
         rbtnActivo.setText("Activo");
 
-        rbtgOpcionBusqueda.add(rbtnInactivo);
+        rbtgEstado.add(rbtnInactivo);
         rbtnInactivo.setText("Inactivo");
 
         jLabel1.setText("Rol");
 
         jLabel11.setText("Id usuario");
+
+        btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -225,7 +271,9 @@ public class FrmUsuario extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtContraseña)
@@ -235,36 +283,38 @@ public class FrmUsuario extends javax.swing.JFrame {
                             .addComponent(txtNombre))
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnGuardar)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel9)
                                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6)
-                                            .addComponent(jLabel9)
-                                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                .addComponent(txtFoto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                                .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))))
-                                    .addComponent(jLabel4))
-                                .addGap(32, 32, 32)
+                                        .addComponent(txtFoto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                        .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))))
+                            .addComponent(jLabel4))
+                        .addGap(32, 32, 32)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dcFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(dcFechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel1)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(rbtnActivo)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(rbtnInactivo))
-                                            .addComponent(jLabel10)
-                                            .addComponent(jLabel7)
-                                            .addComponent(cboRol, 0, 185, Short.MAX_VALUE))
+                                    .addComponent(jLabel1)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(rbtnActivo)
                                         .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel11)
-                                            .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                    .addComponent(btnRegistrar))
+                                        .addComponent(rbtnInactivo))
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel7)
+                                    .addComponent(cboRol, 0, 185, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11)
+                                    .addComponent(txtIdUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnRegistrar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnLimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -307,7 +357,8 @@ public class FrmUsuario extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
-                    .addComponent(btnGuardar))
+                    .addComponent(btnGuardar)
+                    .addComponent(btnLimpiar))
                 .addContainerGap(216, Short.MAX_VALUE))
         );
 
@@ -337,43 +388,164 @@ public class FrmUsuario extends javax.swing.JFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
-        int fila = tblUsuario.getSelectedRow();
-
-        String usuarioId = String.valueOf(tblUsuario.getValueAt(fila, 0));
-        String rolId = String.valueOf(tblUsuario.getValueAt(fila, 1));
-        String rolNombre = String.valueOf(tblUsuario.getValueAt(fila, 2));
-        String usuarioNombre = String.valueOf(tblUsuario.getValueAt(fila, 3));
-        String usuarioApellido = String.valueOf(tblUsuario.getValueAt(fila, 4));
-        String usuarioPassword = String.valueOf(tblUsuario.getValueAt(fila, 5));
-        String usuarioCI = String.valueOf(tblUsuario.getValueAt(fila, 6));
-        String usuarioEmail = String.valueOf(tblUsuario.getValueAt(fila, 7));
-        String usuarioFoto = String.valueOf(tblUsuario.getValueAt(fila, 9));
-        String estado = String.valueOf(tblUsuario.getValueAt(fila, 10));
-
-        Date usuarioFechaNac = Date.valueOf(tblUsuario.getValueAt(fila, 8).toString());
-
-        Rol rolSeleccionado = new Rol(Integer.parseInt(rolId), rolNombre);
-
-        txtIdUsuario.setText(usuarioId);
-        txtNombre.setText(usuarioNombre);
-        txtApellido.setText(usuarioApellido);
-        txtContraseña.setText(usuarioPassword);
-        txtCi.setText(usuarioCI);
-        txtEmail.setText(usuarioEmail);
-        txtFoto.setText(usuarioFoto);
-        cboRol.setSelectedItem(rolSeleccionado);
-        dcFechaNac.setDate(usuarioFechaNac);
-
-        if (estado.equals("Activo")) {
-            rbtnActivo.setSelected(true);
-        } else {
-            rbtnInactivo.setSelected(true);
-        }
-        
-        tabbGeneral.setSelectedIndex(1);
 
 
     }//GEN-LAST:event_tblUsuarioMouseClicked
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);        // TODO add your handling code here:
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        String respuesta = "";
+
+        String usuarioNombre = txtNombre.getText();
+        String usuarioApellido = txtApellido.getText();
+        String usuarioCI = txtCi.getText();
+        String usuarioEmail = txtEmail.getText();
+        String usuarioPassword = txtContraseña.getText();
+        String usuarioFoto = txtFoto.getText();
+
+        Rol rolSeleccionado = (Rol) cboRol.getSelectedItem();
+        int rolId = rolSeleccionado.getIdRol();
+
+        boolean estado;
+        if (rbtnActivo.isSelected()) {
+            estado = true;
+        } else {
+            estado = false;
+        }
+
+        Calendar cal;
+        Date usuarioFechaNac;
+        int d, m, a;
+        try {
+            cal = dcFechaNac.getCalendar();
+            d = cal.get(Calendar.DAY_OF_MONTH);
+            m = cal.get(Calendar.MONTH);
+            a = cal.get(Calendar.YEAR) - 1900;
+            usuarioFechaNac = new Date(a, m, d);
+        } catch (Exception e) {
+            mensajeError(e.getMessage());
+            usuarioFechaNac = new Date(1970 - 1900, 00, 01);
+        }
+
+//        String fecha = ((JTextField)dcFechaNac.getDateEditor().getUiComponent()).getText();
+        respuesta = this.CONTROL.insertar(rolId, usuarioPassword, usuarioNombre, usuarioApellido, usuarioCI, usuarioEmail, usuarioFechaNac, usuarioFoto, estado);
+        if (respuesta.equals("OK")) {
+            mensajeInformacion("Registro insertado");
+        } else {
+            mensajeError("Error insertando el registro");
+        }
+        limpiar();
+        tabbGeneral.setSelectedIndex(0);
+        this.listado("");
+
+    }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (mensajeConfirmacion("Desea editar este registro") == 0) {
+            String respuesta = "";
+
+            String usuarioNombre = txtNombre.getText();
+            String usuarioApellido = txtApellido.getText();
+            String usuarioCI = txtCi.getText();
+            String usuarioEmail = txtEmail.getText();
+            String usuarioPassword = txtContraseña.getText();
+            String usuarioFoto = txtFoto.getText();
+
+            Rol rolSeleccionado = (Rol) cboRol.getSelectedItem();
+            int rolId = rolSeleccionado.getIdRol();
+            int usuarioId = Integer.parseInt(txtIdUsuario.getText());
+
+            boolean estado;
+            if (rbtnActivo.isSelected()) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            Calendar cal;
+            Date usuarioFechaNac;
+            int d, m, a;
+            try {
+                cal = dcFechaNac.getCalendar();
+                d = cal.get(Calendar.DAY_OF_MONTH);
+                m = cal.get(Calendar.MONTH);
+                a = cal.get(Calendar.YEAR) - 1900;
+                usuarioFechaNac = new Date(a, m, d);
+            } catch (Exception e) {
+                mensajeError(e.getMessage());
+                usuarioFechaNac = new Date(1970 - 1900, 00, 01);
+            }
+
+//        String fecha = ((JTextField)dcFechaNac.getDateEditor().getUiComponent()).getText();
+            respuesta = this.CONTROL.actualizar(usuarioId, rolId, usuarioPassword, usuarioNombre, usuarioApellido, usuarioCI, usuarioEmail, usuarioFechaNac, usuarioFoto, estado);
+            if (respuesta.equals("OK")) {
+                mensajeInformacion("Registro Actualizado");
+            } else {
+                mensajeError("Error actualizando el registro");
+            }
+            limpiar();
+             tabbGeneral.setSelectedIndex(0);
+            this.listado("");
+        } else {
+            limpiar();
+            desactivar();
+            tabbGeneral.setSelectedIndex(0);
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (tblUsuario.getSelectedRowCount() == 1) {
+            int fila = tblUsuario.getSelectedRow();
+
+            String usuarioId = String.valueOf(tblUsuario.getValueAt(fila, 0));
+            String rolId = String.valueOf(tblUsuario.getValueAt(fila, 1));
+            String rolNombre = String.valueOf(tblUsuario.getValueAt(fila, 2));
+            String usuarioNombre = String.valueOf(tblUsuario.getValueAt(fila, 3));
+            String usuarioApellido = String.valueOf(tblUsuario.getValueAt(fila, 4));
+            String usuarioPassword = String.valueOf(tblUsuario.getValueAt(fila, 5));
+            String usuarioCI = String.valueOf(tblUsuario.getValueAt(fila, 6));
+            String usuarioEmail = String.valueOf(tblUsuario.getValueAt(fila, 7));
+            String usuarioFoto = String.valueOf(tblUsuario.getValueAt(fila, 9));
+            String estado = String.valueOf(tblUsuario.getValueAt(fila, 10));
+
+            Date usuarioFechaNac = Date.valueOf(tblUsuario.getValueAt(fila, 8).toString());
+
+            Rol rolSeleccionado = new Rol(Integer.parseInt(rolId), rolNombre);
+
+            txtIdUsuario.setText(usuarioId);
+            txtNombre.setText(usuarioNombre);
+            txtApellido.setText(usuarioApellido);
+            txtContraseña.setText(usuarioPassword);
+            txtCi.setText(usuarioCI);
+            txtEmail.setText(usuarioEmail);
+            txtFoto.setText(usuarioFoto);
+            cboRol.setSelectedItem(rolSeleccionado);
+            dcFechaNac.setDate(usuarioFechaNac);
+
+            if (estado.equals("Activo")) {
+                rbtnActivo.setSelected(true);
+            } else {
+                rbtnInactivo.setSelected(true);
+            }
+            activar();
+            tabbGeneral.setSelectedIndex(1);
+        } else {
+            mensajeError("Debe seleccionar almenos un registro");
+        }
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -410,6 +582,7 @@ public class FrmUsuario extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnGuardar;
+    private javax.swing.JButton btnLimpiar;
     private javax.swing.JButton btnRegistrar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cboRol;

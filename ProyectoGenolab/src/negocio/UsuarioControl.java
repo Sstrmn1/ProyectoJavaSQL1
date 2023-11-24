@@ -105,10 +105,10 @@ public class UsuarioControl {
         obj.setEmail(email);
         obj.setActivo(estado);
 
-        if (DATOSUSUARIO.insertar(obj)) {
+        if (DATOSUSUARIO.actualizar(obj)) {
             return "OK";
         } else {
-            return "Error en la insercion.";
+            return "Error en la actualizacion.";
         }
 
     }

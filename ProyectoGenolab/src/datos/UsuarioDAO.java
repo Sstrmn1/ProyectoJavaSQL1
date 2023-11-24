@@ -100,7 +100,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
     public boolean actualizar(Usuario obj) {
         respuesta = false;
         try {
-            ps = CON.conectar().prepareStatement("UPDATE usuario SET id_rol = ?, password = ?, nombre = ?"
+            ps = CON.conectar().prepareStatement("UPDATE usuario SET id_rol = ?, password = ?, nombre = ?,"
                     + "apellido = ?, ci = ?, email = ?, fecha_nacimiento = ?, foto = ?, activo = ?"
                     + " WHERE id_usuario = ?");
             ps.setInt(1, obj.getIdRol());
