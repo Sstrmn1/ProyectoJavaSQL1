@@ -9,7 +9,7 @@ import entidades.Rol;
 
 public class FrmUsuario extends javax.swing.JFrame {
 
-    //Atribubos
+    //atribubos
     private final UsuarioControl CONTROL;
 
     //constructor
@@ -434,7 +434,6 @@ public class FrmUsuario extends javax.swing.JFrame {
             usuarioFechaNac = new Date(1970 - 1900, 00, 01);
         }
 
-//        String fecha = ((JTextField)dcFechaNac.getDateEditor().getUiComponent()).getText();
         respuesta = this.CONTROL.insertar(rolId, usuarioPassword, usuarioNombre, usuarioApellido, usuarioCI, usuarioEmail, usuarioFechaNac, usuarioFoto, estado);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Registro insertado");
