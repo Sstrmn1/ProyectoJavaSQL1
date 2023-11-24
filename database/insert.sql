@@ -28,6 +28,25 @@ INSERT INTO `bd_genolab`.`articulo` (`id_ffarmaceutica`, `descripcion`, `concent
 (1, 'Paracetamol 500mg', 500, 'PARA001', 1),
 (3, 'Vitamina C 5ml', 5, 'VITC001', 1);
 
+INSERT INTO articulo (id_ffarmaceutica, descripcion, concentracion, codigo, activo) VALUES 
+(3, 'Vitamina K 2ml', 2, 'VITK001', 1);
+
+UPDATE articulo SET
+id_ffarmaceutica = ?,
+descripcion = ?,
+concentracion = ?,
+codigo = ?,
+activo = ?
+WHERE id_articulo = ?;
+
+UPDATE articulo SET
+id_ffarmaceutica = 2,
+descripcion = "Hola",
+concentracion = "200",
+codigo = "Hola200",
+activo = 0
+WHERE id_articulo = 2;
+
 INSERT INTO `bd_genolab`.`lote` (`id_articulo`, `id_laboratorio`, `fecha_fabricacion`, `fecha_expiracion`, `stock`, `precio_unitario`, `activo`, `codigo`) VALUES 
 (1, 1, '2023-11-01', '2024-11-01', 500000, 0.5, 1, 'LOTE001'),
 (2, 2, '2023-11-01', '2024-11-01', 500000, 0.4, 1, 'LOTE002'),

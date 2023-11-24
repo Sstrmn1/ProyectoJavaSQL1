@@ -69,3 +69,12 @@ JOIN bd_genolab.usuario u ON o.id_usuario = u.id_usuario
 JOIN bd_genolab.rol r ON u.id_rol = r.id_rol;
 
 
+SELECT u.id_usuario, u.id_rol, r.nombre AS rol_nombre, u.nombre, u.apellido, 
+u.ci, u.email, u.password, u.fecha_nacimiento, u.foto, u .activo
+FROM usuario u INNER JOIN rol r ON u.id_rol=r.id_rol; 
+
+SELECT a.id_articulo, a.id_ffarmaceutica, a.codigo, a.descripcion, a.concentracion,
+f.descripcion AS forma_farmaceutica, a.activo FROM articulo a INNER JOIN forma_farmaceutica f
+ON a.id_ffarmaceutica = f.id_ffarmaceutica WHERE a.descripcion LIKE "%%";
+
+

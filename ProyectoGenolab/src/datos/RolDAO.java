@@ -46,8 +46,8 @@ public class RolDAO implements CrudSimpleInterface<Rol> {
         }
         return registros;
     }
-    
-        public List<Rol> seleccionarRoles() {
+
+    public List<Rol> seleccionarRoles() {
         List<Rol> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("select id_rol, nombre from rol order by nombre asc");

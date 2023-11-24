@@ -16,6 +16,13 @@ public class FormaFarmaceutica {
         this.activo = activo;
     }
 
+    public FormaFarmaceutica(int idFFarmaceutica, String descripcion) {
+        this.idFFarmaceutica = idFFarmaceutica;
+        this.descripcion = descripcion;
+    }
+    
+    
+
     public int getIdFFarmaceutica() {
         return idFFarmaceutica;
     }
