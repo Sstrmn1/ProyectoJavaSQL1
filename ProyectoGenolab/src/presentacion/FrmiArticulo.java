@@ -9,13 +9,13 @@ public class FrmiArticulo extends javax.swing.JFrame {
 
     //atributos
     public final ArticuloControl CONTROL;
-    
+
     public FrmiArticulo() {
         initComponents();
         this.CONTROL = new ArticuloControl();
         this.listado("");
         this.listarCombobox();
-        
+
         txtId.setEnabled(false);
         desactivar();
     }
@@ -26,33 +26,33 @@ public class FrmiArticulo extends javax.swing.JFrame {
         TableRowSorter orden = new TableRowSorter(tblArticulo.getModel());
         tblArticulo.setRowSorter(orden);
     }
-    
+
     private void listarCombobox() {
         cboFFarmaceutica.setModel(this.CONTROL.cargarFormaFarmaceutica());
     }
-    
+
     private void activar() {
         btnGuardar.setEnabled(true);
         btnRegistrar.setEnabled(false);
     }
-    
+
     private void desactivar() {
         btnGuardar.setEnabled(false);
         btnRegistrar.setEnabled(true);
     }
-    
+
     private void mensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private void mensajeInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private static int mensajeConfirmacion(String mensaje) {
         return JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
     }
-    
+
     private void limpiar() {
         txtDescripcion.setText("");
         txtId.setText("");
@@ -62,7 +62,7 @@ public class FrmiArticulo extends javax.swing.JFrame {
         rbtnActivo.setSelected(true);
         txtDescripcion.requestFocus();
         desactivar();
-        
+
     }
 
     /**
@@ -226,8 +226,18 @@ public class FrmiArticulo extends javax.swing.JFrame {
         rbtnInactivo.setText("Inactivo");
 
         btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistrarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
+        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLimpiarActionPerformed(evt);
+            }
+        });
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -249,36 +259,34 @@ public class FrmiArticulo extends javax.swing.JFrame {
                         .addComponent(rbtnActivo)
                         .addGap(31, 31, 31)
                         .addComponent(rbtnInactivo)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnRegistrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnLimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGuardar))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnRegistrar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnLimpiar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnGuardar))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel3)
-                                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 385, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                                .addComponent(jLabel5)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(cboFFarmaceutica, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtConcentracion))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                                        .addComponent(jLabel5)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(cboFFarmaceutica, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel7)
-                                    .addComponent(txtCodigo)
-                                    .addComponent(txtId))))
-                        .addContainerGap())))
+                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtConcentracion))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel7)
+                            .addComponent(txtCodigo)
+                            .addComponent(txtId))))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -322,7 +330,7 @@ public class FrmiArticulo extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbArticulo, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+                .addComponent(tabbArticulo)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -345,7 +353,38 @@ public class FrmiArticulo extends javax.swing.JFrame {
     }//GEN-LAST:event_txtIdActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
+        if (mensajeConfirmacion("Desea editar este registro?") == 0) {
+            String respuesta = "";
+
+            String articuloDescripcion = txtDescripcion.getText();
+            String articuloConcentracion = txtConcentracion.getText();
+            String articuloCodigo = txtCodigo.getText();
+            int articuloId = Integer.parseInt(txtId.getText());
+            FormaFarmaceutica fFarmaceuticaSeleccionada = (FormaFarmaceutica) cboFFarmaceutica.getSelectedItem();
+            String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion();
+            int fFarmaceuticaId = fFarmaceuticaSeleccionada.getIdFFarmaceutica();
+
+            boolean estado;
+            if (rbtnActivo.isSelected()) {
+                estado = true;
+            } else {
+                estado = false;
+            }
+
+            respuesta = this.CONTROL.actualizar(articuloId,fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloConcentracion, articuloCodigo, estado);
+            if (respuesta.equals("OK")) {
+                mensajeInformacion("Registro actualizado");
+            } else {
+                mensajeError("Error actualizando el registro");
+            }
+            limpiar();
+            tabbArticulo.setSelectedIndex(0);
+            this.listado("");
+        } else {
+            limpiar();
+            desactivar();
+            tabbArticulo.setSelectedIndex(0);
+        }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
@@ -357,43 +396,72 @@ public class FrmiArticulo extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-//        if (tblArticulo.getSelectedRowCount() == 1) {
-//            int fila = tblArticulo.getSelectedRow();
-//
-//            String articuloId = String.valueOf(tblArticulo.getValueAt(fila, 0));
-//            String ffarmaceuticaId = String.valueOf(tblArticulo.getValueAt(fila, 1));
-//            String articuloCodigo = String.valueOf(tblArticulo.getValueAt(fila, 2));
-//            String articuloDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 3));
-//            String articuloConcentracion = String.valueOf(tblArticulo.getValueAt(fila, 4));
-//            String ffarmaceuticaDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 5));
-//            String articuloEstado = String.valueOf(tblArticulo.getValueAt(fila, 6));
-//            
-//
-//            Date articuloFechaNac = Date.valueOf(tblArticulo.getValueAt(fila, 8).toString());
-//
-//            Rol ffarmaceuticaSeleccionado = new Rol(Integer.parseInt(ffarmaceuticaId), ffarmaceuticaNombre);
-//
-//            txtIdUsuario.setText(articuloId);
-//            txtNombre.setText(articuloNombre);
-//            txtApellido.setText(articuloApellido);
-//            txtContraseña.setText(articuloPassword);
-//            txtCi.setText(articuloCI);
-//            txtEmail.setText(articuloEmail);
-//            txtFoto.setText(articuloFoto);
-//            cboRol.setSelectedItem(ffarmaceuticaSeleccionado);
-//            dcFechaNac.setDate(articuloFechaNac);
-//
-//            if (estado.equals("Activo")) {
-//                rbtnActivo.setSelected(true);
-//            } else {
-//                rbtnInactivo.setSelected(true);
-//            }
-//            activar();
-//            tabbGeneral.setSelectedIndex(1);
-//        } else {
-//            mensajeError("Debe seleccionar almenos un registro");
-//        }
+        if (tblArticulo.getSelectedRowCount() == 1) {
+            int fila = tblArticulo.getSelectedRow();
+
+            String articuloId = String.valueOf(tblArticulo.getValueAt(fila, 0));
+            String ffarmaceuticaId = String.valueOf(tblArticulo.getValueAt(fila, 1));
+            String articuloCodigo = String.valueOf(tblArticulo.getValueAt(fila, 2));
+            String articuloDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 3));
+            String articuloConcentracion = String.valueOf(tblArticulo.getValueAt(fila, 4));
+            String ffarmaceuticaDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 5));
+            String estado = String.valueOf(tblArticulo.getValueAt(fila, 6));
+
+            FormaFarmaceutica ffarmaceuticaSeleccionada = new FormaFarmaceutica(Integer.parseInt(ffarmaceuticaId), ffarmaceuticaDescripcion);
+
+            txtId.setText(articuloId);
+            txtDescripcion.setText(articuloDescripcion);
+            txtConcentracion.setText(articuloConcentracion);
+            txtCodigo.setText(articuloCodigo);
+
+            cboFFarmaceutica.setSelectedItem(ffarmaceuticaSeleccionada);
+
+            if (estado.equals("Activo")) {
+                rbtnActivo.setSelected(true);
+            } else {
+                rbtnInactivo.setSelected(true);
+            }
+            activar();
+            tabbArticulo.setSelectedIndex(1);
+        } else {
+            mensajeError("Debe seleccionar almenos un registro");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+        limpiar();
+        desactivar();  // TODO add your handling code here:
+    }//GEN-LAST:event_btnLimpiarActionPerformed
+
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        String respuesta = "";
+
+        String articuloDescripcion = txtDescripcion.getText();
+        String articuloConcentracion = txtConcentracion.getText();
+        String articuloCodigo = txtCodigo.getText();
+
+        FormaFarmaceutica fFarmaceuticaSeleccionada = (FormaFarmaceutica) cboFFarmaceutica.getSelectedItem();
+        String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion();
+        int fFarmaceuticaId = fFarmaceuticaSeleccionada.getIdFFarmaceutica();
+
+        boolean estado;
+        if (rbtnActivo.isSelected()) {
+            estado = true;
+        } else {
+            estado = false;
+        }
+
+        respuesta = this.CONTROL.insertar(fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloConcentracion, articuloCodigo, estado);
+        if (respuesta.equals("OK")) {
+            mensajeInformacion("Registro insertado");
+        } else {
+            mensajeError("Error insertando el registro");
+        }
+        limpiar();
+        tabbArticulo.setSelectedIndex(0);
+        this.listado("");
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     /**
      * @param args the command line arguments

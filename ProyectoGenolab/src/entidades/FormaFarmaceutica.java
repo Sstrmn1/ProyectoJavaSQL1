@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Objects;
+
 
 public class FormaFarmaceutica {
     
@@ -49,8 +51,40 @@ public class FormaFarmaceutica {
 
     @Override
     public String toString() {
-        return "FormaFarmaceutica{" + "idFFarmaceutica=" + idFFarmaceutica + ", descripcion=" + descripcion + ", activo=" + activo + '}';
+        return descripcion;
     }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.idFFarmaceutica;
+        hash = 79 * hash + Objects.hashCode(this.descripcion);
+        hash = 79 * hash + (this.activo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final FormaFarmaceutica other = (FormaFarmaceutica) obj;
+        if (this.idFFarmaceutica != other.idFFarmaceutica) {
+            return false;
+        }
+        if (this.activo != other.activo) {
+            return false;
+        }
+        return Objects.equals(this.descripcion, other.descripcion);
+    }
+    
+    
     
     
 }
