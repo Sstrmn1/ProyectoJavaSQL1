@@ -47,7 +47,7 @@ public class LoteControl {
         this.modeloTabla = new DefaultTableModel(null, titulos);
 
         String estado;
-        String[] registro = new String[11];
+        String[] registro = new String[12];
         this.registrosMostrados = 0;
 
         for (Lote item : lista) {

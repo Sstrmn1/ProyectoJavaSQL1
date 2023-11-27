@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Objects;
+
 public class Articulo {
     private int idArticulo;
     private int idFfarmaceutica;
@@ -85,7 +87,53 @@ public class Articulo {
 
     @Override
     public String toString() {
-        return "Articulo{" + "idArticulo=" + idArticulo + ", idFfarmaceutica=" + idFfarmaceutica + ", descripcion=" + descripcion + ", ffDescripcion=" + ffDescripcion + ", concentracion=" + concentracion + ", codigo=" + codigo + ", activo=" + activo + '}';
+        return descripcion;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 59 * hash + this.idArticulo;
+        hash = 59 * hash + this.idFfarmaceutica;
+        hash = 59 * hash + Objects.hashCode(this.descripcion);
+        hash = 59 * hash + Objects.hashCode(this.ffDescripcion);
+        hash = 59 * hash + Objects.hashCode(this.concentracion);
+        hash = 59 * hash + Objects.hashCode(this.codigo);
+        hash = 59 * hash + (this.activo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Articulo other = (Articulo) obj;
+        if (this.idArticulo != other.idArticulo) {
+            return false;
+        }
+        if (this.idFfarmaceutica != other.idFfarmaceutica) {
+            return false;
+        }
+        if (this.activo != other.activo) {
+            return false;
+        }
+        if (!Objects.equals(this.descripcion, other.descripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.ffDescripcion, other.ffDescripcion)) {
+            return false;
+        }
+        if (!Objects.equals(this.concentracion, other.concentracion)) {
+            return false;
+        }
+        return Objects.equals(this.codigo, other.codigo);
     }
     
     

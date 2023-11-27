@@ -1,5 +1,7 @@
 package entidades;
 
+import java.util.Objects;
+
 public class Laboratorio {
 
     private int idLaboratorio;
@@ -56,7 +58,41 @@ public class Laboratorio {
 
     @Override
     public String toString() {
-        return "Laboratorio{" + "idLaboratorio=" + idLaboratorio + ", nombre=" + nombre + ", procedencia=" + procedencia + ", activo=" + activo + '}';
+        return nombre;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + this.idLaboratorio;
+        hash = 89 * hash + Objects.hashCode(this.nombre);
+        hash = 89 * hash + Objects.hashCode(this.procedencia);
+        hash = 89 * hash + (this.activo ? 1 : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Laboratorio other = (Laboratorio) obj;
+        if (this.idLaboratorio != other.idLaboratorio) {
+            return false;
+        }
+        if (this.activo != other.activo) {
+            return false;
+        }
+        if (!Objects.equals(this.nombre, other.nombre)) {
+            return false;
+        }
+        return Objects.equals(this.procedencia, other.procedencia);
     }
 
 }
