@@ -12,6 +12,11 @@ public class Articulo {
     public Articulo() {
     }
 
+    public Articulo(int idArticulo, String descripcion) {
+        this.idArticulo = idArticulo;
+        this.descripcion = descripcion;
+    }   
+
     public Articulo(int idArticulo, int idFfarmaceutica, String descripcion, String ffDescripcion, String concentracion, String codigo, boolean activo) {
         this.idArticulo = idArticulo;
         this.idFfarmaceutica = idFfarmaceutica;

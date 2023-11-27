@@ -45,6 +45,26 @@ public class LaboratorioDAO implements CrudSimpleInterface<Laboratorio> {
         return registros;
     }
 
+    public List<Laboratorio> seleccionarLaboratorio() {
+        List<Laboratorio> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("select id_laboratorio, nombre from laboratorio order by nombre asc");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Laboratorio(rs.getInt(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean insertar(Laboratorio obj) {
         respuesta = false;
@@ -89,8 +109,6 @@ public class LaboratorioDAO implements CrudSimpleInterface<Laboratorio> {
         }
         return respuesta;
     }
-    
-    
 
     @Override
     public boolean desactivar(int id) {

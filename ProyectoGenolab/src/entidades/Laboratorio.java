@@ -8,7 +8,12 @@ public class Laboratorio {
     private boolean activo;
 
     public Laboratorio() {
-    }    
+    }
+
+    public Laboratorio(int idLaboratorio, String nombre) {
+        this.idLaboratorio = idLaboratorio;
+        this.nombre = nombre;
+    }
 
     public Laboratorio(int idLaboratorio, String nombre, String procedencia, boolean activo) {
         this.idLaboratorio = idLaboratorio;

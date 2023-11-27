@@ -48,6 +48,27 @@ public class ArticuloDAO implements CrudSimpleInterface<Articulo> {
         }
         return registros;
     }
+    
+    
+    public List<Articulo> seleccionarArticulo() {
+        List<Articulo> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("select id_articulo, descripcion from articulo order by descripcion asc");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Articulo(rs.getInt(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
 
     @Override
     public boolean insertar(Articulo obj) {
@@ -73,6 +94,8 @@ public class ArticuloDAO implements CrudSimpleInterface<Articulo> {
         }
         return respuesta;
     }
+    
+    
 
     @Override
     public boolean actualizar(Articulo obj) {
