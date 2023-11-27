@@ -3,13 +3,12 @@ use bd_genolab;
 -- Tablas independientes
 select * from cliente;
 select * from distrito;
-select * from empresa;
 select * from forma_farmaceutica;
 select * from laboratorio;
 
 -- Tablas dependientes
 select * from articulo;
-select * from direccion;
+select * from sucursal;
 select * from factura;
 select * from lote;
 select * from orden_de_venta;
