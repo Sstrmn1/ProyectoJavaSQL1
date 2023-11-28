@@ -53,10 +53,10 @@ public class ArticuloDAO implements CrudSimpleInterface<Articulo> {
     public List<Articulo> seleccionarArticulo() {
         List<Articulo> registros = new ArrayList();
         try {
-            ps = CON.conectar().prepareStatement("select id_articulo, descripcion from articulo order by descripcion asc");
+            ps = CON.conectar().prepareStatement("select id_articulo, descripcion, codigo from articulo order by descripcion asc");
             rs = ps.executeQuery();
             while (rs.next()) {
-                registros.add(new Articulo(rs.getInt(1), rs.getString(2)));
+                registros.add(new Articulo(rs.getInt(1), rs.getString(2), rs.getString(3)));
             }
             ps.close();
             rs.close();

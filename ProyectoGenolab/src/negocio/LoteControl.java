@@ -82,7 +82,7 @@ public class LoteControl {
         List<Articulo> lista = new ArrayList();
         lista = DATOSARTICULO.seleccionarArticulo();
         for (Articulo item : lista) {
-            items.addElement(new Articulo(item.getIdArticulo(), item.getDescripcion()));
+            items.addElement(new Articulo(item.getIdArticulo(), item.getDescripcion(), item.getCodigo()));
         }
         return items;
     }

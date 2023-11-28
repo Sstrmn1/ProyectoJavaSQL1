@@ -22,6 +22,7 @@ public class FrmiLote extends javax.swing.JFrame {
         dcExpiracion.setDate(new Date(2020 - 1900, 00, 01));
 
         txtId.setEnabled(false);
+        txtCodArticulo.setEnabled(false);
         desactivar();
     }
 
@@ -256,6 +257,11 @@ public class FrmiLote extends javax.swing.JFrame {
         cboArticulo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 cboArticuloItemStateChanged(evt);
+            }
+        });
+        cboArticulo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboArticuloActionPerformed(evt);
             }
         });
 
@@ -506,15 +512,14 @@ public class FrmiLote extends javax.swing.JFrame {
             String loteCodigo = String.valueOf(tblLote.getValueAt(fila, 5));
             String loteStock = String.valueOf(tblLote.getValueAt(fila, 8));
             String lotePrecioUnitario = String.valueOf(tblLote.getValueAt(fila, 9));
-            String laboratorioNombre =String.valueOf(tblLote.getValueAt(fila, 10));
+            String laboratorioNombre = String.valueOf(tblLote.getValueAt(fila, 10));
             String estado = String.valueOf(tblLote.getValueAt(fila, 11));
-            
+
             Date fechaFabricacion = Date.valueOf(tblLote.getValueAt(fila, 6).toString());
             Date fechaExpiracion = Date.valueOf(tblLote.getValueAt(fila, 7).toString());
-            
-            
-            Articulo articuloSeleccionado = new Articulo(Integer.parseInt(articuloId), articuloDescripcion);
-            Laboratorio laboratorioSeleccionado = new Laboratorio (Integer.parseInt(laboratorioId), laboratorioNombre);
+
+            Articulo articuloSeleccionado = new Articulo(Integer.parseInt(articuloId), articuloDescripcion, articuloCodigo);
+            Laboratorio laboratorioSeleccionado = new Laboratorio(Integer.parseInt(laboratorioId), laboratorioNombre);
 
             cboArticulo.setSelectedItem(articuloSeleccionado);
             txtCodArticulo.setText(articuloCodigo);
@@ -618,14 +623,18 @@ public class FrmiLote extends javax.swing.JFrame {
     }//GEN-LAST:event_txtCodigoLoteActionPerformed
 
     private void cboArticuloItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cboArticuloItemStateChanged
-        if (cboArticulo.getSelectedItem()!=null) {
-            Articulo articuloSeleccionado = (Articulo)cboArticulo.getSelectedItem();
+
+    }//GEN-LAST:event_cboArticuloItemStateChanged
+
+    private void cboArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboArticuloActionPerformed
+        if (cboArticulo.getSelectedItem() != null) {
+            Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
             String codigoArticulo = articuloSeleccionado.getCodigo();
             txtCodArticulo.setText(codigoArticulo);
         } else {
             return;
         }
-    }//GEN-LAST:event_cboArticuloItemStateChanged
+    }//GEN-LAST:event_cboArticuloActionPerformed
 
     /**
      * @param args the command line arguments
