@@ -18,12 +18,12 @@ public class FrmiLote extends javax.swing.JFrame {
         this.CONTROL = new LoteControl();
         this.listado("");
         this.listarCombobox();
-        dcFabricacion.setDate(new Date(2020 - 1900, 00, 01));
-        dcExpiracion.setDate(new Date(2020 - 1900, 00, 01));
+        dcFabricacion.setDate(new Date(1970 - 1900, 00, 01));
+        dcExpiracion.setDate(new Date(1970 - 1900, 00, 01));
 
         txtId.setEnabled(false);
         txtCodArticulo.setEnabled(false);
-        desactivar();
+        limpiar();
     }
 
     //metodos
@@ -429,8 +429,8 @@ public class FrmiLote extends javax.swing.JFrame {
             String laboratorioNombre = laboratorioSeleccionado.getNombre();
 
             String loteCodigo = txtCodigoLote.getText();
-            int stock = Integer.parseInt(txtStock.getSelectedText());
-            float precioUnitario = Float.parseFloat(txtPrecio.getSelectedText());
+            int stock = Integer.parseInt(txtStock.getText());
+            float precioUnitario = Float.parseFloat(txtPrecio.getText());
 
             boolean estado;
             if (rbtnActivo.isSelected()) {
@@ -560,8 +560,9 @@ public class FrmiLote extends javax.swing.JFrame {
         String laboratorioNombre = laboratorioSeleccionado.getNombre();
 
         String loteCodigo = txtCodigoLote.getText();
-        int stock = Integer.parseInt(txtStock.getSelectedText());
-        float precioUnitario = Float.parseFloat(txtPrecio.getSelectedText());
+        int stock = Integer.parseInt(txtStock.getText());
+
+        float precioUnitario = Float.parseFloat(txtPrecio.getText());
 
         boolean estado;
         if (rbtnActivo.isSelected()) {

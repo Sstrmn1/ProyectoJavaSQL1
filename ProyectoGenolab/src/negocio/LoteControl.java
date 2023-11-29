@@ -63,10 +63,10 @@ public class LoteControl {
             registro[3] = item.getArticuloCodigo();
             registro[4] = item.getArticuloDescripcion();
             registro[5] = item.getLoteCodigo();
-            registro[6] = String.valueOf(obj.getFechaFabricacion());
-            registro[7] = String.valueOf(obj.getFechaExpiracion());
+            registro[6] = String.valueOf(item.getFechaFabricacion());
+            registro[7] = String.valueOf(item.getFechaExpiracion());
             registro[8] = Integer.toString(item.getStock());
-            registro[9] = Float.toString(obj.getPrecioUnitario());
+            registro[9] = Float.toString(item.getPrecioUnitario());
             registro[10] = item.getLaboratorioNombre();
 
             registro[11] = estado;
