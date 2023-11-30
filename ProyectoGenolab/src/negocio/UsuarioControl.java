@@ -121,4 +121,8 @@ public class UsuarioControl {
         return this.registrosMostrados;
     }
 
+    public String generaNombreImagen(String nombre, String numeroDocumento){
+        String nombreImagen =  nombre.replaceAll("\\s","").trim() + numeroDocumento.trim();
+        return nombreImagen;
+    }
 }
