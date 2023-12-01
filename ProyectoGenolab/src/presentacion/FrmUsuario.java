@@ -12,14 +12,17 @@ import entidades.Rol;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 public class FrmUsuario extends javax.swing.JFrame {
 
-    //atribubos
+    //atributos
     private final UsuarioControl CONTROL;
     private String rutaDestino;
     private final String DIRECTORIO = "src/files/usuarios/";
@@ -93,6 +96,10 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void mensajeInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void mensajeAlerta(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.WARNING_MESSAGE);
     }
 
     private static int mensajeConfirmacion(String mensaje) {
@@ -362,8 +369,18 @@ public class FrmUsuario extends javax.swing.JFrame {
         });
 
         btnApagarCam.setText("Apagar camara");
+        btnApagarCam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarCamActionPerformed(evt);
+            }
+        });
 
         btnCapturaFoto.setText("Capturar");
+        btnCapturaFoto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCapturaFotoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -680,6 +697,12 @@ public class FrmUsuario extends javax.swing.JFrame {
             } else {
                 rbtnInactivo.setSelected(true);
             }
+
+            ImageIcon im = new ImageIcon(this.DIRECTORIO + this.imagenAnt);
+            Icon icono = new ImageIcon(im.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_DEFAULT));
+            lblFoto.setIcon(icono);
+            lblFoto.repaint();
+
             activar();
             tabbGeneral.setSelectedIndex(1);
         } else {
@@ -690,7 +713,44 @@ public class FrmUsuario extends javax.swing.JFrame {
 
     private void btnIniciarCamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarCamActionPerformed
         // TODO add your handling code here:
+        Thread hilo = new Thread() {
+            @Override
+            public void run() {
+                webcamPanel.start();
+            }
+        };
+
+        hilo.setDaemon(true);
+        hilo.start();
+        activa();
     }//GEN-LAST:event_btnIniciarCamActionPerformed
+
+    private void btnApagarCamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarCamActionPerformed
+        // TODO add your handling code here:
+        webcamPanel.stop();
+        desactiva();
+    }//GEN-LAST:event_btnApagarCamActionPerformed
+
+    private void btnCapturaFotoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapturaFotoActionPerformed
+        // TODO add your handling code here:
+        if (txtNombre.getText().isEmpty() || txtNombre.getText().length() > 40) {
+            mensajeAlerta("Debes ingresar un nombre, menor a 40 caracteres");
+            txtNombre.requestFocus();
+            return;
+        }
+        if (txtCi.getText().isEmpty() || txtCi.getText().length() > 20) {
+            mensajeAlerta("Debes ingresar un ci, menor a 20 caracteres");
+            txtCi.requestFocus();
+            return;
+        }
+
+        ImageIcon foto;
+        this.imagen = CONTROL.generaNombreImagen(txtNombre.getText(), txtCi.getText()).trim() + ".jpg";
+        foto = new ImageIcon(webcam.getImage());
+        Icon iconoFoto = new ImageIcon(foto.getImage().getScaledInstance(lblFoto.getWidth(), lblFoto.getHeight(), Image.SCALE_SMOOTH));
+        lblFoto.setIcon(iconoFoto);
+        rutaWebCam = webcam.getImage();
+    }//GEN-LAST:event_btnCapturaFotoActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

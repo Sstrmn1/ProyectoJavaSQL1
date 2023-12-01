@@ -516,11 +516,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Apagar camara"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnApagarCamActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnCapturaFoto">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Capturar"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCapturaFotoActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

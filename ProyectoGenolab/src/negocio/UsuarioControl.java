@@ -83,6 +83,7 @@ public class UsuarioControl {
             obj.setFechaNac(fechaNac);
             obj.setEmail(email);
             obj.setActivo(estado);
+            obj.setFoto(foto);
 
             if (DATOSUSUARIO.insertar(obj)) {
                 return "OK";
