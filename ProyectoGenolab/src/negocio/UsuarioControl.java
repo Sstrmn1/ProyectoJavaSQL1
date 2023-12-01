@@ -4,6 +4,8 @@ import datos.UsuarioDAO;
 import datos.RolDAO;
 import entidades.Usuario;
 import entidades.Rol;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +116,21 @@ public class UsuarioControl {
 
     }
 
+    public static String encriptar(String valor) {
+        MessageDigest md;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            return null;
+        }
+        byte[] hash = md.digest(valor.getBytes());
+        StringBuilder sb = new StringBuilder();
+        for (byte b : hash) {
+            sb.append(String.format("%02x", b));
+        }
+        return sb.toString();
+    }
+
     public int total() {
         return DATOSUSUARIO.total();
     }
@@ -122,8 +139,8 @@ public class UsuarioControl {
         return this.registrosMostrados;
     }
 
-    public String generaNombreImagen(String nombre, String numeroDocumento){
-        String nombreImagen =  nombre.replaceAll("\\s","").trim() + numeroDocumento.trim();
+    public String generaNombreImagen(String nombre, String numeroDocumento) {
+        String nombreImagen = nombre.replaceAll("\\s", "").trim() + numeroDocumento.trim();
         return nombreImagen;
     }
 }
