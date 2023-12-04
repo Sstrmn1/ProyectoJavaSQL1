@@ -17,6 +17,17 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(int idUsuario, int idRol, String rolNombre, String nombre, String apellido, String ci, String email, boolean activo) {
+        this.idUsuario = idUsuario;
+        this.idRol = idRol;
+        this.rolNombre = rolNombre;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.ci = ci;
+        this.email = email;
+        this.activo = activo;
+    }   
+
     public Usuario(int idUsuario, int idRol, String rolNombre, String password, String nombre, String apellido, String ci, String email, Date fechaNac, String foto, boolean activo) {
         this.idUsuario = idUsuario;
         this.idRol = idRol;

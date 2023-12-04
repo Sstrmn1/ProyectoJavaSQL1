@@ -1,5 +1,6 @@
 package negocio;
 
+import clases.Variables;
 import datos.UsuarioDAO;
 import datos.RolDAO;
 import entidades.Usuario;
@@ -61,6 +62,28 @@ public class UsuarioControl {
         }
         return this.modeloTabla;
     }
+    
+    public String login(String email, String password)
+    {
+        String resp = "0"
+                ;
+        Usuario usu = this.DATOSUSUARIO.login(email, password)
+                ;
+        if (usu!=null) {
+            if (usu.isActivo()) {
+                Variables.usuarioId=usu.getIdUsuario();
+                Variables.rolId=usu.getIdRol();
+                Variables.rolNombre=usu.getRolNombre();
+                Variables.usuarioNombre=usu.getNombre();
+                Variables.usuarioApellido=usu.getApellido();
+                Variables.usuarioCi=usu.getCi();
+                Variables.usuarioEmail=usu.getEmail();
+                
+            }
+            
+        }
+        return resp;
+    }
 
     public DefaultComboBoxModel cargarRoles() {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
@@ -80,7 +103,7 @@ public class UsuarioControl {
             obj.setIdRol(idRol);
             obj.setNombre(nombre);
             obj.setApellido(apellido);
-            obj.setPassword(password);
+            obj.setPassword(this.encriptar(password));
             obj.setCi(ci);
             obj.setFechaNac(fechaNac);
             obj.setEmail(email);
@@ -102,7 +125,13 @@ public class UsuarioControl {
         obj.setIdRol(idRol);
         obj.setNombre(nombre);
         obj.setApellido(apellido);
-        obj.setPassword(password);
+        String encriptado;
+        if (password.length() == 64) {
+            encriptado = password;
+        } else {
+            encriptado = this.encriptar(password);
+        }
+        obj.setPassword(encriptado);
         obj.setCi(ci);
         obj.setFechaNac(fechaNac);
         obj.setEmail(email);

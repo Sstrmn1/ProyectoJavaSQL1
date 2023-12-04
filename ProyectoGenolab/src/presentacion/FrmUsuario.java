@@ -56,8 +56,6 @@ public class FrmUsuario extends javax.swing.JFrame {
         pnlCamara.setLayout(new FlowLayout());
         pnlCamara.add(webcamPanel);
 
-        ocultarColumnas();
-
         desactiva();
     }
 
@@ -74,6 +72,7 @@ public class FrmUsuario extends javax.swing.JFrame {
         tblUsuario.setModel(this.CONTROL.listar(texto));
         TableRowSorter orden = new TableRowSorter(tblUsuario.getModel());
         tblUsuario.setRowSorter(orden);
+        ocultarColumnas();
     }
 
     private void listarCombobox() {
@@ -128,10 +127,22 @@ public class FrmUsuario extends javax.swing.JFrame {
     }
 
     private void ocultarColumnas() {
+        tblUsuario.getColumnModel().getColumn(0).setMaxWidth(30);
+        tblUsuario.getColumnModel().getColumn(0).setMinWidth(30);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
         tblUsuario.getColumnModel().getColumn(1).setMaxWidth(0);
         tblUsuario.getColumnModel().getColumn(1).setMinWidth(0);
         tblUsuario.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
         tblUsuario.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblUsuario.getColumnModel().getColumn(5).setMaxWidth(0);
+        tblUsuario.getColumnModel().getColumn(5).setMinWidth(0);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+        tblUsuario.getColumnModel().getColumn(9).setMaxWidth(0);
+        tblUsuario.getColumnModel().getColumn(9).setMinWidth(0);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
+        tblUsuario.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
     }
 
     private void subirImagenes() {
@@ -615,7 +626,6 @@ public class FrmUsuario extends javax.swing.JFrame {
             String usuarioCI = txtCi.getText();
             String usuarioEmail = txtEmail.getText();
             String usuarioPassword = txtContraseña.getText();
-            String usuarioFoto = txtFoto.getText();
 
             Rol rolSeleccionado = (Rol) cboRol.getSelectedItem();
             int rolId = rolSeleccionado.getIdRol();

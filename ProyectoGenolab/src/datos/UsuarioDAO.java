@@ -111,7 +111,7 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
             ps.setString(6, obj.getEmail());
             ps.setDate(7, obj.getFechaNac());
             ps.setString(8, obj.getFoto());
-            ps.setInt(9, obj.isActivo() ? 1 : 0);            
+            ps.setInt(9, obj.isActivo() ? 1 : 0);
 
             ps.setInt(10, obj.getIdUsuario());
             if (ps.executeUpdate() > 0) {
@@ -125,6 +125,47 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
             CON.desconectar();
         }
         return respuesta;
+    }
+
+    public Usuario login(String email, String password) {
+        Usuario usu = null;
+        try {
+            ps = CON.conectar().prepareStatement("SELECT "
+                    + "u.id_usuario, "
+                    + "u.id_rol, "
+                    + "r.nombre AS rol_nombre, "
+                    + "u.nombre, "
+                    + "u.apellido, "
+                    + "u.ci, "
+                    + "u.email, "
+                    + "u.activo "
+                    + "FROM usuario u "
+                    + "INNER JOIN rol r ON u.id_rol=r.id_rol "
+                    + "WHERE u.email=? AND u.password=? "
+            );
+            ps.setString(1, email);
+            ps.setString(2, password);
+            rs = ps.executeQuery();
+            if (rs.first()) {
+                usu = new Usuario(rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getString(5),
+                        rs.getString(6),
+                        rs.getString(7),
+                        rs.getBoolean(8));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return usu;
     }
 
     @Override
