@@ -76,4 +76,32 @@ SELECT a.id_articulo, a.id_ffarmaceutica, a.codigo, a.descripcion, a.concentraci
 f.descripcion AS forma_farmaceutica, a.activo FROM articulo a INNER JOIN forma_farmaceutica f
 ON a.id_ffarmaceutica = f.id_ffarmaceutica WHERE a.descripcion LIKE "%%";
 
+SELECT l.id_lote,
+l.id_articulo,
+l.id_laboratorio,
+a.codigo AS codigo,
+a.descripcion AS articulo,
+l.codigo AS lote,
+l.fecha_fabricacion,
+l.fecha_expiracion,
+l.stock,
+l.precio_unitario,
+lab.nombre as laboratorio,
+l.activo
+FROM lote l 
+INNER JOIN articulo a
+ON l.id_articulo = a.id_articulo
+INNER JOIN laboratorio lab
+ON l.id_laboratorio = lab.id_laboratorio
+WHERE a.codigo LIKE "%%";
+
+SELECT o.id_orden,
+o.id_sucursal,
+o.id_usuario,
+o.fecha_hora,
+o.importe_total,
+s.
+c.nombre as cliente,
+c.id_cliente,
+
 
