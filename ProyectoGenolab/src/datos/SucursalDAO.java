@@ -63,9 +63,7 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
                     + "    d.id_cliente AS idCliente,\n"
                     + "    dis.nombre AS nombreDistrito,\n"
                     + "    c.nombre AS nombreCliente,\n"
-                    + "    d.calle,\n"
-                    + "    d.numero,\n"
-                    + "    d.oficina,\n"
+                    + "    d.direccion,\n"
                     + "    d.activo\n"
                     + "FROM bd_genolab.sucursal d\n"
                     + "INNER JOIN bd_genolab.distrito dis ON d.id_distrito = dis.id_distrito\n"
@@ -74,8 +72,7 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
             rs = ps.executeQuery();
             while (rs.next()) {
                 registros.add(new Sucursal(rs.getInt(1), rs.getInt(2), rs.getInt(3),
-                        rs.getString(4), rs.getString(5), rs.getString(6),
-                        rs.getString(7), rs.getString(8), rs.getBoolean(9)));
+                        rs.getString(4), rs.getString(5), rs.getString(6), rs.getBoolean(7)));
             }
             ps.close();
             rs.close();
@@ -93,15 +90,13 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
     public boolean insertar(Sucursal obj) {
         respuesta = false;
         try {
-            ps = CON.conectar().prepareStatement("insert into sucursal(id_distrito,id_cliente,calle, "
-                    + "numero, oficina, activo)\n"
-                    + "values(?,?,?,?,?,?)");
+            ps = CON.conectar().prepareStatement("insert into sucursal(id_distrito,id_cliente,direccion, "
+                    + "activo)\n"
+                    + "values(?,?,?,?)");
             ps.setInt(1, obj.getIdDistrito());
             ps.setInt(2, obj.getIdCliente());
-            ps.setString(3, obj.getCalle());
-            ps.setString(4, obj.getNumeroCalle());
-            ps.setString(5, obj.getOficina());
-            ps.setInt(6, obj.isActivo() ? 1 : 0);
+            ps.setString(3, obj.getDireccion());
+            ps.setInt(4, obj.isActivo() ? 1 : 0);
 
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
@@ -121,16 +116,14 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
         respuesta = false;
         try {
             ps = CON.conectar().prepareStatement("UPDATE sucursal SET id_distrito = ?, id_cliente = ?, "
-                    + "calle = ?, numero = ?, oficina = ?, activo = ?"
+                    + "direccion = ?, activo = ?"
                     + " WHERE id_sucursal = ?");
             ps.setInt(1, obj.getIdDistrito());
             ps.setInt(2, obj.getIdCliente());
-            ps.setString(3, obj.getCalle());
-            ps.setString(4, obj.getNumeroCalle());
-            ps.setString(5, obj.getOficina());
-            ps.setInt(6, obj.isActivo() ? 1 : 0);
+            ps.setString(3, obj.getDireccion());
+            ps.setInt(4, obj.isActivo() ? 1 : 0);
 
-            ps.setInt(7, obj.getIdSucursal());
+            ps.setInt(5, obj.getIdSucursal());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
             }

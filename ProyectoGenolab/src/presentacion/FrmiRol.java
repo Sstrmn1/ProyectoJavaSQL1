@@ -347,8 +347,8 @@ public class FrmiRol extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtNombre.getText().isEmpty() || txtNombre.getText().length() > 20) {
-            mensajeAdvertencia("Debe ingresar un nombre y debe ser menor a 20 caracteres");
+        if (txtNombre.getText().isEmpty() || txtNombre.getText().length() > 50) {
+            mensajeAdvertencia("Debe ingresar un nombre y debe ser menor a 50 caracteres");
             txtNombre.requestFocus();
             return;
         }

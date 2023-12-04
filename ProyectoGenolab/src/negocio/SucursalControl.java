@@ -31,12 +31,12 @@ public class SucursalControl {
     public DefaultTableModel listar(String texto) {
         List<Sucursal> lista = new ArrayList();
         lista.addAll(DATOSSUCURSAL.listar(texto));
-        String[] titulos = {"ID", "IDDistrito", "IDCliente", "Nom Cliente", "Nom Distrito", "Calle",
-            "Numero", "Oficina", "Estado"};
+        String[] titulos = {"ID", "IDDistrito", "IDCliente", "Nom Cliente", "Nom Distrito", "Direccion",
+            "Estado"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
 
         String estado;
-        String[] registro = new String[9];
+        String[] registro = new String[7];
         this.registrosMostrados = 0;
 
         for (Sucursal item : lista) {
@@ -51,10 +51,8 @@ public class SucursalControl {
             registro[2] = Integer.toString(item.getIdCliente());
             registro[3] = item.getNombreCliente();
             registro[4] = item.getNombreDistrito();
-            registro[5] = item.getCalle();
-            registro[6] = item.getNumeroCalle();
-            registro[7] = item.getOficina();
-            registro[8] = estado;
+            registro[5] = item.getDireccion();
+            registro[6] = estado;
 
             this.modeloTabla.addRow(registro);
             registrosMostrados++;
@@ -86,13 +84,12 @@ public class SucursalControl {
         return cliente.getIdCliente();
     }
 
-    public String insertar(int idDistrito, int idCliente, String calle, String numeroCalle, String oficina, boolean estado) {
+    public String insertar(int idDistrito, int idCliente, String direccion, boolean estado) {
 
         obj.setIdDistrito(idDistrito);
         obj.setIdCliente(idCliente);
-        obj.setCalle(calle);
-        obj.setNumeroCalle(numeroCalle);
-        obj.setOficina(oficina);
+        obj.setDireccion(direccion);
+
         obj.setActivo(estado);
 
         if (DATOSSUCURSAL.insertar(obj)) {
@@ -103,13 +100,11 @@ public class SucursalControl {
 
     }
 
-    public String actualizar(int idSucursal, int idDistrito, int idCliente, String calle, String numeroCalle, String oficina, boolean estado) {
+    public String actualizar(int idSucursal, int idDistrito, int idCliente, String direccion, boolean estado) {
         obj.setIdSucursal(idSucursal);
         obj.setIdDistrito(idDistrito);
         obj.setIdCliente(idCliente);
-        obj.setCalle(calle);
-        obj.setNumeroCalle(numeroCalle);
-        obj.setOficina(oficina);
+        obj.setDireccion(direccion);
         obj.setActivo(estado);
         if (DATOSSUCURSAL.actualizar(obj)) {
             return "OK";

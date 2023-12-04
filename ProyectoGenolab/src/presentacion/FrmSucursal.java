@@ -28,49 +28,47 @@ public class FrmSucursal extends javax.swing.JFrame {
         TableRowSorter orden = new TableRowSorter(tblSucursal.getModel());
         tblSucursal.setRowSorter(orden);
     }
-    
+
     private void listarCombobox() {
         cboCliente.setModel(this.CONTROL.listarClientes());
         cboDistrito.setModel(this.CONTROL.listarDistritos());
     }
-    
+
     private void activar() {
         btnEditar.setEnabled(true);
         btnRegistrar.setEnabled(false);
     }
-    
+
     private void desactivar() {
         btnEditar.setEnabled(false);
         btnRegistrar.setEnabled(true);
     }
-    
+
     private void limpiar() {
         cboCliente.setSelectedItem(null);
         cboDistrito.setSelectedItem(null);
-        txtCalle.setText("");
-        txtNumeroCalle.setText("");
+        txtDireccion.setText("");
         txtIdCliente.setText("");
-        txtOficina.setText("");
         rbtnActivo.setSelected(true);
         txtBuscar.setText("");
         cboCliente.requestFocus();
         txtIdSucursal.setText("");
-        
+
         desactivar();
     }
-    
+
     private void mensajeError(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
     }
-    
+
     private void mensajeInformacion(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
     }
-    
+
     private static int mensajeConfirmacion(String mensaje) {
         return JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -81,12 +79,6 @@ public class FrmSucursal extends javax.swing.JFrame {
         cboCliente = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         cboDistrito = new javax.swing.JComboBox<>();
-        jLabel3 = new javax.swing.JLabel();
-        txtCalle = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        txtNumeroCalle = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtOficina = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
@@ -98,7 +90,7 @@ public class FrmSucursal extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtIdSucursal = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDireccion = new javax.swing.JTextArea();
         jLabel10 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -132,12 +124,6 @@ public class FrmSucursal extends javax.swing.JFrame {
                 cboDistritoActionPerformed(evt);
             }
         });
-
-        jLabel3.setText("Calle/Avenida");
-
-        jLabel4.setText("Numero");
-
-        jLabel5.setText("Oficina");
 
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,9 +172,9 @@ public class FrmSucursal extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDireccion.setColumns(20);
+        txtDireccion.setRows(5);
+        jScrollPane2.setViewportView(txtDireccion);
 
         jLabel10.setText("Direccion");
 
@@ -213,48 +199,29 @@ public class FrmSucursal extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addComponent(jLabel2))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(cboCliente, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGap(36, 36, 36))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(57, 57, 57)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel3)
-                                            .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(38, 38, 38)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(30, 30, 30)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel5)
-                                            .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                                .addGap(18, 18, 18)
+                                .addComponent(cboCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(54, 54, 54)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rbtnActivo)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(rbtnInactivo)
-                                        .addGap(50, 50, 50)
-                                        .addComponent(jLabel9)))
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbtnActivo)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbtnInactivo)
+                                .addGap(50, 50, 50)
+                                .addComponent(jLabel9)
                                 .addGap(38, 38, 38)
                                 .addComponent(txtIdSucursal, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel10))
+                            .addComponent(jLabel10)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(11, 11, 11)
+                                .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         jPanel1Layout.setVerticalGroup(
@@ -267,17 +234,9 @@ public class FrmSucursal extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtIdCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel5))
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNumeroCalle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtOficina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(cboDistrito, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
@@ -411,30 +370,27 @@ public class FrmSucursal extends javax.swing.JFrame {
 
     private void tblSucursalMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSucursalMouseClicked
         int fila = tblSucursal.getSelectedRow();
-        
+
         String sucursalId = String.valueOf(tblSucursal.getValueAt(fila, 0));
         int clienteId = Integer.parseInt(String.valueOf(tblSucursal.getValueAt(fila, 2)));
         String clienteNombre = String.valueOf(tblSucursal.getValueAt(fila, 3));
         int distritoId = Integer.parseInt(String.valueOf(tblSucursal.getValueAt(fila, 1)));
         String distritoNombre = String.valueOf(tblSucursal.getValueAt(fila, 4));
-        String calle = String.valueOf(tblSucursal.getValueAt(fila, 5));
-        String numeroCalle = String.valueOf(tblSucursal.getValueAt(fila, 6));
-        String oficina = String.valueOf(tblSucursal.getValueAt(fila, 7));
-        String estado = String.valueOf(tblSucursal.getValueAt(fila, 8));
+        String direccion = String.valueOf(tblSucursal.getValueAt(fila, 5));
+
+        String estado = String.valueOf(tblSucursal.getValueAt(fila, 6));
 
         //Instanciar nuevos objetos cliente y distrito para determinar
         //el objeto seleccionado en la tabla
         Cliente clienteSeleccionado = new Cliente(clienteId, clienteNombre);
         Distrito distritoSeleccionado = new Distrito(distritoId, distritoNombre);
-        
+
         txtIdSucursal.setText(sucursalId);
         cboCliente.setSelectedItem(clienteSeleccionado);
         cboDistrito.setSelectedItem(distritoSeleccionado);
         txtIdCliente.setText(String.valueOf(clienteId));
-        txtCalle.setText(calle);
-        txtNumeroCalle.setText(numeroCalle);
-        txtOficina.setText(oficina);
-        
+        txtDireccion.setText(direccion);
+
         if (estado.equals("Activo")) {
             rbtnActivo.setSelected(true);
         } else {
@@ -465,17 +421,15 @@ public class FrmSucursal extends javax.swing.JFrame {
 //        String clienteNombre = clienteSeleccionado.getNombre();
         int distritoId = distritoSeleccionado.getIdDistrito();
 //        String distritoNombre = distritoSeleccionado.getNombre();
-        String calle = txtCalle.getText();
-        String numeroCalle = txtNumeroCalle.getText();
-        String oficina = txtOficina.getText();
+        String direccion = txtDireccion.getText();
         boolean estado;
         if (rbtnActivo.isSelected()) {
             estado = true;
         } else {
             estado = false;
         }
-        
-        respuesta = this.CONTROL.insertar(distritoId, clienteId, calle, numeroCalle, oficina, estado);
+
+        respuesta = this.CONTROL.insertar(distritoId, clienteId, direccion, estado);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Registro insertado");
         } else {
@@ -495,20 +449,18 @@ public class FrmSucursal extends javax.swing.JFrame {
             Cliente clienteSeleccionado = (Cliente) cboCliente.getSelectedItem();
             Distrito distritoSeleccionado = (Distrito) cboDistrito.getSelectedItem();
             int clienteId = clienteSeleccionado.getIdCliente();
-            
+
             int distritoId = distritoSeleccionado.getIdDistrito();
-            String calle = txtCalle.getText();
-            String numeroCalle = txtNumeroCalle.getText();
-            String oficina = txtOficina.getText();
+            String direccion = txtDireccion.getText();
             boolean estado;
             if (rbtnActivo.isSelected()) {
                 estado = true;
             } else {
                 estado = false;
             }
-            
-            respuesta = this.CONTROL.actualizar(sucursalId, distritoId, clienteId, calle, numeroCalle, oficina, estado);
-            
+
+            respuesta = this.CONTROL.actualizar(sucursalId, distritoId, clienteId, direccion, estado);
+
             if (respuesta.equals("OK")) {
                 mensajeInformacion("Registro actualizado");
             } else {
@@ -578,9 +530,6 @@ public class FrmSucursal extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -591,16 +540,13 @@ public class FrmSucursal extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton rbtnActivo;
     private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.ButtonGroup rbtngEstado;
     private javax.swing.JTable tblSucursal;
     private javax.swing.JTextField txtBuscar;
-    private javax.swing.JTextField txtCalle;
+    private javax.swing.JTextArea txtDireccion;
     private javax.swing.JTextField txtIdCliente;
     private javax.swing.JTextField txtIdSucursal;
-    private javax.swing.JTextField txtNumeroCalle;
-    private javax.swing.JTextField txtOficina;
     // End of variables declaration//GEN-END:variables
 }
