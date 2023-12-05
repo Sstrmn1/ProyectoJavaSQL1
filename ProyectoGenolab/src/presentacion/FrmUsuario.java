@@ -113,7 +113,6 @@ public class FrmUsuario extends javax.swing.JFrame {
         txtCi.setText("");
         txtEmail.setText("");
         txtContraseña.setText("");
-        txtFoto.setText("");
         rbtnActivo.setSelected(true);
         dcFechaNac.setDate(new Date(1970 - 1900, 00, 01));
         txtNombre.requestFocus();
@@ -186,8 +185,6 @@ public class FrmUsuario extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         txtContraseña = new javax.swing.JPasswordField();
-        jLabel9 = new javax.swing.JLabel();
-        txtFoto = new javax.swing.JTextField();
         btnRegistrar = new javax.swing.JButton();
         btnGuardar = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
@@ -317,8 +314,6 @@ public class FrmUsuario extends javax.swing.JFrame {
 
         jLabel8.setText("Contraseña");
 
-        jLabel9.setText("Cargar foto");
-
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -416,13 +411,10 @@ public class FrmUsuario extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+                                .addComponent(txtApellido, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel6)
-                                    .addComponent(jLabel9)
-                                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(txtFoto, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                                        .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING))))
+                                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jLabel4))
                         .addGap(32, 32, 32)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -486,12 +478,10 @@ public class FrmUsuario extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jLabel9)
                     .addComponent(jLabel10))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtnActivo)
                     .addComponent(rbtnInactivo))
                 .addGap(18, 18, 18)
@@ -698,7 +688,7 @@ public class FrmUsuario extends javax.swing.JFrame {
             txtContraseña.setText(usuarioPassword);
             txtCi.setText(usuarioCI);
             txtEmail.setText(usuarioEmail);
-            txtFoto.setText(usuarioFoto);
+//            txtFoto.setText(usuarioFoto);
             cboRol.setSelectedItem(rolSeleccionado);
             dcFechaNac.setDate(usuarioFechaNac);
 
@@ -816,7 +806,6 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -836,7 +825,6 @@ public class FrmUsuario extends javax.swing.JFrame {
     private javax.swing.JTextField txtCi;
     private javax.swing.JPasswordField txtContraseña;
     private javax.swing.JTextField txtEmail;
-    private javax.swing.JTextField txtFoto;
     private javax.swing.JTextField txtIdUsuario;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables

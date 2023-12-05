@@ -219,14 +219,10 @@
                               <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                      <Component id="txtApellido" alignment="0" pref="147" max="32767" attributes="0"/>
+                                      <Component id="txtApellido" alignment="0" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
-                                              <Component id="txtFoto" alignment="0" pref="147" max="32767" attributes="0"/>
-                                              <Component id="txtEmail" alignment="0" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="txtEmail" alignment="0" min="-2" pref="147" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
@@ -311,13 +307,11 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="txtContraseña" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtFoto" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rbtnActivo" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rbtnInactivo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -386,13 +380,6 @@
               </Properties>
             </Component>
             <Component class="javax.swing.JPasswordField" name="txtContrase&#xf1;a">
-            </Component>
-            <Component class="javax.swing.JLabel" name="jLabel9">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="Cargar foto"/>
-              </Properties>
-            </Component>
-            <Component class="javax.swing.JTextField" name="txtFoto">
             </Component>
             <Component class="javax.swing.JButton" name="btnRegistrar">
               <Properties>

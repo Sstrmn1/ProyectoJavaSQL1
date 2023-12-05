@@ -62,25 +62,23 @@ public class UsuarioControl {
         }
         return this.modeloTabla;
     }
-    
-    public String login(String email, String password)
-    {
-        String resp = "0"
-                ;
-        Usuario usu = this.DATOSUSUARIO.login(email, password)
-                ;
-        if (usu!=null) {
+
+    public String login(String email, String password) {
+        String resp = "0";
+        Usuario usu = this.DATOSUSUARIO.login(email, this.encriptar(password));
+        if (usu != null) {
             if (usu.isActivo()) {
-                Variables.usuarioId=usu.getIdUsuario();
-                Variables.rolId=usu.getIdRol();
-                Variables.rolNombre=usu.getRolNombre();
-                Variables.usuarioNombre=usu.getNombre();
-                Variables.usuarioApellido=usu.getApellido();
-                Variables.usuarioCi=usu.getCi();
-                Variables.usuarioEmail=usu.getEmail();
-                
+                Variables.usuarioId = usu.getIdUsuario();
+                Variables.rolId = usu.getIdRol();
+                Variables.rolNombre = usu.getRolNombre();
+                Variables.usuarioNombre = usu.getNombre();
+                Variables.usuarioApellido = usu.getApellido();
+                Variables.usuarioCi = usu.getCi();
+                Variables.usuarioEmail = usu.getEmail();
+                resp = "1";
+            } else {
+                resp = "2";
             }
-            
         }
         return resp;
     }
