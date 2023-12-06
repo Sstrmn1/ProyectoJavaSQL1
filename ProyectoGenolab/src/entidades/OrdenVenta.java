@@ -1,8 +1,11 @@
 package entidades;
+
 import java.sql.Timestamp;
 
 public class OrdenVenta {
+
     private int idOrden;
+    private int numeroOrden;
     private int idSucursal;
     private int idUsuario;
     private Timestamp fechaHora;
@@ -11,8 +14,9 @@ public class OrdenVenta {
     public OrdenVenta() {
     }
 
-    public OrdenVenta(int idOrden, int idSucursal, int idUsuario, Timestamp fechaHora, float importeTotal) {
+    public OrdenVenta(int idOrden, int numeroOrden, int idSucursal, int idUsuario, Timestamp fechaHora, float importeTotal) {
         this.idOrden = idOrden;
+        this.numeroOrden = numeroOrden;
         this.idSucursal = idSucursal;
         this.idUsuario = idUsuario;
         this.fechaHora = fechaHora;
@@ -25,6 +29,14 @@ public class OrdenVenta {
 
     public void setIdOrden(int idOrden) {
         this.idOrden = idOrden;
+    }
+
+    public int getNumeroOrden() {
+        return numeroOrden;
+    }
+
+    public void setNumeroOrden(int numeroOrden) {
+        this.numeroOrden = numeroOrden;
     }
 
     public int getIdSucursal() {
@@ -58,6 +70,10 @@ public class OrdenVenta {
     public void setImporteTotal(float importeTotal) {
         this.importeTotal = importeTotal;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "OrdenVenta{" + "idOrden=" + idOrden + ", numeroOrden=" + numeroOrden + ", idSucursal=" + idSucursal + ", idUsuario=" + idUsuario + ", fechaHora=" + fechaHora + ", importeTotal=" + importeTotal + '}';
+    }
+
 }

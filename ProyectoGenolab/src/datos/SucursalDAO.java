@@ -86,6 +86,36 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
         return registros;
     }
 
+    public List<Sucursal> listarDireccion(int idCliente) {
+        List<Sucursal> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("SELECT\n"
+                    + "s.id_sucursal,\n"
+                    + "d.nombre AS distrito,\n"
+                    + "s.direccion\n"
+                    + "FROM sucursal s\n"
+                    + "INNER JOIN distrito d\n"
+                    + "ON s.id_distrito = d.id_distrito\n"
+                    + "INNER JOIN cliente\n"
+                    + "ON s.id_cliente = cliente.id_cliente\n"
+                    + "WHERE s.id_cliente = ?;");
+            ps.setString(1, idCliente);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Sucursal(rs.getInt(1), rs.getString(2), rs.getString(3)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean insertar(Sucursal obj) {
         respuesta = false;
