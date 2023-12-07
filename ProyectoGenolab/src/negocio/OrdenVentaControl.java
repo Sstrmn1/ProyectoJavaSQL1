@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
+import java.sql.Timestamp;
 
 public class OrdenVentaControl {
 
@@ -18,7 +19,8 @@ public class OrdenVentaControl {
     private final ClienteDAO DATOSCLIENTE;
     private final SucursalDAO DATOSSUCURSAL;
     private OrdenVenta obj;
-    private DefaultTableModel modeloTabla;
+    private DefaultTableModel modeloTablaOrden,
+            modeloTablaSucursal, modeloTablaCliente;
     public int registrosMostrados;
 
     public OrdenVentaControl() {
@@ -29,6 +31,7 @@ public class OrdenVentaControl {
         this.registrosMostrados = 0;
     }
 
+    //Pendiente si es necesario listar ordenes de venta
 //    public DefaultTableModel listar(String texto) {
 //        List<OrdenVenta> lista = new ArrayList();
 //        lista.addAll(DATOSORDEN.listar(texto));
@@ -60,38 +63,53 @@ public class OrdenVentaControl {
 //        }
 //        return this.modeloTabla;
 //    }
+    public DefaultTableModel listarSucursal(int idCliente) {
+        List<Sucursal> lista = new ArrayList();
+        lista.addAll(DATOSSUCURSAL.listarDireccion(idCliente));
+        String[] titulos = {"ID", "Cliente"};
+        this.modeloTablaSucursal = new DefaultTableModel(null, titulos);
 
-    public DefaultComboBoxModel listarSucursal(int idCliente) {
-        DefaultComboBoxModel items = new DefaultComboBoxModel();
-        List<Distrito> lista = new ArrayList();
-        lista = DATOSSUCURSAL.listarDireccion(idCliente);
-        for (Distrito item : lista) {
-            items.addElement(new Distrito(item.getIdDistrito(), item.getNombre()));
+        String[] registro = new String[3];
+
+        for (Sucursal item : lista) {
+            registro[0] = Integer.toString(item.getIdSucursal());
+            registro[1] = item.getNombreDistrito();
+            registro[2] = item.getDireccion();
+
+            this.modeloTablaSucursal.addRow(registro);
         }
-        return items;
+        return this.modeloTablaSucursal;
+        //        DefaultTableModel items = new DefaultTableModel();
+        //        List<Sucursal> lista = new ArrayList();
+        //        lista = DATOSSUCURSAL.listarDireccion(idCliente);
+        //        for (Sucursal item : lista) {
+        //            items.addElement(new Sucursal(item.getIdSucursal(), item.getNombreDistrito(), item.getDireccion()));
+        //        }
+        //        return items;
     }
 
-    public DefaultComboBoxModel listarClientes() {
-        DefaultComboBoxModel items = new DefaultComboBoxModel();
+    public DefaultTableModel listarClientes() {
         List<Cliente> lista = new ArrayList();
-        lista = DATOSCLIENTE.listarNombres();
+        lista.addAll(DATOSCLIENTE.listarNombres());
+        String[] titulos = {"ID", "Nombre"};
+        this.modeloTablaCliente = new DefaultTableModel(null, titulos);
+
+        String[] registro = new String[2];
+
         for (Cliente item : lista) {
-            items.addElement(new Cliente(item.getIdCliente(), item.getNombre()));
+            registro[0] = Integer.toString(item.getIdCliente());
+            registro[1] = item.getNombre();
+
+            this.modeloTablaCliente.addRow(registro);
         }
-        return items;
+        return this.modeloTablaCliente;
     }
 
-    public int enviarIdCliente(Cliente cliente) {
-        return cliente.getIdCliente();
-    }
+    public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
 
-    public String insertar(int idDistrito, int idCliente, String direccion, boolean estado) {
-
-        obj.setIdDistrito(idDistrito);
-        obj.setIdCliente(idCliente);
-        obj.setDireccion(direccion);
-
-        obj.setActivo(estado);
+        obj.setNumeroOrden(numeroOrden);
+        obj.setIdSucursal(idSucursal);
+        obj.setIdUsuario(idUsuario);
 
         if (DATOSORDEN.insertar(obj)) {
             return "OK";
@@ -101,12 +119,9 @@ public class OrdenVentaControl {
 
     }
 
-    public String actualizar(int idOrdenVenta, int idDistrito, int idCliente, String direccion, boolean estado) {
-        obj.setIdOrdenVenta(idOrdenVenta);
-        obj.setIdDistrito(idDistrito);
-        obj.setIdCliente(idCliente);
-        obj.setDireccion(direccion);
-        obj.setActivo(estado);
+    public String calcularImporte(int idOrdenVenta, float importeTotal) {
+        obj.setIdOrden(idOrdenVenta);
+        obj.setImporteTotal(importeTotal);
         if (DATOSORDEN.actualizar(obj)) {
             return "OK";
         } else {
