@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import basedatos.Conexion;
 
 public class ClienteDAO implements CrudSimpleInterface<Cliente> {
-    
+
     private final Conexion CON;
     private PreparedStatement ps;
     private ResultSet rs;
     private boolean respuesta;
-    
+
     public ClienteDAO() {
         CON = Conexion.getInstancia();
     }
-    
+
     @Override
     public List<Cliente> listar(String texto) {
         List<Cliente> registros = new ArrayList();
@@ -42,7 +42,7 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return registros;
     }
-    
+
     public List<Cliente> listarNombres() {
         List<Cliente> registros = new ArrayList();
         try {
@@ -62,7 +62,32 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return registros;
     }
-    
+
+    public List<Cliente> listarNombres(String texto) {
+        List<Cliente> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("select "
+                    + "id_cliente, "
+                    + "nombre "
+                    + "from cliente "
+                    + "where nombre like ? order by nombre asc");
+            ps.setString(1, "%" + texto + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Cliente(rs.getInt(1), rs.getString(2)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean insertar(Cliente obj) {
         respuesta = false;
@@ -76,7 +101,7 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
             ps.setString(4, obj.getTelefono());
             ps.setString(5, obj.getEmail());
             ps.setInt(6, obj.isActivo() ? 1 : 0);
-            
+
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
             }
@@ -89,7 +114,7 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return respuesta;
     }
-    
+
     @Override
     public boolean actualizar(Cliente obj) {
         respuesta = false;
@@ -103,7 +128,7 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
             ps.setString(4, obj.getTelefono());
             ps.setString(5, obj.getEmail());
             ps.setInt(6, obj.isActivo() ? 1 : 0);
-            
+
             ps.setInt(7, obj.getIdCliente());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
@@ -117,17 +142,17 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return respuesta;
     }
-    
+
     @Override
     public boolean desactivar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public boolean activar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public int total() {
         int totalRegistros = 0;
@@ -148,7 +173,7 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return totalRegistros;
     }
-    
+
     @Override
     public boolean existe(String texto) {
         respuesta = false;
@@ -171,5 +196,5 @@ public class ClienteDAO implements CrudSimpleInterface<Cliente> {
         }
         return respuesta;
     }
-    
+
 }

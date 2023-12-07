@@ -4,17 +4,28 @@
  */
 package presentacion;
 
+import entidades.Cliente;
+
 /**
  *
  * @author USUARIO
  */
 public class FrmOrden extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FrmOrden
-     */
+    private Cliente cliente;
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
     public FrmOrden() {
         initComponents();
+        this.cliente = new Cliente();
+        System.out.println(this.cliente);
     }
 
     /**
@@ -58,6 +69,11 @@ public class FrmOrden extends javax.swing.JFrame {
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Generar orden"));
 
         btnCliente.setText("Cliente");
+        btnCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClienteActionPerformed(evt);
+            }
+        });
 
         btnSucursal.setText("Sucursal");
 
@@ -283,6 +299,16 @@ public class FrmOrden extends javax.swing.JFrame {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
+        DialogCliente ventanaCliente = new DialogCliente(this, true);
+        ventanaCliente.setLocationRelativeTo(null);
+        ventanaCliente.setVisible(true);
+//        ventanaCliente.getCliente().toString();
+        this.cliente = ventanaCliente.getCliente();
+        txtCliente.setText(this.cliente.toString());
+
+    }//GEN-LAST:event_btnClienteActionPerformed
 
     /**
      * @param args the command line arguments

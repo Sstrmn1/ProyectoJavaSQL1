@@ -88,9 +88,9 @@ public class OrdenVentaControl {
         //        return items;
     }
 
-    public DefaultTableModel listarClientes() {
+    public DefaultTableModel listarClientes(String texto) {
         List<Cliente> lista = new ArrayList();
-        lista.addAll(DATOSCLIENTE.listarNombres());
+        lista.addAll(DATOSCLIENTE.listarNombres(texto));
         String[] titulos = {"ID", "Nombre"};
         this.modeloTablaCliente = new DefaultTableModel(null, titulos);
 
