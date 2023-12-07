@@ -1,15 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package presentacion;
 
 import entidades.Cliente;
 
-/**
- *
- * @author USUARIO
- */
+
 public class FrmOrden extends javax.swing.JFrame {
 
     private Cliente cliente;
@@ -24,8 +17,7 @@ public class FrmOrden extends javax.swing.JFrame {
 
     public FrmOrden() {
         initComponents();
-        this.cliente = new Cliente();
-        System.out.println(this.cliente);
+        this.cliente = new Cliente();        
     }
 
     /**
