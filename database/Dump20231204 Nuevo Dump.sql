@@ -237,6 +237,7 @@ CREATE TABLE `orden_de_venta` (
   `id_usuario` int NOT NULL,
   `fecha_hora` datetime NOT NULL,
   `importe_total` decimal(10,2) DEFAULT NULL,
+  `numero_orden` int DEFAULT NULL,
   PRIMARY KEY (`id_orden`),
   UNIQUE KEY `id_orden_UNIQUE` (`id_orden`),
   KEY `fk_orden_usuario_idx` (`id_usuario`),
@@ -252,7 +253,7 @@ CREATE TABLE `orden_de_venta` (
 
 LOCK TABLES `orden_de_venta` WRITE;
 /*!40000 ALTER TABLE `orden_de_venta` DISABLE KEYS */;
-INSERT INTO `orden_de_venta` VALUES (1,1,2,'2023-11-15 20:37:26',3800.00),(2,2,2,'2023-11-15 20:37:26',3700.00),(3,3,2,'2023-11-15 20:37:26',3400.00),(10,4,2,'2023-11-25 12:14:43',NULL),(11,5,2,'2023-11-25 12:14:43',NULL),(12,6,2,'2023-11-25 12:14:43',NULL),(13,7,2,'2023-11-25 12:14:43',NULL),(14,8,2,'2023-11-25 12:14:43',NULL),(15,9,2,'2023-11-25 12:14:43',NULL),(16,1,2,'2023-11-25 12:14:43',NULL);
+INSERT INTO `orden_de_venta` VALUES (1,1,2,'2023-11-15 20:37:26',3800.00,null),(2,2,2,'2023-11-15 20:37:26',3700.00,null),(3,3,2,'2023-11-15 20:37:26',3400.00,null);
 /*!40000 ALTER TABLE `orden_de_venta` ENABLE KEYS */;
 UNLOCK TABLES;
 
