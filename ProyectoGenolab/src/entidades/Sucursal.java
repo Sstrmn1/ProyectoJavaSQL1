@@ -12,8 +12,6 @@ public class Sucursal {
     private String numeroCalle;
     private String oficina;
     private boolean activo;
-    
-
 
     public Sucursal() {
     }
@@ -46,8 +44,6 @@ public class Sucursal {
         this.nombreDistrito = nombreDistrito;
         this.direccion = direccion;
     }
-    
-    
 
     public String getDireccion() {
         return direccion;
@@ -131,9 +127,7 @@ public class Sucursal {
 
     @Override
     public String toString() {
-        return "Sucursal{" + "idSucursal=" + idSucursal + ", idDistrito=" + idDistrito + ", idCliente=" + idCliente + ", nombreDistrito=" + nombreDistrito + ", nombreCliente=" + nombreCliente + ", calle=" + calle + ", numeroCalle=" + numeroCalle + ", oficina=" + oficina + ", activo=" + activo + '}';
+        return nombreDistrito + ", " + direccion;
     }
-    
-    
 
 }

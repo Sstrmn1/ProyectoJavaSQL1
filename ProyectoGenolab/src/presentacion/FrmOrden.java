@@ -2,24 +2,48 @@ package presentacion;
 
 import entidades.Cliente;
 import entidades.Sucursal;
+import entidades.OrdenVenta;
+import javax.swing.JOptionPane;
+import negocio.OrdenVentaControl;
 
 public class FrmOrden extends javax.swing.JFrame {
-    
+
+    public final OrdenVentaControl CONTROL;
     private Cliente cliente;
     private Sucursal sucursal;
-    
-    public Cliente getCliente() {
-        return cliente;
-    }
-    
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
-    }
-    
+    private OrdenVenta ordenVenta;
+
     public FrmOrden() {
         initComponents();
         this.cliente = new Cliente();
         this.sucursal = new Sucursal();
+        this.ordenVenta = new OrdenVenta();
+        this.CONTROL = new OrdenVentaControl();
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    //Metodos
+    private void mensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mensajeAdvertencia(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.WARNING_MESSAGE);
+    }
+
+    private void mensajeInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private static int mensajeConfirmacion(String mensaje) {
+        return JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
     }
 
     /**
@@ -79,6 +103,11 @@ public class FrmOrden extends javax.swing.JFrame {
         jLabel2.setText("Numero de orden");
 
         btnGenerar.setText("Generar");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -311,13 +340,34 @@ public class FrmOrden extends javax.swing.JFrame {
 
     private void btnSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalActionPerformed
         DialogSucursal ventanaSucursal = new DialogSucursal(this, true);
+        ventanaSucursal.setIdCliente(this.cliente.getIdCliente());
+        ventanaSucursal.setNombreCliente(this.cliente.getNombre());
+        ventanaSucursal.listado(this.cliente.getIdCliente(), this.cliente.getNombre());
+
         ventanaSucursal.setLocationRelativeTo(null);
         ventanaSucursal.setVisible(true);
 //        ventanaSucursal.getSucursal().toString();
-        ventanaSucursal.setCliente(this.cliente);
-        this.sucursal = ventanaSucursal.getSucursal();
+//        ventanaSucursal.setCliente(this.cliente);
+
+//        this.sucursal = new Sucursal(TEXT_CURSOR, nombreDistrito, direccion);
 //        txtSucursal.setText(this.cliente.toString());
+        this.sucursal = ventanaSucursal.getSucursal();
+        txtSucursal.setText(this.sucursal.toString());
     }//GEN-LAST:event_btnSucursalActionPerformed
+
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        String respuesta = "";
+        ordenVenta.setIdSucursal(this.sucursal.getIdSucursal());
+        ordenVenta.setIdUsuario(1);
+        ordenVenta.setNumeroOrden(((int) (Math.random() * 100)));
+
+        respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario());
+        if (respuesta.equals("OK")) {
+            mensajeInformacion("Orden generada correctamente");
+        } else {
+            mensajeError("Error generando orden");
+        }
+    }//GEN-LAST:event_btnGenerarActionPerformed
 
     /**
      * @param args the command line arguments

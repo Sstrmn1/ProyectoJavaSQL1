@@ -11,6 +11,8 @@ public class DialogSucursal extends javax.swing.JDialog {
     private OrdenVentaControl control;
     private Sucursal sucursal;
     private Cliente cliente;
+    private int idCliente;
+    private String nombreCliente;
 
     public DialogSucursal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -18,7 +20,24 @@ public class DialogSucursal extends javax.swing.JDialog {
         this.control = new OrdenVentaControl();
         this.cliente = new Cliente();
         this.sucursal = new Sucursal();
-        this.listado(this.cliente);
+//        this.listado(this.cliente);
+        this.listado(this.idCliente, this.nombreCliente);
+    }
+
+    public int getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
     }
 
     public Sucursal getSucursal() {
@@ -43,8 +62,16 @@ public class DialogSucursal extends javax.swing.JDialog {
 //        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
 //        tblListado.setRowSorter(orden);
 //    }
-    private void listado(Cliente cliente) {
-        this.cliente = cliente;
+//    
+//    private void listado(Cliente cliente) {
+//        this.cliente = cliente;
+//        tblListado.setModel(this.control.listarSucursal(this.cliente.getIdCliente()));
+//        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+//        tblListado.setRowSorter(orden);
+//    }
+    public void listado(int idCliente, String nombreCliente) {
+        this.cliente.setIdCliente(idCliente);
+        this.cliente.setNombre(nombreCliente);
         tblListado.setModel(this.control.listarSucursal(this.cliente.getIdCliente()));
         TableRowSorter orden = new TableRowSorter(tblListado.getModel());
         tblListado.setRowSorter(orden);
