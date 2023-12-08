@@ -1,23 +1,25 @@
 package presentacion;
 
 import entidades.Cliente;
-
+import entidades.Sucursal;
 
 public class FrmOrden extends javax.swing.JFrame {
-
+    
     private Cliente cliente;
-
+    private Sucursal sucursal;
+    
     public Cliente getCliente() {
         return cliente;
     }
-
+    
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
-
+    
     public FrmOrden() {
         initComponents();
-        this.cliente = new Cliente();        
+        this.cliente = new Cliente();
+        this.sucursal = new Sucursal();
     }
 
     /**
@@ -68,6 +70,11 @@ public class FrmOrden extends javax.swing.JFrame {
         });
 
         btnSucursal.setText("Sucursal");
+        btnSucursal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSucursalActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Numero de orden");
 
@@ -301,6 +308,16 @@ public class FrmOrden extends javax.swing.JFrame {
         txtCliente.setText(this.cliente.toString());
 
     }//GEN-LAST:event_btnClienteActionPerformed
+
+    private void btnSucursalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSucursalActionPerformed
+        DialogSucursal ventanaSucursal = new DialogSucursal(this, true);
+        ventanaSucursal.setLocationRelativeTo(null);
+        ventanaSucursal.setVisible(true);
+//        ventanaSucursal.getSucursal().toString();
+        ventanaSucursal.setCliente(this.cliente);
+        this.sucursal = ventanaSucursal.getSucursal();
+//        txtSucursal.setText(this.cliente.toString());
+    }//GEN-LAST:event_btnSucursalActionPerformed
 
     /**
      * @param args the command line arguments

@@ -66,7 +66,7 @@ public class OrdenVentaControl {
     public DefaultTableModel listarSucursal(int idCliente) {
         List<Sucursal> lista = new ArrayList();
         lista.addAll(DATOSSUCURSAL.listarDireccion(idCliente));
-        String[] titulos = {"ID", "Cliente"};
+        String[] titulos = {"ID", "Distrito", "Direccion"};
         this.modeloTablaSucursal = new DefaultTableModel(null, titulos);
 
         String[] registro = new String[3];

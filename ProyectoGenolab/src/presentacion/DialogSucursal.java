@@ -1,21 +1,28 @@
 package presentacion;
 
 import negocio.OrdenVentaControl;
+import entidades.Sucursal;
 import entidades.Cliente;
 import javax.management.StringValueExp;
 import javax.swing.table.TableRowSorter;
 
-public class DialogCliente extends javax.swing.JDialog {
+public class DialogSucursal extends javax.swing.JDialog {
 
     private OrdenVentaControl control;
+    private Sucursal sucursal;
     private Cliente cliente;
 
-    public DialogCliente(java.awt.Frame parent, boolean modal) {
+    public DialogSucursal(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         this.control = new OrdenVentaControl();
-        this.listado("");
         this.cliente = new Cliente();
+        this.sucursal = new Sucursal();
+        this.listado(this.cliente);
+    }
+
+    public Sucursal getSucursal() {
+        return sucursal;
     }
 
     public Cliente getCliente() {
@@ -26,21 +33,34 @@ public class DialogCliente extends javax.swing.JDialog {
         this.cliente = cliente;
     }
 
-    private void listado(String texto) {
-        tblListado.setModel(this.control.listarClientes(texto));
+    public void setSucursal(Sucursal sucursal) {
+        this.sucursal = sucursal;
+    }
+
+//    public void listado(int idCliente) {
+//        this.cliente.setIdCliente(idCliente);
+//        tblListado.setModel(this.control.listarSucursal(this.cliente.getIdCliente()));
+//        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+//        tblListado.setRowSorter(orden);
+//    }
+    private void listado(Cliente cliente) {
+        this.cliente = cliente;
+        tblListado.setModel(this.control.listarSucursal(this.cliente.getIdCliente()));
         TableRowSorter orden = new TableRowSorter(tblListado.getModel());
         tblListado.setRowSorter(orden);
     }
 
-    private void capturarCliente() {
+    private void capturarSucursal() {
         if (tblListado.getSelectedRowCount() == 1) {
             int fila = tblListado.getSelectedRow();
 
-            int idCliente = Integer.parseInt(String.valueOf(tblListado.getValueAt(fila, 0)));
-            String nombre = String.valueOf(tblListado.getValueAt(fila, 1));
-            
-            cliente.setIdCliente(idCliente);
-            cliente.setNombre(nombre);
+            int idSucursal = Integer.parseInt(String.valueOf(tblListado.getValueAt(fila, 0)));
+            String distrito = String.valueOf(tblListado.getValueAt(fila, 1));
+            String direccion = String.valueOf(tblListado.getValueAt(fila, 2));
+
+            sucursal.setIdSucursal(idSucursal);
+            sucursal.setNombreDistrito(distrito);
+            sucursal.setDireccion(direccion);
         }
     }
 
@@ -63,7 +83,7 @@ public class DialogCliente extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccionar Cliente"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Seleccionar Sucursal"));
 
         jLabel1.setText("Buscar");
 
@@ -157,11 +177,11 @@ public class DialogCliente extends javax.swing.JDialog {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        this.listado(txtBuscar.getText());
+//        this.listado(txtBuscar.getText());
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSeleccionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarActionPerformed
-        capturarCliente();
+        capturarSucursal();
         dispose();
     }//GEN-LAST:event_btnSeleccionarActionPerformed
 
@@ -182,21 +202,23 @@ public class DialogCliente extends javax.swing.JDialog {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DialogCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DialogCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DialogCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DialogCliente.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(DialogSucursal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
 
         /* Create and display the dialog */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                DialogCliente dialog = new DialogCliente(new javax.swing.JFrame(), true);
+                DialogSucursal dialog = new DialogSucursal(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {

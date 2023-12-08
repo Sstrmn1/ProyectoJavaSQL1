@@ -98,7 +98,7 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
                     + "ON s.id_distrito = d.id_distrito\n"
                     + "INNER JOIN cliente\n"
                     + "ON s.id_cliente = cliente.id_cliente\n"
-                    + "WHERE s.id_cliente = ?;");
+                    + "WHERE s.id_cliente = ?");
             ps.setInt(1, idCliente);
             rs = ps.executeQuery();
             while (rs.next()) {
