@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import basedatos.Conexion;
 import entidades.OrdenVenta;
+import entidades.Transaccion;
 
 public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 
@@ -125,6 +126,71 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             CON.desconectar();
         }
         return respuesta;
+    }
+
+    public boolean insertarTransaccion(Transaccion obj) {
+        respuesta = false;
+        try {
+            ps = CON.conectar().prepareStatement("insert into transaccion\n"
+                    + "(id_lote,\n"
+                    + "id_orden,\n"
+                    + "cantidad,\n"
+                    + "fecha,\n"
+                    + "(?,?,?,now())");
+            ps.setInt(1, obj.getIdLote());
+            ps.setInt(2, obj.getIdOrden());
+            ps.setInt(3, obj.getCantidad());
+
+            if (ps.executeUpdate() > 0) {
+                respuesta = true;
+            }
+            ps.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            CON.desconectar();
+        }
+        return respuesta;
+    }
+
+    public List<Transaccion> listarTransacciones(int idOrden) {
+        List<Transaccion> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("SELECT \n"
+                    + "    a.codigo AS 'Codigo Articulo',\n"
+                    + "    a.descripcion AS 'Descripcion Articulo',\n"
+                    + "    l.codigo AS 'Codigo Lote',\n"
+                    + "    t.cantidad AS 'Cantidad',\n"
+                    + "    t.id_orden AS 'ID Orden',\n"
+                    + "    (t.cantidad * l.precio_unitario) AS 'Importe'\n"
+                    + "FROM\n"
+                    + "    bd_genolab.transaccion t\n"
+                    + "    JOIN bd_genolab.lote l ON t.id_lote = l.id_lote\n"
+                    + "    JOIN bd_genolab.articulo a ON l.id_articulo = a.id_articulo\n"
+                    + "    JOIN bd_genolab.orden_de_venta o ON t.id_orden = o.id_orden\n"
+                    + "    where t.id_orden= ? ");
+            ps.setInt(1, idOrden);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Transaccion(rs.getString(1), 
+                        rs.getString(2), 
+                        rs.getString(3), 
+                        rs.getInt(5), 
+                        rs.getInt(4), 
+                        rs.getFloat("Importe"))                        
+                );
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
     }
 
     @Override

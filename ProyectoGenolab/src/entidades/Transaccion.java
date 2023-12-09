@@ -11,6 +11,7 @@ public class Transaccion {
     private String LoteCodigo;
     private int idOrden;
     private int cantidad;
+    private float importe;
     private Timestamp fechaHora;
 
     public Transaccion() {
@@ -26,6 +27,36 @@ public class Transaccion {
         this.cantidad = cantidad;
         this.fechaHora = fechaHora;
     }
+
+    public Transaccion(int idTransaccion, int idLote, int idOrden, int cantidad, Timestamp fechaHora) {
+        this.idTransaccion = idTransaccion;
+        this.idLote = idLote;
+        this.idOrden = idOrden;
+        this.cantidad = cantidad;
+        this.fechaHora = fechaHora;
+    }
+
+    public Transaccion(String Articulo, String ArticuloDescripcion, String LoteCodigo, int idOrden, int cantidad, float importe) {
+        this.Articulo = Articulo;
+        this.ArticuloDescripcion = ArticuloDescripcion;
+        this.LoteCodigo = LoteCodigo;
+        this.idOrden = idOrden;
+        this.cantidad = cantidad;
+        this.importe = importe;
+    }    
+    
+
+    public float getImporte() {
+        return importe;
+    }
+
+    public void setImporte(float importe) {
+        this.importe = importe;
+    }
+    
+    
+    
+    
 
     public int getIdTransaccion() {
         return idTransaccion;

@@ -6,6 +6,7 @@ import entidades.Sucursal;
 import entidades.OrdenVenta;
 import entidades.Lote;
 import javax.swing.JOptionPane;
+import javax.swing.table.TableRowSorter;
 import negocio.OrdenVentaControl;
 import negocio.LoteControl;
 
@@ -27,6 +28,7 @@ public class FrmOrden extends javax.swing.JFrame {
         this.CONTROL = new OrdenVentaControl();
         this.LOTECONTROL = new LoteControl();
         this.listarComboboxArticulo();
+        this.listarDetalle();
     }
 
     private void listarComboboxArticulo() {
@@ -36,6 +38,12 @@ public class FrmOrden extends javax.swing.JFrame {
 
     private void listarComboboxLote(int idArticulo) {
         cboLote.setModel(this.CONTROL.cargarLote(idArticulo));
+    }
+
+    private void listarDetalle() {
+        tblDetalle.setModel(this.CONTROL.listarDetalle(this.ordenVenta.getIdOrden()));
+        TableRowSorter orden = new TableRowSorter(tblDetalle.getModel());
+        tblDetalle.setRowSorter(orden);
     }
 
     public Cliente getCliente() {
@@ -179,6 +187,11 @@ public class FrmOrden extends javax.swing.JFrame {
         jLabel4.setText("Cantidad");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setText("Limpiar");
 
@@ -392,6 +405,24 @@ public class FrmOrden extends javax.swing.JFrame {
         int articuloId = articuloSeleccionado.getIdArticulo();
         listarComboboxLote(articuloId);
     }//GEN-LAST:event_cboArticuloActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String respuesta = "";
+        if (cboArticulo.getSelectedItem() != null && cboLote.getSelectedItem() != null && !txtCantidad.getText().isEmpty()) {
+//            Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
+            Lote loteSeleccionado = (Lote) cboLote.getSelectedItem();
+            int cantidad = Integer.parseInt(txtCantidad.getText());
+            respuesta = CONTROL.insertarTransaccion(loteSeleccionado.getIdLote(), this.ordenVenta.getIdOrden(), cantidad);
+            if (respuesta.equals("OK")) {
+                mensajeInformacion("Transaccion insertada");
+            } else {
+                mensajeError("Error insertando transaccion");
+            }
+        } else {
+            mensajeAdvertencia("Debe llenar todos los campos antes de proceder a esta operacion");
+        }
+        this.listarDetalle();
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     /**
      * @param args the command line arguments

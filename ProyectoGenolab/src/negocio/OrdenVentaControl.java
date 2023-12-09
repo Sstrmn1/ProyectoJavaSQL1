@@ -7,6 +7,7 @@ import datos.SucursalDAO;
 import entidades.Cliente;
 import entidades.Sucursal;
 import entidades.OrdenVenta;
+import entidades.Transaccion;
 import entidades.Distrito;
 import entidades.Lote;
 import java.util.ArrayList;
@@ -22,8 +23,8 @@ public class OrdenVentaControl {
     private final SucursalDAO DATOSSUCURSAL;
     private final LoteDAO DATOSLOTE;
     private OrdenVenta obj;
-    private DefaultTableModel modeloTablaOrden,
-            modeloTablaSucursal, modeloTablaCliente;
+    private Transaccion objTransaccion;
+    private DefaultTableModel modeloTablaOrden, modeloTablaSucursal, modeloTablaCliente, modeloTablaTransaccion;
     public int registrosMostrados;
 
     public OrdenVentaControl() {
@@ -109,6 +110,27 @@ public class OrdenVentaControl {
         return this.modeloTablaCliente;
     }
 
+    public DefaultTableModel listarDetalle(int idOrden) {
+        List<Transaccion> lista = new ArrayList();
+        lista.addAll(DATOSORDEN.listarTransacciones(idOrden));
+        String[] titulos = {"ARTICULO", "DESCRIPCION", "LOTE", "CANTIDAD", "ID IRDEN", "IMPORTE"};
+        this.modeloTablaTransaccion = new DefaultTableModel(null, titulos);
+
+        String[] registro = new String[6];
+
+        for (Transaccion item : lista) {
+            registro[0] = item.getArticulo();
+            registro[1] = item.getArticuloDescripcion();
+            registro[2] = item.getLoteCodigo();
+            registro[3] = String.valueOf(item.getCantidad());
+            registro[4] = String.valueOf(item.getIdOrden());
+            registro[5] = String.valueOf(item.getImporte());
+
+            this.modeloTablaTransaccion.addRow(registro);
+        }
+        return this.modeloTablaTransaccion;
+    }
+
     public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
 
         obj.setNumeroOrden(numeroOrden);
@@ -121,6 +143,18 @@ public class OrdenVentaControl {
             return "Error en la insercion.";
         }
 
+    }
+
+    public String insertarTransaccion(int idLote, int idOrden, int cantidad) {
+        objTransaccion.setIdLote(idLote);
+        objTransaccion.setIdOrden(idOrden);
+        objTransaccion.setCantidad(cantidad);
+
+        if (DATOSORDEN.insertarTransaccion(objTransaccion)) {
+            return "OK";
+        } else {
+            return "Error insertando transaccion";
+        }
     }
 
     public DefaultComboBoxModel cargarLote(int idArticulo) {
