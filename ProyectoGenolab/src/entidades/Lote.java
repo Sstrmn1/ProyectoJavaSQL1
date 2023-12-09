@@ -1,13 +1,15 @@
 package entidades;
+
 import java.sql.Date;
 
 public class Lote {
+
     private int idLote;
     private int idArticulo;
     private int idLaboratorio;
     private String articuloCodigo;
     private String articuloDescripcion;
-    private String loteCodigo;    
+    private String loteCodigo;
     private Date fechaFabricacion;
     private Date fechaExpiracion;
     private int stock;
@@ -31,6 +33,12 @@ public class Lote {
         this.precioUnitario = precioUnitario;
         this.laboratorioNombre = laboratorioNombre;
         this.activo = activo;
+    }
+
+    public Lote(int idLote, int idArticulo, String loteCodigo) {
+        this.idLote = idLote;
+        this.idArticulo = idArticulo;
+        this.loteCodigo = loteCodigo;
     }
 
     public int getIdLote() {
@@ -131,10 +139,7 @@ public class Lote {
 
     @Override
     public String toString() {
-        return "Lote{" + "idLote=" + idLote + ", idArticulo=" + idArticulo + ", idLaboratorio=" + idLaboratorio + ", articuloCodigo=" + articuloCodigo + ", articuloDescripcion=" + articuloDescripcion + ", loteCodigo=" + loteCodigo + ", fechaFabricacion=" + fechaFabricacion + ", fechaExpiracion=" + fechaExpiracion + ", stock=" + stock + ", precioUnitario=" + precioUnitario + ", laboratorioNombre=" + laboratorioNombre + ", activo=" + activo + '}';
+        return loteCodigo;
     }
 
-
-    
-    
 }

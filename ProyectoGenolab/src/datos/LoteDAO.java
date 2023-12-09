@@ -147,6 +147,34 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         return respuesta;
     }
 
+    public List<Lote> seleccionarLote(int idArticulo) {
+        List<Lote> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("SELECT l.id_lote,\n"
+                    + "l.id_articulo,\n"
+                    + "l.codigo AS lote\n"
+                    + "FROM lote l \n"
+                    + "-- INNER JOIN articulo a\n"
+                    + "-- ON l.id_articulo = a.id_articulo\n"
+                    + "WHERE l.id_articulo = ?");
+            ps.setInt(1, idArticulo);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Lote(rs.getInt(1), rs.getInt(2), rs.getString(3))
+                );
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
+
     @Override
     public boolean desactivar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

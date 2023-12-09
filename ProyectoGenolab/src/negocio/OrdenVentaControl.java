@@ -1,12 +1,14 @@
 package negocio;
 
 import datos.ClienteDAO;
+import datos.LoteDAO;
 import datos.OrdenVentaDAO;
 import datos.SucursalDAO;
 import entidades.Cliente;
 import entidades.Sucursal;
 import entidades.OrdenVenta;
 import entidades.Distrito;
+import entidades.Lote;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
@@ -18,6 +20,7 @@ public class OrdenVentaControl {
     private final OrdenVentaDAO DATOSORDEN;
     private final ClienteDAO DATOSCLIENTE;
     private final SucursalDAO DATOSSUCURSAL;
+    private final LoteDAO DATOSLOTE;
     private OrdenVenta obj;
     private DefaultTableModel modeloTablaOrden,
             modeloTablaSucursal, modeloTablaCliente;
@@ -27,6 +30,7 @@ public class OrdenVentaControl {
         this.DATOSORDEN = new OrdenVentaDAO();
         this.DATOSCLIENTE = new ClienteDAO();
         this.DATOSSUCURSAL = new SucursalDAO();
+        this.DATOSLOTE = new LoteDAO();
         this.obj = new OrdenVenta();
         this.registrosMostrados = 0;
     }
@@ -117,6 +121,16 @@ public class OrdenVentaControl {
             return "Error en la insercion.";
         }
 
+    }
+
+    public DefaultComboBoxModel cargarLote(int idArticulo) {
+        DefaultComboBoxModel items = new DefaultComboBoxModel();
+        List<Lote> lista = new ArrayList();
+        lista = DATOSLOTE.seleccionarLote(idArticulo);
+        for (Lote item : lista) {
+            items.addElement(new Lote(item.getIdLote(), item.getIdArticulo(), item.getLoteCodigo()));
+        }
+        return items;
     }
 
     public String calcularImporte(int idOrdenVenta, float importeTotal) {
