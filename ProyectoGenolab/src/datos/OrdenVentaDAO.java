@@ -135,8 +135,8 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     + "(id_lote,\n"
                     + "id_orden,\n"
                     + "cantidad,\n"
-                    + "fecha,\n"
-                    + "(?,?,?,now())");
+                    + "fecha\n"
+                    + "values(?,?,?,now())");
             ps.setInt(1, obj.getIdLote());
             ps.setInt(2, obj.getIdOrden());
             ps.setInt(3, obj.getCantidad());
@@ -152,6 +152,26 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             CON.desconectar();
         }
         return respuesta;
+    }
+
+    public int obtenerIdOrden() {
+        int idOrden = 0;
+        try {
+            ps = CON.conectar().prepareStatement("SELECT LAST_INSERT_ID() as last_id");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                idOrden = rs.getInt("last_id");
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return idOrden;
     }
 
     public List<Transaccion> listarTransacciones(int idOrden) {
@@ -173,12 +193,12 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             ps.setInt(1, idOrden);
             rs = ps.executeQuery();
             while (rs.next()) {
-                registros.add(new Transaccion(rs.getString(1), 
-                        rs.getString(2), 
-                        rs.getString(3), 
-                        rs.getInt(5), 
-                        rs.getInt(4), 
-                        rs.getFloat("Importe"))                        
+                registros.add(new Transaccion(rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(5),
+                        rs.getInt(4),
+                        rs.getFloat("Importe"))
                 );
             }
             ps.close();

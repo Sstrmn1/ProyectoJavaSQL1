@@ -33,6 +33,7 @@ public class OrdenVentaControl {
         this.DATOSSUCURSAL = new SucursalDAO();
         this.DATOSLOTE = new LoteDAO();
         this.obj = new OrdenVenta();
+        this.objTransaccion=new Transaccion();
         this.registrosMostrados = 0;
     }
 
@@ -129,6 +130,10 @@ public class OrdenVentaControl {
             this.modeloTablaTransaccion.addRow(registro);
         }
         return this.modeloTablaTransaccion;
+    }
+    
+    public int obtenerIdOrden(){
+        return DATOSORDEN.obtenerIdOrden();
     }
 
     public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
