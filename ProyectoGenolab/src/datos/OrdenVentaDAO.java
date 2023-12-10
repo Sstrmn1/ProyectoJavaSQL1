@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import basedatos.Conexion;
 import entidades.OrdenVenta;
 import entidades.Transaccion;
+import java.sql.Statement;
 
 public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 
@@ -75,30 +76,74 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         return registros;
     }
 
+//    @Override
+//    public boolean insertar(OrdenVenta obj) {
+//        respuesta = false;
+//        try {
+//            String consulta = "insert into orden_de_venta\n"
+//                    + "(numero_orden,\n"
+//                    + "id_sucursal,\n"
+//                    + "id_usuario,\n"
+//                    + "fecha_hora,\n"
+//                    + "importe_total)\n"
+//                    + "values\n"
+//                    + "(?,?,?,now(),0)";
+//            ps = CON.conectar().prepareStatement(consulta);
+//            ps.setInt(1, obj.getNumeroOrden());
+//            ps.setInt(2, obj.getIdSucursal());
+//            ps.setInt(3, obj.getIdUsuario());
+//
+//            if (ps.executeUpdate() > 0) {
+//                respuesta = true;
+////                rs = ps.executeQuery();
+//
+////                System.out.println(ps.getGeneratedKeys().getInt(1));
+//            }
+//            ps.close();
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+//        } finally {
+//            ps = null;
+//            CON.desconectar();
+//        }
+//        return respuesta;
+//    }
     @Override
     public boolean insertar(OrdenVenta obj) {
         respuesta = false;
+        int idGenerado = -1; // Variable para almacenar la ID autogenerada
+
         try {
-            ps = CON.conectar().prepareStatement("insert into orden_de_venta\n"
-                    + "(numero_orden,\n"
-                    + "id_sucursal,\n"
-                    + "id_usuario,\n"
-                    + "fecha_hora,\n"
-                    + "importe_total)\n"
-                    + "values\n"
-                    + "(?,?,?,now(),0)");
+            String consulta = "INSERT INTO orden_de_venta "
+                    + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
+                    + "VALUES (?, ?, ?, NOW(), 0)";
+            ps = CON.conectar().prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, obj.getNumeroOrden());
             ps.setInt(2, obj.getIdSucursal());
             ps.setInt(3, obj.getIdUsuario());
 
             if (ps.executeUpdate() > 0) {
-                respuesta = true;
+                ResultSet generatedKeys = ps.getGeneratedKeys();
+
+                if (generatedKeys.next()) {
+                    idGenerado = generatedKeys.getInt(1);
+                    // Puedes usar idGenerado como la ID autogenerada
+                    System.out.println(idGenerado);
+                    respuesta = true;
+                }
+                generatedKeys.close();
             }
-            ps.close();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } finally {
-            ps = null;
+            try {
+                if (ps != null) {
+                    ps.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
             CON.desconectar();
         }
         return respuesta;
@@ -164,6 +209,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             }
             ps.close();
             rs.close();
+
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } finally {
