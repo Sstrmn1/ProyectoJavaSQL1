@@ -199,26 +199,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         return respuesta;
     }
 
-    public int obtenerIdOrden() {
-        int idOrden = 0;
-        try {
-            ps = CON.conectar().prepareStatement("SELECT LAST_INSERT_ID() as last_id");
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                idOrden = rs.getInt("last_id");
-            }
-            ps.close();
-            rs.close();
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            ps = null;
-            rs = null;
-            CON.desconectar();
-        }
-        return idOrden;
-    }
+ 
 
     public List<Transaccion> listarTransacciones(int idOrden) {
         List<Transaccion> registros = new ArrayList();

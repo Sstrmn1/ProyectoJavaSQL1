@@ -395,7 +395,6 @@ public class FrmOrden extends javax.swing.JFrame {
         respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario());
         if (respuesta.equals("OK")) {
             mensajeInformacion("Orden generada correctamente");
-            ordenVenta.setIdOrden(CONTROL.obtenerIdOrden());
             System.out.println(this.ordenVenta.getIdOrden());
         } else {
             mensajeError("Error generando orden");
@@ -409,18 +408,12 @@ public class FrmOrden extends javax.swing.JFrame {
     }//GEN-LAST:event_cboArticuloActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        String respuesta = "";
+
         if (cboArticulo.getSelectedItem() != null && cboLote.getSelectedItem() != null && !txtCantidad.getText().isEmpty()) {
-//            Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
+
             Lote loteSeleccionado = (Lote) cboLote.getSelectedItem();
             int cantidad = Integer.parseInt(txtCantidad.getText());
-            System.out.println(this.ordenVenta.getIdOrden());
-            respuesta = CONTROL.insertarTransaccion(loteSeleccionado.getIdLote(), this.ordenVenta.getIdOrden(), cantidad);
-            if (respuesta.equals("OK")) {
-                mensajeInformacion("Transaccion insertada");
-            } else {
-                mensajeError("Error insertando transaccion");
-            }
+
         } else {
             mensajeAdvertencia("Debe llenar todos los campos antes de proceder a esta operacion");
         }

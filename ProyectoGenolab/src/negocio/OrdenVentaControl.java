@@ -8,13 +8,13 @@ import entidades.Cliente;
 import entidades.Sucursal;
 import entidades.OrdenVenta;
 import entidades.Transaccion;
-import entidades.Distrito;
+
 import entidades.Lote;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
-import java.sql.Timestamp;
+
 
 public class OrdenVentaControl {
 
@@ -37,38 +37,7 @@ public class OrdenVentaControl {
         this.registrosMostrados = 0;
     }
 
-    //Pendiente si es necesario listar ordenes de venta
-//    public DefaultTableModel listar(String texto) {
-//        List<OrdenVenta> lista = new ArrayList();
-//        lista.addAll(DATOSORDEN.listar(texto));
-//        String[] titulos = {"ID", "IDDistrito", "IDCliente", "Nom Cliente", "Nom Distrito", "Direccion",
-//            "Estado"};
-//        this.modeloTabla = new DefaultTableModel(null, titulos);
-//
-//        String estado;
-//        String[] registro = new String[7];
-//        this.registrosMostrados = 0;
-//
-//        for (OrdenVenta item : lista) {
-//            if (item.isActivo()) {
-//                estado = "Activo";
-//            } else {
-//                estado = "Inactivo";
-//            }
-//
-//            registro[0] = Integer.toString(item.getIdOrdenVenta());
-//            registro[1] = Integer.toString(item.getIdDistrito());
-//            registro[2] = Integer.toString(item.getIdCliente());
-//            registro[3] = item.getNombreCliente();
-//            registro[4] = item.getNombreDistrito();
-//            registro[5] = item.getDireccion();
-//            registro[6] = estado;
-//
-//            this.modeloTabla.addRow(registro);
-//            registrosMostrados++;
-//        }
-//        return this.modeloTabla;
-//    }
+
     public DefaultTableModel listarSucursal(int idCliente) {
         List<Sucursal> lista = new ArrayList();
         lista.addAll(DATOSSUCURSAL.listarDireccion(idCliente));
@@ -85,13 +54,7 @@ public class OrdenVentaControl {
             this.modeloTablaSucursal.addRow(registro);
         }
         return this.modeloTablaSucursal;
-        //        DefaultTableModel items = new DefaultTableModel();
-        //        List<Sucursal> lista = new ArrayList();
-        //        lista = DATOSSUCURSAL.listarDireccion(idCliente);
-        //        for (Sucursal item : lista) {
-        //            items.addElement(new Sucursal(item.getIdSucursal(), item.getNombreDistrito(), item.getDireccion()));
-        //        }
-        //        return items;
+
     }
 
     public DefaultTableModel listarClientes(String texto) {
@@ -132,9 +95,6 @@ public class OrdenVentaControl {
         return this.modeloTablaTransaccion;
     }
     
-    public int obtenerIdOrden(){
-        return DATOSORDEN.obtenerIdOrden();
-    }
 
     public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
 
@@ -150,17 +110,7 @@ public class OrdenVentaControl {
 
     }
 
-    public String insertarTransaccion(int idLote, int idOrden, int cantidad) {
-        objTransaccion.setIdLote(idLote);
-        objTransaccion.setIdOrden(idOrden);
-        objTransaccion.setCantidad(cantidad);
 
-        if (DATOSORDEN.insertarTransaccion(objTransaccion)) {
-            return "OK";
-        } else {
-            return "Error insertando transaccion";
-        }
-    }
 
     public DefaultComboBoxModel cargarLote(int idArticulo) {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
