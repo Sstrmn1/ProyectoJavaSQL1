@@ -106,10 +106,12 @@ public class FrmOrden extends javax.swing.JFrame {
         btnAgregar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
         txtCantidad = new javax.swing.JTextField();
-        jPanel5 = new javax.swing.JPanel();
         btnQuitar = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDetalle = new javax.swing.JTable();
+        jLabel5 = new javax.swing.JLabel();
+        txtImporteTotal = new javax.swing.JTextField();
         btnConfirmar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -207,6 +209,13 @@ public class FrmOrden extends javax.swing.JFrame {
 
         btnLimpiar.setText("Limpiar");
 
+        btnQuitar.setText("Quitar transaccion");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -230,8 +239,10 @@ public class FrmOrden extends javax.swing.JFrame {
                             .addComponent(txtCantidad)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(btnAgregar)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnLimpiar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar)))
+                        .addComponent(btnQuitar)))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -250,18 +261,12 @@ public class FrmOrden extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgregar)
-                    .addComponent(btnLimpiar))
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnQuitar))
                 .addGap(16, 16, 16))
         );
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
-
-        btnQuitar.setText("Quitar transaccion");
-        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnQuitarActionPerformed(evt);
-            }
-        });
 
         tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -273,6 +278,14 @@ public class FrmOrden extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblDetalle);
 
+        jLabel5.setText("Importe total");
+
+        txtImporteTotal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtImporteTotalActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
@@ -280,10 +293,12 @@ public class FrmOrden extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 754, Short.MAX_VALUE)
+                    .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnQuitar))
-                    .addComponent(jScrollPane1))
+                        .addComponent(jLabel5)
+                        .addGap(35, 35, 35)
+                        .addComponent(txtImporteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         jPanel5Layout.setVerticalGroup(
@@ -292,11 +307,18 @@ public class FrmOrden extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnQuitar)
-                .addContainerGap())
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(txtImporteTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(10, 10, 10))
         );
 
         btnConfirmar.setText("Confirmar orden");
+        btnConfirmar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConfirmarActionPerformed(evt);
+            }
+        });
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -347,7 +369,7 @@ public class FrmOrden extends javax.swing.JFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGap(0, 643, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Consultas", jPanel1);
@@ -404,18 +426,18 @@ public class FrmOrden extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSucursalActionPerformed
 
     private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
-        String respuesta = "";
-        ordenVenta.setIdSucursal(this.sucursal.getIdSucursal());
-        ordenVenta.setIdUsuario(1);
-        ordenVenta.setNumeroOrden(((int) (Math.random() * 100)));
-
-        respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario());
-        if (respuesta.equals("OK")) {
-            mensajeInformacion("Orden generada correctamente");
-            System.out.println(this.ordenVenta.getIdOrden());
-        } else {
-            mensajeError("Error generando orden");
-        }
+//        String respuesta = "";
+//        ordenVenta.setIdSucursal(this.sucursal.getIdSucursal());
+//        ordenVenta.setIdUsuario(1);
+//        ordenVenta.setNumeroOrden(((int) (Math.random() * 100)));
+//
+//        respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario());
+//        if (respuesta.equals("OK")) {
+//            mensajeInformacion("Orden generada correctamente");
+//            System.out.println(this.ordenVenta.getIdOrden());
+//        } else {
+//            mensajeError("Error generando orden");
+//        }
     }//GEN-LAST:event_btnGenerarActionPerformed
 
     private void cboArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboArticuloActionPerformed
@@ -426,6 +448,7 @@ public class FrmOrden extends javax.swing.JFrame {
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String[] registro = new String[5];
+        float importeTotal = 0f;
         if (cboArticulo.getSelectedItem() != null && cboLote.getSelectedItem() != null && !txtCantidad.getText().isEmpty()) {
             this.modeloTabla.setDataVector(null, titulos);
             Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
@@ -449,18 +472,21 @@ public class FrmOrden extends javax.swing.JFrame {
                 registro[3] = Integer.toString(item.getCantidad());
 //            registro[4] = Float.toString(importe);
                 registro[4] = Float.toString(item.getImporte());
-
+                importeTotal = item.getImporte() + importeTotal;
                 this.modeloTabla.addRow(registro);
             }
+            importeTotal = Float.parseFloat(FORMATO.format(importeTotal).replace(',', '.'));
+            txtImporteTotal.setText(String.valueOf(importeTotal));
 
         } else {
-            mensajeAdvertencia("Debe llenar todos los campos antes de proceder a esta operacion");
+            mensajeAdvertencia("Debe llenar todos los campos antes de proceder con esta operacion");
         }
         this.listarDetalle();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
         String[] registro = new String[5];
+        float importeTotal = 0f;
         if (tblDetalle.getSelectedRowCount() == 1) {
 
             int indice = tblDetalle.getSelectedRow();
@@ -473,13 +499,38 @@ public class FrmOrden extends javax.swing.JFrame {
                 registro[3] = Integer.toString(item.getCantidad());
 //            registro[4] = Float.toString(importe);
                 registro[4] = Float.toString(item.getImporte());
-
+                importeTotal = item.getImporte() + importeTotal;
                 this.modeloTabla.addRow(registro);
             }
+            importeTotal = Float.parseFloat(FORMATO.format(importeTotal).replace(',', '.'));
+            txtImporteTotal.setText(String.valueOf(importeTotal));
         } else {
             mensajeAdvertencia("Debe seleccionar un registro para quitar");
         }
     }//GEN-LAST:event_btnQuitarActionPerformed
+
+    private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        String respuesta = "";
+        ordenVenta.setIdSucursal(this.sucursal.getIdSucursal());
+        ordenVenta.setIdUsuario(1);
+        ordenVenta.setNumeroOrden(((int) (Math.random() * 100)));
+
+        respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario(),this.listaTransacciones);
+        if (respuesta.equals("OK")) {
+            mensajeInformacion("Orden generada correctamente");
+            System.out.println(this.ordenVenta.getIdOrden());
+        } else {
+            mensajeError("Error generando orden");
+        }
+        
+//        CONTROL.enviarTransacciones();
+
+
+    }//GEN-LAST:event_btnConfirmarActionPerformed
+
+    private void txtImporteTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteTotalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtImporteTotalActionPerformed
 
     /**
      * @param args the command line arguments
@@ -531,6 +582,7 @@ public class FrmOrden extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -541,6 +593,7 @@ public class FrmOrden extends javax.swing.JFrame {
     private javax.swing.JTable tblDetalle;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCliente;
+    private javax.swing.JTextField txtImporteTotal;
     private javax.swing.JTextField txtNumOrden;
     private javax.swing.JTextField txtSucursal;
     // End of variables declaration//GEN-END:variables

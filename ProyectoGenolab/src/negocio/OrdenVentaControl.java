@@ -15,7 +15,6 @@ import java.util.List;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableModel;
 
-
 public class OrdenVentaControl {
 
     private final OrdenVentaDAO DATOSORDEN;
@@ -33,10 +32,9 @@ public class OrdenVentaControl {
         this.DATOSSUCURSAL = new SucursalDAO();
         this.DATOSLOTE = new LoteDAO();
         this.obj = new OrdenVenta();
-        this.objTransaccion=new Transaccion();
+        this.objTransaccion = new Transaccion();
         this.registrosMostrados = 0;
     }
-
 
     public DefaultTableModel listarSucursal(int idCliente) {
         List<Sucursal> lista = new ArrayList();
@@ -83,8 +81,7 @@ public class OrdenVentaControl {
 
         return this.modeloTablaTransaccion;
     }
-    
-    
+
 //        public DefaultTableModel listarDetalle(int idOrden) {
 //        List<Transaccion> lista = new ArrayList();
 //        lista.addAll(DATOSORDEN.listarTransacciones(idOrden));
@@ -105,12 +102,16 @@ public class OrdenVentaControl {
 //        }
 //        return this.modeloTablaTransaccion;
 //    }
-
-    public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
+    public String insertar(int numeroOrden, int idSucursal, int idUsuario, List<Transaccion> listaTransacciones) {
 
         obj.setNumeroOrden(numeroOrden);
         obj.setIdSucursal(idSucursal);
         obj.setIdUsuario(idUsuario);
+
+//        for (Transaccion item : listaTransacciones) {
+//            objTransaccion.setIdLote(item.getIdLote());
+//            objTransaccion.setCantidad(item.getCantidad());
+//        }
 
         if (DATOSORDEN.insertar(obj)) {
             return "OK";
@@ -119,8 +120,6 @@ public class OrdenVentaControl {
         }
 
     }
-
-
 
     public DefaultComboBoxModel cargarLote(int idArticulo) {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
@@ -150,5 +149,12 @@ public class OrdenVentaControl {
     public int totalMostrados() {
         return this.registrosMostrados;
     }
+
+//    public void enviarTransacciones(List<Transaccion> listaTransacciones) {
+//        for (Transaccion item : listaTransacciones) {
+//            objTransaccion.setIdLote(item.getIdLote());
+//            objTransaccion.setCantidad(item.getCantidad());
+//        }
+//    }
 
 }
