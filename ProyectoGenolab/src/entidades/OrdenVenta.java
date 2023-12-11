@@ -1,6 +1,7 @@
 package entidades;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class OrdenVenta {
 
@@ -10,18 +11,30 @@ public class OrdenVenta {
     private int idUsuario;
     private Timestamp fechaHora;
     private float importeTotal;
+    private List<Transaccion> transacciones;
 
     public OrdenVenta() {
     }
 
-    public OrdenVenta(int idOrden, int numeroOrden, int idSucursal, int idUsuario, Timestamp fechaHora, float importeTotal) {
+    public OrdenVenta(int idOrden, int numeroOrden, int idSucursal, int idUsuario, Timestamp fechaHora, float importeTotal, List<Transaccion> transacciones) {
         this.idOrden = idOrden;
         this.numeroOrden = numeroOrden;
         this.idSucursal = idSucursal;
         this.idUsuario = idUsuario;
         this.fechaHora = fechaHora;
         this.importeTotal = importeTotal;
+        this.transacciones = transacciones;
     }
+
+    public List<Transaccion> getTransacciones() {
+        return transacciones;
+    }
+
+    public void setTransacciones(List<Transaccion> transacciones) {
+        this.transacciones = transacciones;
+    }
+
+
 
     public int getIdOrden() {
         return idOrden;

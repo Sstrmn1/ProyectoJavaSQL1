@@ -127,9 +127,33 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 
                 if (generatedKeys.next()) {
                     idGenerado = generatedKeys.getInt(1);
-                    // Puedes usar idGenerado como la ID autogenerada
-                    System.out.println(idGenerado);
-                    respuesta = true;
+
+                    // Insertar transacciones
+                    String consultaTransaccion = "INSERT INTO transaccion "
+                            + "(id_lote, id_orden, cantidad, fecha) "
+                            + "VALUES (?, ?, ?, NOW())";
+                    ps = CON.conectar().prepareStatement(consultaTransaccion);
+
+                    // Supongamos que tienes una lista de transacciones en obj.getTransacciones()
+                    for (Transaccion transaccion : obj.getTransacciones()) {
+                        ps.setInt(1, transaccion.getIdLote());
+                        ps.setInt(2, idGenerado); // Usar la ID autogenerada de la orden de venta
+                        ps.setInt(3, transaccion.getCantidad());
+
+                        ps.addBatch(); // Agregar la transacción al lote para la ejecución en lote
+                    }
+                    // Ejecutar todas las transacciones en lote
+                    int[] result = ps.executeBatch();
+                    // Verificar que todas las transacciones se hayan insertado correctamente
+                    for (int res : result) {
+                        if (res <= 0) {
+                            respuesta = false;
+                            break;
+                        } else {
+                            respuesta = true;
+                        }
+                    }
+
                 }
                 generatedKeys.close();
             }
@@ -198,8 +222,6 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         }
         return respuesta;
     }
-
- 
 
     public List<Transaccion> listarTransacciones(int idOrden) {
         List<Transaccion> registros = new ArrayList();

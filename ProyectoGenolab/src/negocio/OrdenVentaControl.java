@@ -107,6 +107,7 @@ public class OrdenVentaControl {
         obj.setNumeroOrden(numeroOrden);
         obj.setIdSucursal(idSucursal);
         obj.setIdUsuario(idUsuario);
+        obj.setTransacciones(listaTransacciones);
 
 //        for (Transaccion item : listaTransacciones) {
 //            objTransaccion.setIdLote(item.getIdLote());

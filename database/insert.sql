@@ -123,6 +123,19 @@ SET l.`stock` = l.`stock` - (
 )
 WHERE l.`id_lote` IN (1, 2, 3, 4);
 
+-- SUMAR IMPORTE TOTAL Version para aplicacion java
+UPDATE orden_de_venta AS O
+SET o.importe_total = (
+	SELECT SUM(t.cantidad * l.precio_unitario)
+    FROM transaccion AS t
+    INNER JOIN lote as l on t.id_lote = l.id_lote
+    WHERE t.id_orden = o.id_orden
+)
+WHERE o.id_orden = 28;
+-- Fin SUMAR IMPORTE TOTAL  version para aplicacion java
+
+
+
 -- FIN DE OPERACION VENTA--
 
 
