@@ -6,9 +6,9 @@ public class Transaccion {
 
     private int idTransaccion;
     private int idLote;
-    private String Articulo;
-    private String ArticuloDescripcion;
-    private String LoteCodigo;
+    private String articulo;
+    private String articuloDescripcion;
+    private String loteCodigo;
     private int idOrden;
     private int cantidad;
     private float importe;
@@ -20,9 +20,9 @@ public class Transaccion {
     public Transaccion(int idTransaccion, int idLote, String Articulo, String ArticuloDescripcion, String LoteCodigo, int idOrden, int cantidad, Timestamp fechaHora) {
         this.idTransaccion = idTransaccion;
         this.idLote = idLote;
-        this.Articulo = Articulo;
-        this.ArticuloDescripcion = ArticuloDescripcion;
-        this.LoteCodigo = LoteCodigo;
+        this.articulo = Articulo;
+        this.articuloDescripcion = ArticuloDescripcion;
+        this.loteCodigo = LoteCodigo;
         this.idOrden = idOrden;
         this.cantidad = cantidad;
         this.fechaHora = fechaHora;
@@ -36,14 +36,25 @@ public class Transaccion {
         this.fechaHora = fechaHora;
     }
 
-    public Transaccion(String Articulo, String ArticuloDescripcion, String LoteCodigo, int idOrden, int cantidad, float importe) {
-        this.Articulo = Articulo;
-        this.ArticuloDescripcion = ArticuloDescripcion;
-        this.LoteCodigo = LoteCodigo;
-        this.idOrden = idOrden;
+//    public Transaccion(String Articulo, String ArticuloDescripcion, String LoteCodigo, int idOrden, int cantidad, float importe) {
+//        this.Articulo = Articulo;
+//        this.ArticuloDescripcion = ArticuloDescripcion;
+//        this.LoteCodigo = LoteCodigo;
+//        this.idOrden = idOrden;
+//        this.cantidad = cantidad;
+//        this.importe = importe;
+//    }   
+
+    public Transaccion(String Articulo, String ArticuloDescripcion, String LoteCodigo, int idLote, int cantidad, float importe) {
+        this.articulo = Articulo;
+        this.articuloDescripcion = ArticuloDescripcion;
+        this.loteCodigo = LoteCodigo;
+        this.idLote = idLote;
         this.cantidad = cantidad;
         this.importe = importe;
-    }    
+    }
+    
+    
     
 
     public float getImporte() {
@@ -75,27 +86,27 @@ public class Transaccion {
     }
 
     public String getArticulo() {
-        return Articulo;
+        return articulo;
     }
 
-    public void setArticulo(String Articulo) {
-        this.Articulo = Articulo;
+    public void setArticulo(String articulo) {
+        this.articulo = articulo;
     }
 
     public String getArticuloDescripcion() {
-        return ArticuloDescripcion;
+        return articuloDescripcion;
     }
 
-    public void setArticuloDescripcion(String ArticuloDescripcion) {
-        this.ArticuloDescripcion = ArticuloDescripcion;
+    public void setArticuloDescripcion(String articuloDescripcion) {
+        this.articuloDescripcion = articuloDescripcion;
     }
 
     public String getLoteCodigo() {
-        return LoteCodigo;
+        return loteCodigo;
     }
 
-    public void setLoteCodigo(String LoteCodigo) {
-        this.LoteCodigo = LoteCodigo;
+    public void setLoteCodigo(String loteCodigo) {
+        this.loteCodigo = loteCodigo;
     }
 
     public int getIdOrden() {
@@ -124,7 +135,7 @@ public class Transaccion {
 
     @Override
     public String toString() {
-        return "Transaccion{" + "idTransaccion=" + idTransaccion + ", idLote=" + idLote + ", Articulo=" + Articulo + ", ArticuloDescripcion=" + ArticuloDescripcion + ", LoteCodigo=" + LoteCodigo + ", idOrden=" + idOrden + ", cantidad=" + cantidad + ", fechaHora=" + fechaHora + '}';
+        return "Transaccion{" + "idTransaccion=" + idTransaccion + ", idLote=" + idLote + ", Articulo=" + articulo + ", ArticuloDescripcion=" + articuloDescripcion + ", LoteCodigo=" + loteCodigo + ", idOrden=" + idOrden + ", cantidad=" + cantidad + ", fechaHora=" + fechaHora + '}';
     }
     
     

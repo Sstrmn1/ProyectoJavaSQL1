@@ -35,10 +35,11 @@ public class Lote {
         this.activo = activo;
     }
 
-    public Lote(int idLote, int idArticulo, String loteCodigo) {
+    public Lote(int idLote, int idArticulo, String loteCodigo, float precioUnitario) {
         this.idLote = idLote;
         this.idArticulo = idArticulo;
         this.loteCodigo = loteCodigo;
+        this.precioUnitario = precioUnitario;
     }
 
     public int getIdLote() {

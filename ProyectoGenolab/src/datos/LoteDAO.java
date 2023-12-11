@@ -11,16 +11,16 @@ import java.sql.SQLException;
 import basedatos.Conexion;
 
 public class LoteDAO implements CrudSimpleInterface<Lote> {
-
+    
     private final Conexion CON;
     private PreparedStatement ps;
     private ResultSet rs;
     private boolean respuesta;
-
+    
     public LoteDAO() {
         CON = Conexion.getInstancia();
     }
-
+    
     @Override
     public List<Lote> listar(String texto) {
         List<Lote> registros = new ArrayList();
@@ -72,7 +72,7 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         }
         return registros;
     }
-
+    
     @Override
     public boolean insertar(Lote obj) {
         respuesta = false;
@@ -96,7 +96,7 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
             ps.setInt(6, obj.getStock());
             ps.setFloat(7, obj.getPrecioUnitario());
             ps.setInt(8, obj.isActivo() ? 1 : 0);
-
+            
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
             }
@@ -109,7 +109,7 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         }
         return respuesta;
     }
-
+    
     @Override
     public boolean actualizar(Lote obj) {
         respuesta = false;
@@ -132,7 +132,7 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
             ps.setInt(6, obj.getStock());
             ps.setFloat(7, obj.getPrecioUnitario());
             ps.setInt(8, obj.isActivo() ? 1 : 0);
-
+            
             ps.setInt(9, obj.getIdLote());
             if (ps.executeUpdate() > 0) {
                 respuesta = true;
@@ -146,13 +146,14 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         }
         return respuesta;
     }
-
+    
     public List<Lote> seleccionarLote(int idArticulo) {
         List<Lote> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("SELECT l.id_lote,\n"
                     + "l.id_articulo,\n"
-                    + "l.codigo AS lote\n"
+                    + "l.codigo AS lote,\n"
+                    + "l.precio_unitario\n"
                     + "FROM lote l \n"
                     + "-- INNER JOIN articulo a\n"
                     + "-- ON l.id_articulo = a.id_articulo\n"
@@ -160,7 +161,7 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
             ps.setInt(1, idArticulo);
             rs = ps.executeQuery();
             while (rs.next()) {
-                registros.add(new Lote(rs.getInt(1), rs.getInt(2), rs.getString(3))
+                registros.add(new Lote(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getFloat(4))
                 );
             }
             ps.close();
@@ -174,17 +175,17 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         }
         return registros;
     }
-
+    
     @Override
     public boolean desactivar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public boolean activar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
+    
     @Override
     public int total() {
         int totalRegistros = 0;
@@ -205,11 +206,11 @@ public class LoteDAO implements CrudSimpleInterface<Lote> {
         }
         return totalRegistros;
     }
-
+    
     @Override
     public boolean existe(String texto) {
         respuesta = false;
         return respuesta;
     }
-
+    
 }

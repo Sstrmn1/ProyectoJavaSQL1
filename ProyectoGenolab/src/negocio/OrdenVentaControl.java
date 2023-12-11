@@ -74,27 +74,37 @@ public class OrdenVentaControl {
         return this.modeloTablaCliente;
     }
 
-    public DefaultTableModel listarDetalle(int idOrden) {
+    public DefaultTableModel listarDetalle() {
         List<Transaccion> lista = new ArrayList();
-        lista.addAll(DATOSORDEN.listarTransacciones(idOrden));
-        String[] titulos = {"ARTICULO", "DESCRIPCION", "LOTE", "CANTIDAD", "ID IRDEN", "IMPORTE"};
+        String[] titulos = {"ARTICULO", "DESCRIPCION", "LOTE", "CANTIDAD", "IMPORTE"};
         this.modeloTablaTransaccion = new DefaultTableModel(null, titulos);
 
-        String[] registro = new String[6];
+        String[] registro = new String[5];
 
-        for (Transaccion item : lista) {
-            registro[0] = item.getArticulo();
-            registro[1] = item.getArticuloDescripcion();
-            registro[2] = item.getLoteCodigo();
-            registro[3] = String.valueOf(item.getCantidad());
-            registro[4] = String.valueOf(item.getIdOrden());
-            registro[5] = String.valueOf(item.getImporte());
-
-            this.modeloTablaTransaccion.addRow(registro);
-        }
         return this.modeloTablaTransaccion;
     }
     
+    
+//        public DefaultTableModel listarDetalle(int idOrden) {
+//        List<Transaccion> lista = new ArrayList();
+//        lista.addAll(DATOSORDEN.listarTransacciones(idOrden));
+//        String[] titulos = {"ARTICULO", "DESCRIPCION", "LOTE", "CANTIDAD", "ID IRDEN", "IMPORTE"};
+//        this.modeloTablaTransaccion = new DefaultTableModel(null, titulos);
+//
+//        String[] registro = new String[6];
+//
+//        for (Transaccion item : lista) {
+//            registro[0] = item.getArticulo();
+//            registro[1] = item.getArticuloDescripcion();
+//            registro[2] = item.getLoteCodigo();
+//            registro[3] = String.valueOf(item.getCantidad());
+//            registro[4] = String.valueOf(item.getIdOrden());
+//            registro[5] = String.valueOf(item.getImporte());
+//
+//            this.modeloTablaTransaccion.addRow(registro);
+//        }
+//        return this.modeloTablaTransaccion;
+//    }
 
     public String insertar(int numeroOrden, int idSucursal, int idUsuario) {
 
@@ -117,7 +127,7 @@ public class OrdenVentaControl {
         List<Lote> lista = new ArrayList();
         lista = DATOSLOTE.seleccionarLote(idArticulo);
         for (Lote item : lista) {
-            items.addElement(new Lote(item.getIdLote(), item.getIdArticulo(), item.getLoteCodigo()));
+            items.addElement(new Lote(item.getIdLote(), item.getIdArticulo(), item.getLoteCodigo(), item.getPrecioUnitario()));
         }
         return items;
     }

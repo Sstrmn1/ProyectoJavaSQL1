@@ -5,10 +5,15 @@ import entidades.Cliente;
 import entidades.Sucursal;
 import entidades.OrdenVenta;
 import entidades.Lote;
+import entidades.Transaccion;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import negocio.OrdenVentaControl;
 import negocio.LoteControl;
+import java.text.DecimalFormat;
 
 public class FrmOrden extends javax.swing.JFrame {
 
@@ -18,6 +23,10 @@ public class FrmOrden extends javax.swing.JFrame {
     private Sucursal sucursal;
     private OrdenVenta ordenVenta;
     private Articulo articulo;
+    private List<Transaccion> listaTransacciones;
+    private DefaultTableModel modeloTabla;
+    private final DecimalFormat FORMATO = new DecimalFormat("#.###");
+    String[] titulos = {"ARTICULO", "DESCRIPCION", "LOTE", "CANTIDAD", "IMPORTE"};
 
     public FrmOrden() {
         initComponents();
@@ -27,7 +36,10 @@ public class FrmOrden extends javax.swing.JFrame {
         this.articulo = new Articulo();
         this.CONTROL = new OrdenVentaControl();
         this.LOTECONTROL = new LoteControl();
+        this.listaTransacciones = new ArrayList();
         this.listarComboboxArticulo();
+
+        this.modeloTabla = new DefaultTableModel(null, titulos);
         this.listarDetalle();
     }
 
@@ -41,7 +53,7 @@ public class FrmOrden extends javax.swing.JFrame {
     }
 
     private void listarDetalle() {
-        tblDetalle.setModel(this.CONTROL.listarDetalle(this.ordenVenta.getIdOrden()));
+        tblDetalle.setModel(this.modeloTabla);
         TableRowSorter orden = new TableRowSorter(tblDetalle.getModel());
         tblDetalle.setRowSorter(orden);
     }
@@ -245,6 +257,11 @@ public class FrmOrden extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Detalle"));
 
         btnQuitar.setText("Quitar transaccion");
+        btnQuitar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQuitarActionPerformed(evt);
+            }
+        });
 
         tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -408,17 +425,45 @@ public class FrmOrden extends javax.swing.JFrame {
     }//GEN-LAST:event_cboArticuloActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-
+        String[] registro = new String[5];
         if (cboArticulo.getSelectedItem() != null && cboLote.getSelectedItem() != null && !txtCantidad.getText().isEmpty()) {
 
+            Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
             Lote loteSeleccionado = (Lote) cboLote.getSelectedItem();
             int cantidad = Integer.parseInt(txtCantidad.getText());
 
+            String articulo = articuloSeleccionado.getCodigo();
+            String descripcion = articuloSeleccionado.getDescripcion();
+            String lote = loteSeleccionado.getLoteCodigo();
+            int loteId = loteSeleccionado.getIdLote();
+            float precioUnitario = loteSeleccionado.getPrecioUnitario();
+            float importe = cantidad * precioUnitario;
+            float importe2d = Float.parseFloat(FORMATO.format(importe).replace(',', '.'));
+
+            this.listaTransacciones.add(new Transaccion(articulo, descripcion, lote, loteId, cantidad, importe2d));
+
+            registro[0] = articulo;
+            registro[1] = descripcion;
+            registro[2] = lote;
+            registro[3] = Integer.toString(cantidad);
+//            registro[4] = Float.toString(importe);
+            registro[4] = Float.toString(importe2d);
+
+            this.modeloTabla.addRow(registro);
         } else {
             mensajeAdvertencia("Debe llenar todos los campos antes de proceder a esta operacion");
         }
         this.listarDetalle();
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        if (tblDetalle.getSelectedRowCount() == 1) {
+            int fila = tblDetalle.getSelectedRow();
+            System.out.println(fila);
+        } else {
+            mensajeAdvertencia("Debe seleccionar un registro para quitar");
+        }
+    }//GEN-LAST:event_btnQuitarActionPerformed
 
     /**
      * @param args the command line arguments
