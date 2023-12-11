@@ -427,7 +427,7 @@ public class FrmOrden extends javax.swing.JFrame {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         String[] registro = new String[5];
         if (cboArticulo.getSelectedItem() != null && cboLote.getSelectedItem() != null && !txtCantidad.getText().isEmpty()) {
-
+            this.modeloTabla.setDataVector(null, titulos);
             Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
             Lote loteSeleccionado = (Lote) cboLote.getSelectedItem();
             int cantidad = Integer.parseInt(txtCantidad.getText());
@@ -442,14 +442,17 @@ public class FrmOrden extends javax.swing.JFrame {
 
             this.listaTransacciones.add(new Transaccion(articulo, descripcion, lote, loteId, cantidad, importe2d));
 
-            registro[0] = articulo;
-            registro[1] = descripcion;
-            registro[2] = lote;
-            registro[3] = Integer.toString(cantidad);
+            for (Transaccion item : this.listaTransacciones) {
+                registro[0] = item.getArticulo();
+                registro[1] = item.getArticuloDescripcion();
+                registro[2] = item.getLoteCodigo();
+                registro[3] = Integer.toString(item.getCantidad());
 //            registro[4] = Float.toString(importe);
-            registro[4] = Float.toString(importe2d);
+                registro[4] = Float.toString(item.getImporte());
 
-            this.modeloTabla.addRow(registro);
+                this.modeloTabla.addRow(registro);
+            }
+
         } else {
             mensajeAdvertencia("Debe llenar todos los campos antes de proceder a esta operacion");
         }
@@ -457,9 +460,22 @@ public class FrmOrden extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
+        String[] registro = new String[5];
         if (tblDetalle.getSelectedRowCount() == 1) {
-            int fila = tblDetalle.getSelectedRow();
-            System.out.println(fila);
+
+            int indice = tblDetalle.getSelectedRow();
+            this.modeloTabla.setDataVector(null, titulos);
+            this.listaTransacciones.remove(indice);
+            for (Transaccion item : this.listaTransacciones) {
+                registro[0] = item.getArticulo();
+                registro[1] = item.getArticuloDescripcion();
+                registro[2] = item.getLoteCodigo();
+                registro[3] = Integer.toString(item.getCantidad());
+//            registro[4] = Float.toString(importe);
+                registro[4] = Float.toString(item.getImporte());
+
+                this.modeloTabla.addRow(registro);
+            }
         } else {
             mensajeAdvertencia("Debe seleccionar un registro para quitar");
         }

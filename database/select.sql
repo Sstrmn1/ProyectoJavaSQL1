@@ -11,6 +11,7 @@ select * from articulo;
 select * from sucursal;
 select * from factura;
 select * from lote;
+select id_lote, precio_unitario, descripcion from lote inner join articulo on lote.id_articulo = articulo.id_articulo;
 select * from orden_de_venta;
 select * from rol;
 select * from transaccion;
