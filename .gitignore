@@ -35,6 +35,7 @@ lib/optional/license.txt
 # Ignorar directorios
 ProyectoGenolab/Drivers/
 ProyectoGenolab/nbproject/
+ProyectoGenolab/src/files/
 
 # Ignorar archivos
 ProyectoGenolab/build.xml
