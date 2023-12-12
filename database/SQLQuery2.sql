@@ -79,9 +79,7 @@ CREATE TABLE sucursal (
     id_sucursal INT PRIMARY KEY IDENTITY(1,1),
     id_distrito INT NOT NULL,
     id_cliente INT NOT NULL,
-    calle VARCHAR(55) NOT NULL,
-    numero VARCHAR(45),
-    oficina VARCHAR(45),
+    direccion varchar(200),
     activo BIT NOT NULL,
     CONSTRAINT fk_sucursal_cliente FOREIGN KEY (id_cliente) REFERENCES cliente (id_cliente),
     CONSTRAINT fk_sucursal_distrito FOREIGN KEY (id_distrito) REFERENCES distrito (id_distrito)
@@ -102,7 +100,7 @@ CREATE TABLE rol (
 CREATE TABLE usuario (
     id_usuario INT PRIMARY KEY IDENTITY(1,1),
     id_rol INT NOT NULL,
-    password VARCHAR(128) NOT NULL,
+    password VARCHAR(64) NOT NULL,
     nombre VARCHAR(100) NOT NULL,
     apellido VARCHAR(100) NOT NULL,
     ci VARCHAR(20) NOT NULL,

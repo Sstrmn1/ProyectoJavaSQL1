@@ -26,16 +26,16 @@ public class SucursalDAO implements CrudSimpleInterface<Sucursal> {
         List<Sucursal> registros = new ArrayList();
         try {
             ps = CON.conectar().prepareStatement("SELECT \n"
-                    + "    d.id_sucursal AS idSucursal,\n"
-                    + "    d.id_distrito AS idDistrito,\n"
-                    + "    d.id_cliente AS idCliente,\n"
+                    + "    s.id_sucursal AS idSucursal,\n"
+                    + "    s.id_distrito AS idDistrito,\n"
+                    + "    s.id_cliente AS idCliente,\n"
                     + "    dis.nombre AS nombreDistrito,\n"
                     + "    c.nombre AS nombreCliente,\n"
-                    + "    d.direccion,\n"
-                    + "    d.activo\n"
-                    + "FROM bd_genolab.sucursal d\n"
-                    + "INNER JOIN bd_genolab.distrito dis ON d.id_distrito = dis.id_distrito\n"
-                    + "INNER JOIN bd_genolab.cliente c ON d.id_cliente = c.id_cliente where c.nombre like ?");
+                    + "    s.direccion,\n"
+                    + "    s.activo\n"
+                    + "FROM sucursal s\n"
+                    + "INNER JOIN distrito dis ON s.id_distrito = dis.id_distrito\n"
+                    + "INNER JOIN cliente c ON s.id_cliente = c.id_cliente where c.nombre like ?");
             ps.setString(1, "%" + texto + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
