@@ -165,13 +165,37 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     ps.executeUpdate();
 
                     // 4. Restar las cantidades de transacciones a los stocks en la tabla lote
-                    String consultaUpdateStock = "UPDATE lote AS l "
+                    String consultaUpdateStockBase = "UPDATE lote AS l "
                             + "JOIN transaccion AS t ON l.id_lote = t.id_lote "
                             + "SET l.stock = l.stock - t.cantidad "
-                            + "WHERE t.id_orden = ?";
-                    ps = CON.conectar().prepareStatement(consultaUpdateStock);
-                    ps.setInt(1, idGenerado);
-                    ps.executeUpdate();
+                            + "WHERE t.id_orden = ? AND l.id_lote = ?";
+                    ps = CON.conectar().prepareStatement(consultaUpdateStockBase);
+
+                    for (Transaccion transaccion : obj.getTransacciones()) {
+                        // Obtener el id de lote de la transacción
+                        int idLote = transaccion.getIdLote();
+
+                        // Configurar los parámetros
+                        ps.setInt(1, idGenerado);
+                        ps.setInt(2, idLote);
+
+                        // Agregar la operación al lote
+                        ps.addBatch();
+                    }
+
+                    // Ejecutar todas las operaciones en lote
+                    int[] resultLote = ps.executeBatch();
+
+                    // Verificar que todas las operaciones en lote de la tabla lote se hayan ejecutado correctamente
+                    for (int res : resultLote) {
+                        if (res <= 0) {
+                            respuesta = false;
+                            break;
+                        } else {
+                            respuesta = true;
+                        }
+                    }
+
                 }
                 generatedKeys.close();
             }
