@@ -1,12 +1,65 @@
 package presentacion;
 
+import javax.swing.JOptionPane;
+
 public class FrmPrincipal extends javax.swing.JFrame {
-    
+
     public FrmPrincipal() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
+        cargarOpcionesMenu();
     }
-    
+
+    private void cargarOpcionesMenu() {
+        if (clases.Variables.rolNombre == null) {
+            mensajeAlerta("Debe ingresar al sistema mediante verificacion de usuario.");
+            System.exit(0);
+        }
+        if (clases.Variables.rolNombre.equalsIgnoreCase("Administrador")) {
+            mnuAcceso.setEnabled(true);
+            mnuClientes.setEnabled(true);
+            mnuOrdenVenta.setEnabled(true);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(true);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Regencia Farmaceutica")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(true);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Ventas")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(true);
+            mnuOrdenVenta.setEnabled(true);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(false);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Almacenes")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(false);
+        } else {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(false);
+            mnuProductos.setEnabled(false);
+        }
+    }
+
+    private void mensajeError(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void mensajeInformacion(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void mensajeAlerta(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.WARNING_MESSAGE);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -20,7 +73,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuiUsuarios = new javax.swing.JMenuItem();
         mnuOrdenVenta = new javax.swing.JMenu();
         mnuiOrdenVenta = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
+        mnuProductos = new javax.swing.JMenu();
         mnuiArticulos = new javax.swing.JMenuItem();
         mnuiLotes = new javax.swing.JMenuItem();
         mnuiLaboratorios = new javax.swing.JMenuItem();
@@ -29,7 +82,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuiRegCliente = new javax.swing.JMenuItem();
         mnuiSucursales = new javax.swing.JMenuItem();
         mnuiDistritos = new javax.swing.JMenuItem();
-        mnuiConsultas = new javax.swing.JMenu();
+        mnuConsultas = new javax.swing.JMenu();
         mnuiKardex = new javax.swing.JMenuItem();
         mnuiInventario = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenu();
@@ -86,26 +139,26 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuOrdenVenta);
 
-        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/snake_cup-024.png"))); // NOI18N
-        jMenu1.setText("Productos");
+        mnuProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/snake_cup-024.png"))); // NOI18N
+        mnuProductos.setText("Productos");
 
         mnuiArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/pill-024.png"))); // NOI18N
         mnuiArticulos.setText("Articulos");
-        jMenu1.add(mnuiArticulos);
+        mnuProductos.add(mnuiArticulos);
 
         mnuiLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132342_box_box.png"))); // NOI18N
         mnuiLotes.setText("Lotes");
-        jMenu1.add(mnuiLotes);
+        mnuProductos.add(mnuiLotes);
 
         mnuiLaboratorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132186_industry_industry.png"))); // NOI18N
         mnuiLaboratorios.setText("Laboratorios");
-        jMenu1.add(mnuiLaboratorios);
+        mnuProductos.add(mnuiLaboratorios);
 
         mnuiFFarmaceuticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Retort.png"))); // NOI18N
         mnuiFFarmaceuticas.setText("Formas Farmaceuticas");
-        jMenu1.add(mnuiFFarmaceuticas);
+        mnuProductos.add(mnuiFFarmaceuticas);
 
-        menuBar.add(jMenu1);
+        menuBar.add(mnuProductos);
 
         mnuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/User group.png"))); // NOI18N
         mnuClientes.setText("Clientes");
@@ -124,12 +177,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuClientes);
 
-        mnuiConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Table.png"))); // NOI18N
-        mnuiConsultas.setText("Consultas");
+        mnuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Table.png"))); // NOI18N
+        mnuConsultas.setText("Consultas");
 
         mnuiKardex.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132237_card_card_file_file.png"))); // NOI18N
         mnuiKardex.setText("Kardex");
-        mnuiConsultas.add(mnuiKardex);
+        mnuConsultas.add(mnuiKardex);
 
         mnuiInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132332_clipboard_clipboard.png"))); // NOI18N
         mnuiInventario.setText("Inventario");
@@ -138,9 +191,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
                 mnuiInventarioActionPerformed(evt);
             }
         });
-        mnuiConsultas.add(mnuiInventario);
+        mnuConsultas.add(mnuiInventario);
 
-        menuBar.add(mnuiConsultas);
+        menuBar.add(mnuConsultas);
 
         mnuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Exit.png"))); // NOI18N
         mnuSalir.setText("Salir");
@@ -172,6 +225,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
     private void mnuiSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiSalirActionPerformed
         System.exit(0);
     }//GEN-LAST:event_mnuiSalirActionPerformed
@@ -193,7 +247,7 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void mnuiInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiInventarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuiInventarioActionPerformed
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -228,15 +282,15 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAcceso;
     private javax.swing.JMenu mnuClientes;
+    private javax.swing.JMenu mnuConsultas;
     private javax.swing.JMenu mnuInicio;
     private javax.swing.JMenu mnuOrdenVenta;
+    private javax.swing.JMenu mnuProductos;
     private javax.swing.JMenu mnuSalir;
     private javax.swing.JMenuItem mnuiArticulos;
-    private javax.swing.JMenu mnuiConsultas;
     private javax.swing.JMenuItem mnuiDistritos;
     private javax.swing.JMenuItem mnuiFFarmaceuticas;
     private javax.swing.JMenuItem mnuiInventario;
