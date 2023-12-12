@@ -518,14 +518,9 @@ public class FrmOrden extends javax.swing.JFrame {
         respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario(),this.listaTransacciones);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Orden generada correctamente");
-            System.out.println(this.ordenVenta.getIdOrden());
         } else {
             mensajeError("Error generando orden");
         }
-        
-//        CONTROL.enviarTransacciones();
-
-
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txtImporteTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteTotalActionPerformed

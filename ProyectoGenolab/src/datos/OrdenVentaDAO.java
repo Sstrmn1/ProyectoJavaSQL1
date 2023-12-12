@@ -1,7 +1,6 @@
 package datos;
 
 import datos.interfaces.CrudSimpleInterface;
-import entidades.OrdenVenta;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -114,6 +113,14 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         int idGenerado = -1; // Variable para almacenar la ID autogenerada
 
         try {
+            if (CON.cadena.isClosed()) {
+                CON.conectar();
+            }
+            // Establecer el savepoint antes de comenzar las operaciones
+            System.out.println("Estableciendo savepoint");
+            CON.setSavepoint();
+            System.out.println("Savepoint establecido");
+
             // 1. Insertar en la tabla orden_de_venta
             String consultaOrdenVenta = "INSERT INTO orden_de_venta "
                     + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
@@ -174,6 +181,18 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     for (Transaccion transaccion : obj.getTransacciones()) {
                         // Obtener el id de lote de la transacción
                         int idLote = transaccion.getIdLote();
+                        int cantidad = transaccion.getCantidad();
+
+                        // Obtener el stock actual del lote
+                        int stockActual = obtenerStockLote(idLote);
+
+                        // Verificar si la cantidad de la transacción es mayor al stock actual
+                        if (cantidad > stockActual) {
+                            // La cantidad es mayor al stock, realizar un rollback y establecer respuesta como falsa
+                            CON.rollbackToSavepoint();
+                            respuesta = false;
+                            break;  // Salir del bucle
+                        }
 
                         // Configurar los parámetros
                         ps.setInt(1, idGenerado);
@@ -195,10 +214,18 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                             respuesta = true;
                         }
                     }
-
                 }
                 generatedKeys.close();
             }
+
+            // Verificar condiciones y establecer respuesta
+            if (!respuesta) {
+                // Algo salió mal, deshacer hasta el savepoint
+                CON.rollbackToSavepoint();
+            }
+
+            // Liberar el savepoint
+            CON.releaseSavepoint();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
@@ -213,6 +240,21 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             CON.desconectar();
         }
         return respuesta;
+    }
+
+    // Obtener el stock actual de un lote específico
+    private int obtenerStockLote(int idLote) throws SQLException {
+        int stockActual = 0;
+        String consultaStock = "SELECT stock FROM lote WHERE id_lote = ?";
+        try (PreparedStatement psStock = CON.conectar().prepareStatement(consultaStock)) {
+            psStock.setInt(1, idLote);
+            try (ResultSet rsStock = psStock.executeQuery()) {
+                if (rsStock.next()) {
+                    stockActual = rsStock.getInt("stock");
+                }
+            }
+        }
+        return stockActual;
     }
 
     @Override

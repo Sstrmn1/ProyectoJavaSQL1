@@ -1,12 +1,13 @@
 /*
 MySQL Connection
-*/
+ */
 package basedatos;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import java.sql.Savepoint;
 
 public class Conexion {
     //atributos
@@ -16,6 +17,7 @@ public class Conexion {
     private final String BD = "bd_genolab";
     private final String USUARIO = "root";
     private final String PASSWORD = "altocard";
+    private Savepoint savepoint;
 
     public Connection cadena;
     public static Conexion instancia;
@@ -52,11 +54,35 @@ public class Conexion {
         return instancia;
     }
 
+    public void setSavepoint() {
+        try {
+            savepoint = cadena.setSavepoint();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void releaseSavepoint() {
+        try {
+            cadena.releaseSavepoint(savepoint);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void rollbackToSavepoint() {
+        try {
+            cadena.rollback(savepoint);
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
 }
 
 /*
 SQL Connection
-*/
+ */
 //package basedatos;
 //
 //import java.sql.Connection;

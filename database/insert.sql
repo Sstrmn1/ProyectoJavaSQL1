@@ -145,7 +145,7 @@ WHERE o.id_orden = 28;
 UPDATE lote AS l
 JOIN transaccion AS t ON l.id_lote = t.id_lote
 JOIN orden_de_venta AS o ON t.id_orden = o.id_orden
-SET l.stock = l.stock - t.cantidad
+SET l.stock = l.stock + t.cantidad
 WHERE o.id_orden = 28 AND l.id_lote = 20;
 
 
