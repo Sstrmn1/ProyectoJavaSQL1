@@ -1,0 +1,12 @@
+Investigar Procedimientos almacenados
+Investigar triggers
+Investigar threads (hilos)
+Investigar metodo hex y equals en java
+Investigar tabla maestro detalle
+
+Transacciones en bases de datos
+	-Commit
+	-Rollback
+	-Usar funcion NOW();
+		
+1ra revision 7ptos, 2da revision 8ptos, Revision Final 15ptos
