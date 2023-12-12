@@ -125,14 +125,10 @@
                                           <Component id="txtSucursal" pref="442" max="32767" attributes="0"/>
                                           <Component id="txtCliente" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="txtNumOrden" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Component id="btnGenerar" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="332" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -143,8 +139,6 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="btnCliente" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="txtCliente" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="txtNumOrden" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
@@ -178,13 +172,6 @@
                       </Events>
                     </Component>
                     <Component class="javax.swing.JTextField" name="txtSucursal">
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel2">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Numero de orden"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="txtNumOrden">
                     </Component>
                     <Component class="javax.swing.JButton" name="btnGenerar">
                       <Properties>

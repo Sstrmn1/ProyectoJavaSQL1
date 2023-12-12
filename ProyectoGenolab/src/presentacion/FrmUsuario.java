@@ -1,5 +1,5 @@
 package presentacion;
-
+//usuario fabio@genolab.com password fabio
 import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamPanel;
 import com.github.sarxos.webcam.WebcamResolution;

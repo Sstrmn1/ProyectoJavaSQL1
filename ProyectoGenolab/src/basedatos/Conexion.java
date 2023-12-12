@@ -95,7 +95,7 @@ public class Conexion {
     //atributos
 
     private final String DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-    private final String URL = "jdbc:sqlserver://localhost:1433;databaseName=bd_genolab;user=root;password=altocard;trustServerCertificate=true";
+    private final String URL = "jdbc:sqlserver://localhost:1433;databaseName=bd_genolab;user=admin1;password=admin1;trustServerCertificate=true";
     private final String BD = "bd_genolab";
     private final String USUARIO = "root";
     private final String PASSWORD = "altocard";

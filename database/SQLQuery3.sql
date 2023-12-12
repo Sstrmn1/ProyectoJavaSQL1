@@ -6,6 +6,7 @@ select * from usuario;
 
 select * from orden_de_venta;
 select * from lote;
+select * from transaccion;
 
 --delete from rol;
 --delete from usuario;
