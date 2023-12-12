@@ -1,5 +1,6 @@
 package presentacion;
 
+import clases.Variables;
 import javax.swing.JOptionPane;
 
 public class FrmPrincipal extends javax.swing.JFrame {
@@ -46,6 +47,9 @@ public class FrmPrincipal extends javax.swing.JFrame {
             mnuConsultas.setEnabled(false);
             mnuProductos.setEnabled(false);
         }
+        lblNombre.setText(Variables.usuarioNombre);
+        lblApellido.setText(Variables.usuarioApellido);
+        lblRol.setText(Variables.rolNombre);
     }
 
     private void mensajeError(String mensaje) {
@@ -65,6 +69,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         escritorio = new javax.swing.JDesktopPane();
+        jToolBar1 = new javax.swing.JToolBar();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        lblApellido = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        lblRol = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         mnuInicio = new javax.swing.JMenu();
         mnuiSalir = new javax.swing.JMenuItem();
@@ -89,6 +106,47 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sisterma administrativo Genolab");
+
+        jToolBar1.setRollover(true);
+
+        jLabel1.setText("Nombre:");
+        jToolBar1.add(jLabel1);
+
+        jLabel2.setText("   ");
+        jToolBar1.add(jLabel2);
+
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblNombre.setText("nombre");
+        jToolBar1.add(lblNombre);
+
+        jLabel4.setText("   ");
+        jToolBar1.add(jLabel4);
+
+        jLabel5.setText("Apellido:");
+        jToolBar1.add(jLabel5);
+
+        jLabel6.setText("   ");
+        jToolBar1.add(jLabel6);
+
+        lblApellido.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblApellido.setText("apellido");
+        jToolBar1.add(lblApellido);
+
+        jLabel8.setText("   ");
+        jToolBar1.add(jLabel8);
+
+        jLabel9.setText("Rol:");
+        jToolBar1.add(jLabel9);
+
+        jLabel10.setText("   ");
+        jToolBar1.add(jLabel10);
+
+        lblRol.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        lblRol.setText("rol");
+        jToolBar1.add(lblRol);
+
+        jLabel12.setText("   ");
+        jToolBar1.add(jLabel12);
 
         mnuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Home.png"))); // NOI18N
         mnuInicio.setMnemonic('f');
@@ -215,11 +273,20 @@ public class FrmPrincipal extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 1088, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(escritorio, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(escritorio, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -282,6 +349,19 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblRol;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAcceso;
     private javax.swing.JMenu mnuClientes;
