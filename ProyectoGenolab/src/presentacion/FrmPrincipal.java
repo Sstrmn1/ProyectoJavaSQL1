@@ -15,19 +15,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
         menuBar = new javax.swing.JMenuBar();
         mnuInicio = new javax.swing.JMenu();
         mnuiSalir = new javax.swing.JMenuItem();
-        mnuOrdenVenta = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        mnuiOrdenVenta = new javax.swing.JMenuItem();
         mnuAcceso = new javax.swing.JMenu();
         mnuiRoles = new javax.swing.JMenuItem();
         mnuiUsuarios = new javax.swing.JMenuItem();
-        mnuConsultas = new javax.swing.JMenu();
-        mnuiConsultasOrdenes = new javax.swing.JMenuItem();
+        mnuOrdenVenta = new javax.swing.JMenu();
+        mnuiOrdenVenta = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        mnuiArticulos = new javax.swing.JMenuItem();
+        mnuiLotes = new javax.swing.JMenuItem();
+        mnuiLaboratorios = new javax.swing.JMenuItem();
+        mnuiFFarmaceuticas = new javax.swing.JMenuItem();
+        mnuClientes = new javax.swing.JMenu();
+        mnuiRegCliente = new javax.swing.JMenuItem();
+        mnuiSucursales = new javax.swing.JMenuItem();
+        mnuiDistritos = new javax.swing.JMenuItem();
+        mnuiConsultas = new javax.swing.JMenu();
+        mnuiKardex = new javax.swing.JMenuItem();
+        mnuiInventario = new javax.swing.JMenuItem();
         mnuSalir = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sisterma administrativo Genolab");
-        setPreferredSize(new java.awt.Dimension(1100, 700));
 
         mnuInicio.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Home.png"))); // NOI18N
         mnuInicio.setMnemonic('f');
@@ -45,22 +53,6 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuInicio.add(mnuiSalir);
 
         menuBar.add(mnuInicio);
-
-        mnuOrdenVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Shopping cart.png"))); // NOI18N
-        mnuOrdenVenta.setMnemonic('e');
-        mnuOrdenVenta.setText("Ordenes de venta");
-
-        cutMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/User group.png"))); // NOI18N
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Clientes");
-        mnuOrdenVenta.add(cutMenuItem);
-
-        mnuiOrdenVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
-        mnuiOrdenVenta.setMnemonic('y');
-        mnuiOrdenVenta.setText("Orden de venta");
-        mnuOrdenVenta.add(mnuiOrdenVenta);
-
-        menuBar.add(mnuOrdenVenta);
 
         mnuAcceso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Lock.png"))); // NOI18N
         mnuAcceso.setMnemonic('h');
@@ -83,13 +75,72 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         menuBar.add(mnuAcceso);
 
-        mnuConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Table.png"))); // NOI18N
-        mnuConsultas.setText("Consultas");
+        mnuOrdenVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Shopping cart.png"))); // NOI18N
+        mnuOrdenVenta.setMnemonic('e');
+        mnuOrdenVenta.setText("Ordenes de venta");
 
-        mnuiConsultasOrdenes.setText("Consultas ordenes");
-        mnuConsultas.add(mnuiConsultasOrdenes);
+        mnuiOrdenVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
+        mnuiOrdenVenta.setMnemonic('y');
+        mnuiOrdenVenta.setText("Orden de venta");
+        mnuOrdenVenta.add(mnuiOrdenVenta);
 
-        menuBar.add(mnuConsultas);
+        menuBar.add(mnuOrdenVenta);
+
+        jMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/snake_cup-024.png"))); // NOI18N
+        jMenu1.setText("Productos");
+
+        mnuiArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/pill-024.png"))); // NOI18N
+        mnuiArticulos.setText("Articulos");
+        jMenu1.add(mnuiArticulos);
+
+        mnuiLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132342_box_box.png"))); // NOI18N
+        mnuiLotes.setText("Lotes");
+        jMenu1.add(mnuiLotes);
+
+        mnuiLaboratorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132186_industry_industry.png"))); // NOI18N
+        mnuiLaboratorios.setText("Laboratorios");
+        jMenu1.add(mnuiLaboratorios);
+
+        mnuiFFarmaceuticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Retort.png"))); // NOI18N
+        mnuiFFarmaceuticas.setText("Formas Farmaceuticas");
+        jMenu1.add(mnuiFFarmaceuticas);
+
+        menuBar.add(jMenu1);
+
+        mnuClientes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/User group.png"))); // NOI18N
+        mnuClientes.setText("Clientes");
+
+        mnuiRegCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Picture.png"))); // NOI18N
+        mnuiRegCliente.setText("Registrar");
+        mnuClientes.add(mnuiRegCliente);
+
+        mnuiSucursales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132240_home_home.png"))); // NOI18N
+        mnuiSucursales.setText("Sucursales");
+        mnuClientes.add(mnuiSucursales);
+
+        mnuiDistritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Earth.png"))); // NOI18N
+        mnuiDistritos.setText("Distritos");
+        mnuClientes.add(mnuiDistritos);
+
+        menuBar.add(mnuClientes);
+
+        mnuiConsultas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Table.png"))); // NOI18N
+        mnuiConsultas.setText("Consultas");
+
+        mnuiKardex.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132237_card_card_file_file.png"))); // NOI18N
+        mnuiKardex.setText("Kardex");
+        mnuiConsultas.add(mnuiKardex);
+
+        mnuiInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132332_clipboard_clipboard.png"))); // NOI18N
+        mnuiInventario.setText("Inventario");
+        mnuiInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiInventarioActionPerformed(evt);
+            }
+        });
+        mnuiConsultas.add(mnuiInventario);
+
+        menuBar.add(mnuiConsultas);
 
         mnuSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Exit.png"))); // NOI18N
         mnuSalir.setText("Salir");
@@ -138,6 +189,10 @@ public class FrmPrincipal extends javax.swing.JFrame {
     private void mnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSalirMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuSalirMouseClicked
+
+    private void mnuiInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuiInventarioActionPerformed
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -172,18 +227,27 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane escritorio;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenu mnuAcceso;
-    private javax.swing.JMenu mnuConsultas;
+    private javax.swing.JMenu mnuClientes;
     private javax.swing.JMenu mnuInicio;
     private javax.swing.JMenu mnuOrdenVenta;
     private javax.swing.JMenu mnuSalir;
-    private javax.swing.JMenuItem mnuiConsultasOrdenes;
+    private javax.swing.JMenuItem mnuiArticulos;
+    private javax.swing.JMenu mnuiConsultas;
+    private javax.swing.JMenuItem mnuiDistritos;
+    private javax.swing.JMenuItem mnuiFFarmaceuticas;
+    private javax.swing.JMenuItem mnuiInventario;
+    private javax.swing.JMenuItem mnuiKardex;
+    private javax.swing.JMenuItem mnuiLaboratorios;
+    private javax.swing.JMenuItem mnuiLotes;
     private javax.swing.JMenuItem mnuiOrdenVenta;
+    private javax.swing.JMenuItem mnuiRegCliente;
     private javax.swing.JMenuItem mnuiRoles;
     private javax.swing.JMenuItem mnuiSalir;
+    private javax.swing.JMenuItem mnuiSucursales;
     private javax.swing.JMenuItem mnuiUsuarios;
     // End of variables declaration//GEN-END:variables
 
