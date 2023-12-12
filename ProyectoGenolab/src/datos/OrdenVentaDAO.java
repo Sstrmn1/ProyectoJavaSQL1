@@ -114,10 +114,11 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         int idGenerado = -1; // Variable para almacenar la ID autogenerada
 
         try {
-            String consulta = "INSERT INTO orden_de_venta "
+            // 1. Insertar en la tabla orden_de_venta
+            String consultaOrdenVenta = "INSERT INTO orden_de_venta "
                     + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
                     + "VALUES (?, ?, ?, NOW(), 0)";
-            ps = CON.conectar().prepareStatement(consulta, Statement.RETURN_GENERATED_KEYS);
+            ps = CON.conectar().prepareStatement(consultaOrdenVenta, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, obj.getNumeroOrden());
             ps.setInt(2, obj.getIdSucursal());
             ps.setInt(3, obj.getIdUsuario());
@@ -128,22 +129,20 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                 if (generatedKeys.next()) {
                     idGenerado = generatedKeys.getInt(1);
 
-                    // Insertar transacciones
+                    // 2. Insertar transacciones en la tabla transaccion
                     String consultaTransaccion = "INSERT INTO transaccion "
                             + "(id_lote, id_orden, cantidad, fecha) "
                             + "VALUES (?, ?, ?, NOW())";
                     ps = CON.conectar().prepareStatement(consultaTransaccion);
 
-                    // Supongamos que tienes una lista de transacciones en obj.getTransacciones()
                     for (Transaccion transaccion : obj.getTransacciones()) {
                         ps.setInt(1, transaccion.getIdLote());
-                        ps.setInt(2, idGenerado); // Usar la ID autogenerada de la orden de venta
+                        ps.setInt(2, idGenerado);
                         ps.setInt(3, transaccion.getCantidad());
-
-                        ps.addBatch(); // Agregar la transacción al lote para la ejecución en lote
+                        ps.addBatch();
                     }
-                    // Ejecutar todas las transacciones en lote
                     int[] result = ps.executeBatch();
+
                     // Verificar que todas las transacciones se hayan insertado correctamente
                     for (int res : result) {
                         if (res <= 0) {
@@ -154,6 +153,25 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                         }
                     }
 
+                    // 3. Actualizar el importe total en la tabla orden_de_venta
+                    String consultaUpdateImporte = "UPDATE orden_de_venta AS o "
+                            + "SET o.importe_total = (SELECT SUM(t.cantidad * l.precio_unitario) "
+                            + "FROM transaccion AS t "
+                            + "INNER JOIN lote AS l ON t.id_lote = l.id_lote "
+                            + "WHERE t.id_orden = o.id_orden) "
+                            + "WHERE o.id_orden = ?";
+                    ps = CON.conectar().prepareStatement(consultaUpdateImporte);
+                    ps.setInt(1, idGenerado);
+                    ps.executeUpdate();
+
+                    // 4. Restar las cantidades de transacciones a los stocks en la tabla lote
+                    String consultaUpdateStock = "UPDATE lote AS l "
+                            + "JOIN transaccion AS t ON l.id_lote = t.id_lote "
+                            + "SET l.stock = l.stock - t.cantidad "
+                            + "WHERE t.id_orden = ?";
+                    ps = CON.conectar().prepareStatement(consultaUpdateStock);
+                    ps.setInt(1, idGenerado);
+                    ps.executeUpdate();
                 }
                 generatedKeys.close();
             }
