@@ -4,14 +4,14 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.LaboratorioControl;
 
-public class PruebaLaboratorio extends javax.swing.JFrame {
+public class FrmLaboratorio extends javax.swing.JFrame {
 
     //atributos
     private final LaboratorioControl CONTROL;
     private String nombreAnt;
 
     //metodos
-    public PruebaLaboratorio() {
+    public FrmLaboratorio() {
         initComponents();
         this.CONTROL = new LaboratorioControl();
         this.listado("");
@@ -369,20 +369,21 @@ public class PruebaLaboratorio extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PruebaLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PruebaLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PruebaLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PruebaLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(FrmLaboratorio.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PruebaLaboratorio().setVisible(true);
+                new FrmLaboratorio().setVisible(true);
             }
         });
     }
