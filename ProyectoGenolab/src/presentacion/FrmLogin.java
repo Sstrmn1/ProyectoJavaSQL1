@@ -55,7 +55,11 @@ public class FrmLogin extends javax.swing.JFrame {
 
         jLabel1.setText("Email:");
 
+        txtEmail.setText("admin@admin.com");
+
         jLabel2.setText("Password: ");
+
+        txtPassword.setText("admin");
 
         btnIngresar.setText("Ingresar");
         btnIngresar.addActionListener(new java.awt.event.ActionListener() {

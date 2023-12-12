@@ -182,6 +182,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuiUsuarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/People.png"))); // NOI18N
         mnuiUsuarios.setMnemonic('a');
         mnuiUsuarios.setText("Usuarios");
+        mnuiUsuarios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiUsuariosActionPerformed(evt);
+            }
+        });
         mnuAcceso.add(mnuiUsuarios);
 
         menuBar.add(mnuAcceso);
@@ -193,6 +198,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
         mnuiOrdenVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         mnuiOrdenVenta.setMnemonic('y');
         mnuiOrdenVenta.setText("Orden de venta");
+        mnuiOrdenVenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiOrdenVentaActionPerformed(evt);
+            }
+        });
         mnuOrdenVenta.add(mnuiOrdenVenta);
 
         menuBar.add(mnuOrdenVenta);
@@ -202,18 +212,38 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuiArticulos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/pill-024.png"))); // NOI18N
         mnuiArticulos.setText("Articulos");
+        mnuiArticulos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiArticulosActionPerformed(evt);
+            }
+        });
         mnuProductos.add(mnuiArticulos);
 
         mnuiLotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132342_box_box.png"))); // NOI18N
         mnuiLotes.setText("Lotes");
+        mnuiLotes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiLotesActionPerformed(evt);
+            }
+        });
         mnuProductos.add(mnuiLotes);
 
         mnuiLaboratorios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132186_industry_industry.png"))); // NOI18N
         mnuiLaboratorios.setText("Laboratorios");
+        mnuiLaboratorios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiLaboratoriosActionPerformed(evt);
+            }
+        });
         mnuProductos.add(mnuiLaboratorios);
 
         mnuiFFarmaceuticas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Retort.png"))); // NOI18N
         mnuiFFarmaceuticas.setText("Formas Farmaceuticas");
+        mnuiFFarmaceuticas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiFFarmaceuticasActionPerformed(evt);
+            }
+        });
         mnuProductos.add(mnuiFFarmaceuticas);
 
         menuBar.add(mnuProductos);
@@ -223,14 +253,29 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuiRegCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Picture.png"))); // NOI18N
         mnuiRegCliente.setText("Registrar");
+        mnuiRegCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiRegClienteActionPerformed(evt);
+            }
+        });
         mnuClientes.add(mnuiRegCliente);
 
         mnuiSucursales.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132240_home_home.png"))); // NOI18N
         mnuiSucursales.setText("Sucursales");
+        mnuiSucursales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiSucursalesActionPerformed(evt);
+            }
+        });
         mnuClientes.add(mnuiSucursales);
 
         mnuiDistritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Earth.png"))); // NOI18N
         mnuiDistritos.setText("Distritos");
+        mnuiDistritos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiDistritosActionPerformed(evt);
+            }
+        });
         mnuClientes.add(mnuiDistritos);
 
         menuBar.add(mnuClientes);
@@ -308,12 +353,66 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuSalirActionPerformed
 
     private void mnuSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mnuSalirMouseClicked
-        // TODO add your handling code here:
+        System.exit(0);
     }//GEN-LAST:event_mnuSalirMouseClicked
 
     private void mnuiInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiInventarioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mnuiInventarioActionPerformed
+
+    private void mnuiArticulosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiArticulosActionPerformed
+        FrmArticulo1 frm = new FrmArticulo1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiArticulosActionPerformed
+
+    private void mnuiUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiUsuariosActionPerformed
+        FrmUsuario1 frm = new FrmUsuario1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiUsuariosActionPerformed
+
+    private void mnuiOrdenVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiOrdenVentaActionPerformed
+        FrmOrden1 frm = new FrmOrden1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiOrdenVentaActionPerformed
+
+    private void mnuiLotesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiLotesActionPerformed
+        FrmLote1 frm = new FrmLote1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiLotesActionPerformed
+
+    private void mnuiLaboratoriosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiLaboratoriosActionPerformed
+        FrmLaboratorio1 frm = new FrmLaboratorio1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiLaboratoriosActionPerformed
+
+    private void mnuiFFarmaceuticasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiFFarmaceuticasActionPerformed
+        FrmFFarmaceutica1 frm = new FrmFFarmaceutica1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiFFarmaceuticasActionPerformed
+
+    private void mnuiRegClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiRegClienteActionPerformed
+        FrmCliente1 frm = new FrmCliente1();
+        escritorio.add(frm);
+        frm.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuiRegClienteActionPerformed
+
+    private void mnuiSucursalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiSucursalesActionPerformed
+        FrmSucursal1 frm = new FrmSucursal1();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiSucursalesActionPerformed
+
+    private void mnuiDistritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiDistritosActionPerformed
+        FrmDistrito1 frm = new FrmDistrito1();
+        escritorio.add(frm);
+        frm.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_mnuiDistritosActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
