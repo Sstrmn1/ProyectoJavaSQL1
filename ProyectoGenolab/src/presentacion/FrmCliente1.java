@@ -4,12 +4,14 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.ClienteControl;
+import org.apache.commons.validator.EmailValidator;
+import clases.FiltrosDeTexto;
 
 public class FrmCliente1 extends javax.swing.JInternalFrame {
 
     //atributos
     private final ClienteControl CONTROL;
-    private final DefaultComboBoxModel modeloCboTipoDoc = new DefaultComboBoxModel(new String[]{"NIT","CI"});
+    private final DefaultComboBoxModel modeloCboTipoDoc = new DefaultComboBoxModel(new String[]{"NIT", "CI"});
 
     //constructor
     public FrmCliente1() {
@@ -18,7 +20,9 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
         this.CONTROL = new ClienteControl();
         cboTIpoDocumento.setModel(modeloCboTipoDoc);
         this.listado("");
+        limpiar();
         desactivar();
+        aplicarFiltros();
     }
 
     //metodos
@@ -61,6 +65,15 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
 
     private static int mensajeConfirmacion(String mensaje) {
         return JOptionPane.showConfirmDialog(null, mensaje, "Confirmación", JOptionPane.YES_NO_OPTION);
+    }
+
+    private void mensajeAlerta(String mensaje) {
+        JOptionPane.showMessageDialog(this, mensaje, "Sistema", JOptionPane.WARNING_MESSAGE);
+    }
+    
+    private void aplicarFiltros(){
+        FiltrosDeTexto.applyNumericFilter(txtNumeroDocumento);
+        FiltrosDeTexto.applyNumericFilter(txtTelefono);
     }
 
     @SuppressWarnings("unchecked")
@@ -374,6 +387,12 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblClienteMouseClicked
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        boolean emailEsValido = EmailValidator.getInstance().isValid(txtEmail.getText());
+        if (!emailEsValido) {
+            mensajeAlerta("Debe introducir un email valido");
+            txtEmail.requestFocus();
+            return;
+        }
         String respuesta = "";
         String nombre = txtNombre.getText();
         String tipoDocumento = String.valueOf(cboTIpoDocumento.getSelectedItem());
@@ -394,7 +413,7 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
             mensajeError("Error insertando el registro");
         }
         limpiar();
-        this.listado("");  
+        this.listado("");
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
