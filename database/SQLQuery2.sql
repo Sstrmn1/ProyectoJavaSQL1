@@ -148,3 +148,4 @@ CREATE TABLE transaccion (
     CONSTRAINT fk_transaccion_orden FOREIGN KEY (id_orden) REFERENCES orden_de_venta (id_orden)
 );
 
+insert into rol values ('Administrador',1);
