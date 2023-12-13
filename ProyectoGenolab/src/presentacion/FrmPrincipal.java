@@ -12,44 +12,44 @@ public class FrmPrincipal extends javax.swing.JFrame {
     }
 
     private void cargarOpcionesMenu() {
-//        if (clases.Variables.rolNombre == null) {
-//            mensajeAlerta("Debe ingresar al sistema mediante verificacion de usuario.");
-//            System.exit(0);
-//        }
-//        if (clases.Variables.rolNombre.equalsIgnoreCase("Administrador")) {
-//            mnuAcceso.setEnabled(true);
-//            mnuClientes.setEnabled(true);
-//            mnuOrdenVenta.setEnabled(true);
-//            mnuConsultas.setEnabled(true);
-//            mnuProductos.setEnabled(true);
-//        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Regencia Farmaceutica")) {
-//            mnuAcceso.setEnabled(false);
-//            mnuClientes.setEnabled(false);
-//            mnuOrdenVenta.setEnabled(false);
-//            mnuConsultas.setEnabled(true);
-//            mnuProductos.setEnabled(true);
-//        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Ventas")) {
-//            mnuAcceso.setEnabled(false);
-//            mnuClientes.setEnabled(true);
-//            mnuOrdenVenta.setEnabled(true);
-//            mnuConsultas.setEnabled(true);
-//            mnuProductos.setEnabled(false);
-//        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Almacenes")) {
-//            mnuAcceso.setEnabled(false);
-//            mnuClientes.setEnabled(false);
-//            mnuOrdenVenta.setEnabled(false);
-//            mnuConsultas.setEnabled(true);
-//            mnuProductos.setEnabled(false);
-//        } else {
-//            mnuAcceso.setEnabled(false);
-//            mnuClientes.setEnabled(false);
-//            mnuOrdenVenta.setEnabled(false);
-//            mnuConsultas.setEnabled(false);
-//            mnuProductos.setEnabled(false);
-//        }
-//        lblNombre.setText(Variables.usuarioNombre);
-//        lblApellido.setText(Variables.usuarioApellido);
-//        lblRol.setText(Variables.rolNombre);
+        if (clases.Variables.rolNombre == null) {
+            mensajeAlerta("Debe ingresar al sistema mediante verificacion de usuario.");
+            System.exit(0);
+        }
+        if (clases.Variables.rolNombre.equalsIgnoreCase("Administrador")) {
+            mnuAcceso.setEnabled(true);
+            mnuClientes.setEnabled(true);
+            mnuOrdenVenta.setEnabled(true);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(true);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Regencia Farmaceutica")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(true);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Ventas")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(true);
+            mnuOrdenVenta.setEnabled(true);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(false);
+        } else if (clases.Variables.rolNombre.equalsIgnoreCase("Almacenes")) {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(true);
+            mnuProductos.setEnabled(false);
+        } else {
+            mnuAcceso.setEnabled(false);
+            mnuClientes.setEnabled(false);
+            mnuOrdenVenta.setEnabled(false);
+            mnuConsultas.setEnabled(false);
+            mnuProductos.setEnabled(false);
+        }
+        lblNombre.setText(Variables.usuarioNombre);
+        lblApellido.setText(Variables.usuarioApellido);
+        lblRol.setText(Variables.rolNombre);
     }
 
     private void mensajeError(String mensaje) {

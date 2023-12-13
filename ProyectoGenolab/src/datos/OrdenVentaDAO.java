@@ -107,152 +107,24 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 //        }
 //        return respuesta;
 //    }
-    //MYSQL
-//    @Override
-//    public boolean insertar(OrdenVenta obj) {
-//        respuesta = false;
-//        int idGenerado = -1; // Variable para almacenar la ID autogenerada
-//
-//        try {
-//            if (CON.cadena.isClosed()) {
-//                CON.conectar();
-//            }
-//            // Establecer el savepoint antes de comenzar las operaciones
-//            System.out.println("Estableciendo savepoint");
-//            CON.setSavepoint();
-//            System.out.println("Savepoint establecido");
-//
-//            // 1. Insertar en la tabla orden_de_venta
-//            String consultaOrdenVenta = "INSERT INTO orden_de_venta "
-//                    + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
-//                    + "VALUES (?, ?, ?, NOW(), 0)";
-//            ps = CON.conectar().prepareStatement(consultaOrdenVenta, Statement.RETURN_GENERATED_KEYS);
-//            ps.setInt(1, obj.getNumeroOrden());
-//            ps.setInt(2, obj.getIdSucursal());
-//            ps.setInt(3, obj.getIdUsuario());
-//
-//            if (ps.executeUpdate() > 0) {
-//                ResultSet generatedKeys = ps.getGeneratedKeys();
-//
-//                if (generatedKeys.next()) {
-//                    idGenerado = generatedKeys.getInt(1);
-//
-//                    // 2. Insertar transacciones en la tabla transaccion
-//                    String consultaTransaccion = "INSERT INTO transaccion "
-//                            + "(id_lote, id_orden, cantidad, fecha) "
-//                            + "VALUES (?, ?, ?, NOW())";
-//                    ps = CON.conectar().prepareStatement(consultaTransaccion);
-//
-//                    for (Transaccion transaccion : obj.getTransacciones()) {
-//                        ps.setInt(1, transaccion.getIdLote());
-//                        ps.setInt(2, idGenerado);
-//                        ps.setInt(3, transaccion.getCantidad());
-//                        ps.addBatch();
-//                    }
-//                    int[] result = ps.executeBatch();
-//
-//                    // Verificar que todas las transacciones se hayan insertado correctamente
-//                    for (int res : result) {
-//                        if (res <= 0) {
-//                            respuesta = false;
-//                            break;
-//                        } else {
-//                            respuesta = true;
-//                        }
-//                    }
-//
-//                    // 3. Actualizar el importe total en la tabla orden_de_venta
-//                    String consultaUpdateImporte = "UPDATE orden_de_venta AS o "
-//                            + "SET o.importe_total = (SELECT SUM(t.cantidad * l.precio_unitario) "
-//                            + "FROM transaccion AS t "
-//                            + "INNER JOIN lote AS l ON t.id_lote = l.id_lote "
-//                            + "WHERE t.id_orden = o.id_orden) "
-//                            + "WHERE o.id_orden = ?";
-//                    ps = CON.conectar().prepareStatement(consultaUpdateImporte);
-//                    ps.setInt(1, idGenerado);
-//                    ps.executeUpdate();
-//
-//                    // 4. Restar las cantidades de transacciones a los stocks en la tabla lote
-//                    String consultaUpdateStockBase = "UPDATE lote AS l "
-//                            + "JOIN transaccion AS t ON l.id_lote = t.id_lote "
-//                            + "SET l.stock = l.stock - t.cantidad "
-//                            + "WHERE t.id_orden = ? AND l.id_lote = ?";
-//                    ps = CON.conectar().prepareStatement(consultaUpdateStockBase);
-//
-//                    for (Transaccion transaccion : obj.getTransacciones()) {
-//                        // Obtener el id de lote de la transacción
-//                        int idLote = transaccion.getIdLote();
-//                        int cantidad = transaccion.getCantidad();
-//
-//                        // Obtener el stock actual del lote
-//                        int stockActual = obtenerStockLote(idLote);
-//
-//                        // Verificar si la cantidad de la transacción es mayor al stock actual
-//                        if (cantidad > stockActual) {
-//                            // La cantidad es mayor al stock, realizar un rollback y establecer respuesta como falsa
-//                            CON.rollbackToSavepoint();
-//                            respuesta = false;
-//                            break;  // Salir del bucle
-//                        }
-//
-//                        // Configurar los parámetros
-//                        ps.setInt(1, idGenerado);
-//                        ps.setInt(2, idLote);
-//
-//                        // Agregar la operación al lote
-//                        ps.addBatch();
-//                    }
-//
-//                    // Ejecutar todas las operaciones en lote
-//                    int[] resultLote = ps.executeBatch();
-//
-//                    // Verificar que todas las operaciones en lote de la tabla lote se hayan ejecutado correctamente
-//                    for (int res : resultLote) {
-//                        if (res <= 0) {
-//                            respuesta = false;
-//                            break;
-//                        } else {
-//                            respuesta = true;
-//                        }
-//                    }
-//                }
-//                generatedKeys.close();
-//            }
-//
-//            // Verificar condiciones y establecer respuesta
-//            if (!respuesta) {
-//                // Algo salió mal, deshacer hasta el savepoint
-//                CON.rollbackToSavepoint();
-//            }
-//
-//            // Liberar el savepoint
-//            CON.releaseSavepoint();
-//
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        } finally {
-//            try {
-//                if (ps != null) {
-//                    ps.close();
-//                }
-//            } catch (SQLException e) {
-//                e.printStackTrace();
-//            }
-//            CON.desconectar();
-//        }
-//        return respuesta;
-//    }
     @Override
     public boolean insertar(OrdenVenta obj) {
         respuesta = false;
         int idGenerado = -1; // Variable para almacenar la ID autogenerada
 
         try {
+            if (CON.cadena.isClosed()) {
+                CON.conectar();
+            }
+            // Establecer el savepoint antes de comenzar las operaciones
+            System.out.println("Estableciendo savepoint");
+            CON.setSavepoint();
+            System.out.println("Savepoint establecido");
 
             // 1. Insertar en la tabla orden_de_venta
             String consultaOrdenVenta = "INSERT INTO orden_de_venta "
                     + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
-                    + "VALUES (?, ?, ?, GETDATE(), 0)";
+                    + "VALUES (?, ?, ?, NOW(), 0)";
             ps = CON.conectar().prepareStatement(consultaOrdenVenta, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, obj.getNumeroOrden());
             ps.setInt(2, obj.getIdSucursal());
@@ -267,7 +139,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     // 2. Insertar transacciones en la tabla transaccion
                     String consultaTransaccion = "INSERT INTO transaccion "
                             + "(id_lote, id_orden, cantidad, fecha) "
-                            + "VALUES (?, ?, ?, GETDATE())";
+                            + "VALUES (?, ?, ?, NOW())";
                     ps = CON.conectar().prepareStatement(consultaTransaccion);
 
                     for (Transaccion transaccion : obj.getTransacciones()) {
@@ -289,21 +161,20 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     }
 
                     // 3. Actualizar el importe total en la tabla orden_de_venta
-                    String consultaUpdateImporte = "UPDATE orden_de_venta "
-                            + "SET importe_total = (SELECT SUM(t.cantidad * l.precio_unitario) "
+                    String consultaUpdateImporte = "UPDATE orden_de_venta AS o "
+                            + "SET o.importe_total = (SELECT SUM(t.cantidad * l.precio_unitario) "
                             + "FROM transaccion AS t "
                             + "INNER JOIN lote AS l ON t.id_lote = l.id_lote "
-                            + "WHERE t.id_orden = orden_de_venta.id_orden) "
-                            + "WHERE id_orden = ?";
+                            + "WHERE t.id_orden = o.id_orden) "
+                            + "WHERE o.id_orden = ?";
                     ps = CON.conectar().prepareStatement(consultaUpdateImporte);
                     ps.setInt(1, idGenerado);
                     ps.executeUpdate();
 
                     // 4. Restar las cantidades de transacciones a los stocks en la tabla lote
-                    String consultaUpdateStockBase = "UPDATE l "
+                    String consultaUpdateStockBase = "UPDATE lote AS l "
+                            + "JOIN transaccion AS t ON l.id_lote = t.id_lote "
                             + "SET l.stock = l.stock - t.cantidad "
-                            + "FROM lote AS l "
-                            + "INNER JOIN transaccion AS t ON l.id_lote = t.id_lote "
                             + "WHERE t.id_orden = ? AND l.id_lote = ?";
                     ps = CON.conectar().prepareStatement(consultaUpdateStockBase);
 
@@ -318,6 +189,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                         // Verificar si la cantidad de la transacción es mayor al stock actual
                         if (cantidad > stockActual) {
                             // La cantidad es mayor al stock, realizar un rollback y establecer respuesta como falsa
+                            CON.rollbackToSavepoint();
                             respuesta = false;
                             break;  // Salir del bucle
                         }
@@ -345,6 +217,15 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                 }
                 generatedKeys.close();
             }
+
+            // Verificar condiciones y establecer respuesta
+            if (!respuesta) {
+                // Algo salió mal, deshacer hasta el savepoint
+                CON.rollbackToSavepoint();
+            }
+
+            // Liberar el savepoint
+            CON.releaseSavepoint();
 
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

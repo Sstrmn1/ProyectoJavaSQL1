@@ -130,12 +130,23 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
     public Usuario login(String email, String password) {
         Usuario usu = null;
         try {
-            String consulta = "SELECT u.id_usuario, u.id_rol, r.nombre AS rol_nombre, u.nombre, u.apellido, u.ci, u.email, u.activo FROM usuario u INNER JOIN rol r ON u.id_rol = r.id_rol WHERE u.email = ? AND u.password = ?";
-            ps = CON.conectar().prepareStatement(consulta);
+            ps = CON.conectar().prepareStatement("SELECT "
+                    + "u.id_usuario, "
+                    + "u.id_rol, "
+                    + "r.nombre AS rol_nombre, "
+                    + "u.nombre, "
+                    + "u.apellido, "
+                    + "u.ci, "
+                    + "u.email, "
+                    + "u.activo "
+                    + "FROM usuario u "
+                    + "INNER JOIN rol r ON u.id_rol=r.id_rol "
+                    + "WHERE u.email=? AND u.password=? "
+            );
             ps.setString(1, email);
             ps.setString(2, password);
             rs = ps.executeQuery();
-            if (rs.next()) {
+            if (rs.first()) {
                 usu = new Usuario(rs.getInt(1),
                         rs.getInt(2),
                         rs.getString(3),
