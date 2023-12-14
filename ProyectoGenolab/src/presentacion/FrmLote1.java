@@ -1,5 +1,6 @@
 package presentacion;
 
+import clases.ValidacionDeTexto;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.LoteControl;
@@ -8,7 +9,7 @@ import java.util.Calendar;
 import entidades.Articulo;
 import entidades.Laboratorio;
 
-public class FrmLote1 extends javax.swing.JInternalFrame  {
+public class FrmLote1 extends javax.swing.JInternalFrame {
 
     //atributos
     public final LoteControl CONTROL;
@@ -28,9 +29,10 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
 
     //metodos
     private void listado(String texto) {
-        tblLote.setModel(this.CONTROL.listar(texto));
-        TableRowSorter orden = new TableRowSorter(tblLote.getModel());
-        tblLote.setRowSorter(orden);
+        tblListado.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+        tblListado.setRowSorter(orden);
+        ocultarColumnas();
     }
 
     private void listarCombobox() {
@@ -77,6 +79,21 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
 
     }
 
+    private void ocultarColumnas() {
+        tblListado.getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(0).setMinWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(1).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(2).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(2).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(2).setMaxWidth(0);
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -94,11 +111,11 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
         txtBuscar = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         rbtnDescripcion = new javax.swing.JRadioButton();
-        rbtnCodigo = new javax.swing.JRadioButton();
+        rbtnArticulo = new javax.swing.JRadioButton();
         btnEditar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblLote = new javax.swing.JTable();
+        tblListado = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -140,10 +157,11 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
         jLabel2.setText("Campo de busqueda");
 
         rbtngCampoBusqueda.add(rbtnDescripcion);
+        rbtnDescripcion.setSelected(true);
         rbtnDescripcion.setText("Descripcion");
 
-        rbtngCampoBusqueda.add(rbtnCodigo);
-        rbtnCodigo.setText("Codigo");
+        rbtngCampoBusqueda.add(rbtnArticulo);
+        rbtnArticulo.setText("Articulo");
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -159,7 +177,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
             }
         });
 
-        tblLote.setModel(new javax.swing.table.DefaultTableModel(
+        tblListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -167,7 +185,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
 
             }
         ));
-        jScrollPane1.setViewportView(tblLote);
+        jScrollPane1.setViewportView(tblListado);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -190,7 +208,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
                         .addGap(18, 18, 18)
                         .addComponent(rbtnDescripcion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(rbtnCodigo)
+                        .addComponent(rbtnArticulo)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -205,7 +223,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(rbtnDescripcion)
-                    .addComponent(rbtnCodigo))
+                    .addComponent(rbtnArticulo))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEditar)
@@ -230,6 +248,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
         jLabel8.setText("Estado");
 
         rbtngEstado.add(rbtnActivo);
+        rbtnActivo.setSelected(true);
         rbtnActivo.setText("Activo");
 
         rbtngEstado.add(rbtnInactivo);
@@ -430,7 +449,8 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
             int laboratorioId = laboratorioSeleccionado.getIdLaboratorio();
             String laboratorioNombre = laboratorioSeleccionado.getNombre();
 
-            String loteCodigo = txtCodigoLote.getText();
+//            String loteCodigo = txtCodigoLote.getText();
+            String loteCodigo = "";
             int stock = Integer.parseInt(txtStock.getText());
             float precioUnitario = Float.parseFloat(txtPrecio.getText());
 
@@ -451,6 +471,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
                 m = cal.get(Calendar.MONTH);
                 a = cal.get(Calendar.YEAR) - 1900;
                 loteFechaFab = new Date(a, m, d);
+                loteCodigo = ValidacionDeTexto.generarLoteCodigo(String.valueOf(loteFechaFab));
             } catch (Exception e) {
                 mensajeError(e.getMessage());
                 loteFechaFab = new Date(2020 - 1900, 00, 01);
@@ -503,22 +524,22 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblLote.getSelectedRowCount() == 1) {
-            int fila = tblLote.getSelectedRow();
+        if (tblListado.getSelectedRowCount() == 1) {
+            int fila = tblListado.getSelectedRow();
 
-            String loteId = String.valueOf(tblLote.getValueAt(fila, 0));
-            String articuloId = String.valueOf(tblLote.getValueAt(fila, 1));
-            String laboratorioId = String.valueOf(tblLote.getValueAt(fila, 2));
-            String articuloCodigo = String.valueOf(tblLote.getValueAt(fila, 3));
-            String articuloDescripcion = String.valueOf(tblLote.getValueAt(fila, 4));
-            String loteCodigo = String.valueOf(tblLote.getValueAt(fila, 5));
-            String loteStock = String.valueOf(tblLote.getValueAt(fila, 8));
-            String lotePrecioUnitario = String.valueOf(tblLote.getValueAt(fila, 9));
-            String laboratorioNombre = String.valueOf(tblLote.getValueAt(fila, 10));
-            String estado = String.valueOf(tblLote.getValueAt(fila, 11));
+            String loteId = String.valueOf(tblListado.getValueAt(fila, 0));
+            String articuloId = String.valueOf(tblListado.getValueAt(fila, 1));
+            String laboratorioId = String.valueOf(tblListado.getValueAt(fila, 2));
+            String articuloCodigo = String.valueOf(tblListado.getValueAt(fila, 3));
+            String articuloDescripcion = String.valueOf(tblListado.getValueAt(fila, 4));
+            String loteCodigo = String.valueOf(tblListado.getValueAt(fila, 5));
+            String loteStock = String.valueOf(tblListado.getValueAt(fila, 8));
+            String lotePrecioUnitario = String.valueOf(tblListado.getValueAt(fila, 9));
+            String laboratorioNombre = String.valueOf(tblListado.getValueAt(fila, 10));
+            String estado = String.valueOf(tblListado.getValueAt(fila, 11));
 
-            Date fechaFabricacion = Date.valueOf(tblLote.getValueAt(fila, 6).toString());
-            Date fechaExpiracion = Date.valueOf(tblLote.getValueAt(fila, 7).toString());
+            Date fechaFabricacion = Date.valueOf(tblListado.getValueAt(fila, 6).toString());
+            Date fechaExpiracion = Date.valueOf(tblListado.getValueAt(fila, 7).toString());
 
             Articulo articuloSeleccionado = new Articulo(Integer.parseInt(articuloId), articuloDescripcion, articuloCodigo);
             Laboratorio laboratorioSeleccionado = new Laboratorio(Integer.parseInt(laboratorioId), laboratorioNombre);
@@ -561,7 +582,8 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
         int laboratorioId = laboratorioSeleccionado.getIdLaboratorio();
         String laboratorioNombre = laboratorioSeleccionado.getNombre();
 
-        String loteCodigo = txtCodigoLote.getText();
+//        String loteCodigo = txtCodigoLote.getText();
+        String loteCodigo = "";
         int stock = Integer.parseInt(txtStock.getText());
 
         float precioUnitario = Float.parseFloat(txtPrecio.getText());
@@ -583,6 +605,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
             m = cal.get(Calendar.MONTH);
             a = cal.get(Calendar.YEAR) - 1900;
             loteFechaFab = new Date(a, m, d);
+            loteCodigo = ValidacionDeTexto.generarLoteCodigo(String.valueOf(loteFechaFab));
         } catch (Exception e) {
             mensajeError(e.getMessage());
             loteFechaFab = new Date(2020 - 1900, 00, 01);
@@ -639,8 +662,6 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
         }
     }//GEN-LAST:event_cboArticuloActionPerformed
 
-  
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -668,13 +689,13 @@ public class FrmLote1 extends javax.swing.JInternalFrame  {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rbtnActivo;
-    private javax.swing.JRadioButton rbtnCodigo;
+    private javax.swing.JRadioButton rbtnArticulo;
     private javax.swing.JRadioButton rbtnDescripcion;
     private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.ButtonGroup rbtngCampoBusqueda;
     private javax.swing.ButtonGroup rbtngEstado;
     private javax.swing.JTabbedPane tabbGeneral;
-    private javax.swing.JTable tblLote;
+    private javax.swing.JTable tblListado;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodArticulo;
     private javax.swing.JTextField txtCodigoLote;

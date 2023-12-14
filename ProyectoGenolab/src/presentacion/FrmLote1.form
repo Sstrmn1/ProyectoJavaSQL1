@@ -83,7 +83,7 @@
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="rbtnDescripcion" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="rbtnCodigo" min="-2" max="-2" attributes="0"/>
+                              <Component id="rbtnArticulo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -103,7 +103,7 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="rbtnDescripcion" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="rbtnCodigo" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="rbtnArticulo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -138,15 +138,16 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="rbtngCampoBusqueda"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Descripcion"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JRadioButton" name="rbtnCodigo">
+            <Component class="javax.swing.JRadioButton" name="rbtnArticulo">
               <Properties>
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="rbtngCampoBusqueda"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Codigo"/>
+                <Property name="text" type="java.lang.String" value="Articulo"/>
               </Properties>
             </Component>
             <Component class="javax.swing.JButton" name="btnEditar">
@@ -172,7 +173,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="tblLote">
+                <Component class="javax.swing.JTable" name="tblListado">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="0" rowCount="0"/>
@@ -379,6 +380,7 @@
                 <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                   <ComponentRef name="rbtngEstado"/>
                 </Property>
+                <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Activo"/>
               </Properties>
             </Component>

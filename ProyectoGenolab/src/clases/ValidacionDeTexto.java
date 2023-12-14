@@ -85,4 +85,17 @@ public class ValidacionDeTexto {
         return resultado;
     }
 
+    public static String generarLoteCodigo(String cadena) {
+        // Verifica si la cadena no es nula y tiene al menos dos caracteres
+        if (cadena != null && cadena.length() >= 2) {
+            // Remueve los dos primeros caracteres
+            cadena = cadena.substring(2);
+        }
+
+        // Remueve los caracteres "-"
+        cadena = cadena.replace("-", "");
+
+        return cadena;
+    }
+
 }
