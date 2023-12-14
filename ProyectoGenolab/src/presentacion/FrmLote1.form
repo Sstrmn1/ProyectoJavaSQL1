@@ -141,6 +141,9 @@
                 <Property name="selected" type="boolean" value="true"/>
                 <Property name="text" type="java.lang.String" value="Descripcion"/>
               </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="rbtnDescripcionStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JRadioButton" name="rbtnArticulo">
               <Properties>
@@ -149,6 +152,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="Articulo"/>
               </Properties>
+              <Events>
+                <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="rbtnArticuloStateChanged"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnEditar">
               <Properties>

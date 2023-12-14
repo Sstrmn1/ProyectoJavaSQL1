@@ -77,6 +77,54 @@ public class LoteControl {
         return this.modeloTabla;
     }
 
+    public DefaultTableModel listar(String texto, String campo) {
+        List<Lote> lista = new ArrayList();
+        lista.addAll(DATOSLOTE.listar(texto, campo));
+        String[] titulos = {"ID",
+            "IDArt",
+            "IDLab",
+            "Articulo",
+            "Descripcion",
+            "Lote",
+            "Fecha fab.",
+            "Fecha exp.",
+            "Stock",
+            "Precio uni.",
+            "Laboratorio",
+            "Estado"};
+        this.modeloTabla = new DefaultTableModel(null, titulos);
+
+        String estado;
+        String[] registro = new String[12];
+        this.registrosMostrados = 0;
+
+        for (Lote item : lista) {
+            if (item.isActivo()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
+
+            registro[0] = Integer.toString(item.getIdLote());
+            registro[1] = Integer.toString(item.getIdArticulo());
+            registro[2] = Integer.toString(item.getIdLaboratorio());
+            registro[3] = item.getArticuloCodigo();
+            registro[4] = item.getArticuloDescripcion();
+            registro[5] = item.getLoteCodigo();
+            registro[6] = String.valueOf(item.getFechaFabricacion());
+            registro[7] = String.valueOf(item.getFechaExpiracion());
+            registro[8] = Integer.toString(item.getStock());
+            registro[9] = Float.toString(item.getPrecioUnitario());
+            registro[10] = item.getLaboratorioNombre();
+
+            registro[11] = estado;
+
+            this.modeloTabla.addRow(registro);
+            registrosMostrados++;
+        }
+        return this.modeloTabla;
+    }
+
     public DefaultComboBoxModel cargarArticulo() {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
         List<Articulo> lista = new ArrayList();

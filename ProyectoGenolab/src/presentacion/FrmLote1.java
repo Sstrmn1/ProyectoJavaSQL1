@@ -13,11 +13,13 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
 
     //atributos
     public final LoteControl CONTROL;
+    private String filtro;
 
     public FrmLote1() {
         initComponents();
+        this.filtro = "a.descripcion";
         this.CONTROL = new LoteControl();
-        this.listado("");
+        this.listado("", this.filtro);
         this.listarCombobox();
         dcFabricacion.setDate(new Date(1970 - 1900, 00, 01));
         dcExpiracion.setDate(new Date(1970 - 1900, 00, 01));
@@ -28,11 +30,20 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
     }
 
     //metodos
-    private void listado(String texto) {
-        tblListado.setModel(this.CONTROL.listar(texto));
+    private void listado(String texto, String campo) {
+        tblListado.setModel(this.CONTROL.listar(texto, campo));
         TableRowSorter orden = new TableRowSorter(tblListado.getModel());
         tblListado.setRowSorter(orden);
         ocultarColumnas();
+    }
+
+    private void seleccionarFiltro() {
+        if (rbtnDescripcion.isSelected()) {
+            this.filtro = "a.descripcion";
+        }
+        if (rbtnArticulo.isSelected()) {
+            this.filtro = "a.codigo";
+        }
     }
 
     private void listarCombobox() {
@@ -159,9 +170,19 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
         rbtngCampoBusqueda.add(rbtnDescripcion);
         rbtnDescripcion.setSelected(true);
         rbtnDescripcion.setText("Descripcion");
+        rbtnDescripcion.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnDescripcionStateChanged(evt);
+            }
+        });
 
         rbtngCampoBusqueda.add(rbtnArticulo);
         rbtnArticulo.setText("Articulo");
+        rbtnArticulo.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnArticuloStateChanged(evt);
+            }
+        });
 
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -507,7 +528,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
             }
             limpiar();
             tabbGeneral.setSelectedIndex(0);
-            this.listado("");
+            this.listado("", this.filtro);
         } else {
             limpiar();
             desactivar();
@@ -516,7 +537,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+        this.listado(txtBuscar.getText(), this.filtro);        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -640,7 +661,7 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
         }
         limpiar();
         tabbGeneral.setSelectedIndex(0);
-        this.listado("");
+        this.listado("", this.filtro);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -661,6 +682,14 @@ public class FrmLote1 extends javax.swing.JInternalFrame {
             return;
         }
     }//GEN-LAST:event_cboArticuloActionPerformed
+
+    private void rbtnDescripcionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnDescripcionStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnDescripcionStateChanged
+
+    private void rbtnArticuloStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnArticuloStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnArticuloStateChanged
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
