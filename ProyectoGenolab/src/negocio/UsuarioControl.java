@@ -62,6 +62,41 @@ public class UsuarioControl {
         }
         return this.modeloTabla;
     }
+    
+    public DefaultTableModel listar(String texto, String campo) {
+        List<Usuario> lista = new ArrayList();
+        lista.addAll(DATOSUSUARIO.listar(texto, campo));
+        String[] titulos = {"ID", "IDRol", "Rol", "Nombre", "Apellido", "Password", "CI", "Email", "Fecha Nac.", "Foto", "Activo"};
+        this.modeloTabla = new DefaultTableModel(null, titulos);
+
+        String estado;
+        String[] registro = new String[11];
+        this.registrosMostrados = 0;
+
+        for (Usuario item : lista) {
+            if (item.isActivo()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
+
+            registro[0] = Integer.toString(item.getIdUsuario());
+            registro[1] = Integer.toString(item.getIdRol());
+            registro[2] = item.getRolNombre();
+            registro[3] = item.getNombre();
+            registro[4] = item.getApellido();
+            registro[5] = item.getPassword();
+            registro[6] = item.getCi();
+            registro[7] = item.getEmail();
+            registro[8] = String.valueOf(item.getFechaNac());
+            registro[9] = item.getFoto();
+            registro[10] = estado;
+
+            this.modeloTabla.addRow(registro);
+            registrosMostrados++;
+        }
+        return this.modeloTabla;
+    }
 
     public String login(String email, String password) {
         String resp = "0";

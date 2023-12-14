@@ -46,6 +46,31 @@ public class UsuarioDAO implements CrudSimpleInterface<Usuario> {
         }
         return registros;
     }
+    
+    public List<Usuario> listar(String texto, String campo) {
+        List<Usuario> registros = new ArrayList();
+        try {
+            ps = CON.conectar().prepareStatement("SELECT u.id_usuario, u.id_rol, r.nombre AS rol_nombre, u.password, u.nombre, u.apellido, \n"
+                    + "u.ci, u.email,  u.fecha_nacimiento, u.foto, u .activo\n"
+                    + "FROM usuario u INNER JOIN rol r ON u.id_rol=r.id_rol WHERE "+campo+" LIKE ? ORDER BY u.id_usuario DESC");
+            ps.setString(1, "%" + texto + "%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                registros.add(new Usuario(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4),
+                        rs.getString(5), rs.getString(6), rs.getString(7),
+                        rs.getString(8), rs.getDate(9), rs.getString(10), rs.getBoolean(11)));
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return registros;
+    }
 
 //    public List<Usuario> listarNombres() {
 //        List<Usuario> registros = new ArrayList();

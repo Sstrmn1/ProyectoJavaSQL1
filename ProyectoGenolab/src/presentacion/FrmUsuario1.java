@@ -30,6 +30,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     private final String DIRECTORIO = "src/files/usuarios/";
     private String imagen = "";
     private String imagenAnt;
+    private String filtro;
 
     //atributos de camara
     File salidaImage;
@@ -44,8 +45,9 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     //constructor
     public FrmUsuario1() {
         initComponents();
+        this.filtro = "u.nombre";
         this.CONTROL = new UsuarioControl();
-        this.listado("");
+        this.listado("", this.filtro);
         this.listarCombobox();
 
         dcFechaNac.setDate(new Date(1970 - 1900, 00, 01));
@@ -69,10 +71,29 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     private void desactiva() {
         btnCapturaFoto.setEnabled(false);
     }
+    
+    private void seleccionarFiltro(){
+        if (rbtnNombre.isSelected()) {
+            this.filtro = "u.nombre";            
+        } 
+        if (rbtnRol.isSelected()) {
+            this.filtro = "r.nombre";
+        }
+        if (rbtnCI.isSelected()) {
+            this.filtro = "u.ci";
+        }
+    }
 
     //metodos
     private void listado(String texto) {
         tblUsuario.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tblUsuario.getModel());
+        tblUsuario.setRowSorter(orden);
+        ocultarColumnas();
+    }
+
+    private void listado(String texto, String campo) {
+        tblUsuario.setModel(this.CONTROL.listar(texto, campo));
         TableRowSorter orden = new TableRowSorter(tblUsuario.getModel());
         tblUsuario.setRowSorter(orden);
         ocultarColumnas();
@@ -180,6 +201,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         tblUsuario = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
+        rbtnCI = new javax.swing.JRadioButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
@@ -217,6 +239,8 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setTitle("Usuarios");
+        setToolTipText("");
         setPreferredSize(new java.awt.Dimension(800, 631));
 
         jLabel2.setText("Buscar usuario");
@@ -233,10 +257,21 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         });
 
         rbtgOpcionBusqueda.add(rbtnNombre);
+        rbtnNombre.setSelected(true);
         rbtnNombre.setText("Nombre");
+        rbtnNombre.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnNombreStateChanged(evt);
+            }
+        });
 
         rbtgOpcionBusqueda.add(rbtnRol);
         rbtnRol.setText("Rol");
+        rbtnRol.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnRolStateChanged(evt);
+            }
+        });
 
         tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,6 +288,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         });
         jScrollPane1.setViewportView(tblUsuario);
 
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Exit.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,10 +296,19 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
+            }
+        });
+
+        rbtgOpcionBusqueda.add(rbtnCI);
+        rbtnCI.setText("CI");
+        rbtnCI.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnCIStateChanged(evt);
             }
         });
 
@@ -277,6 +322,10 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnEditar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnSalir))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -285,12 +334,10 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
                                         .addGap(46, 46, 46)
                                         .addComponent(rbtnNombre)
                                         .addGap(32, 32, 32)
-                                        .addComponent(rbtnRol)))
-                                .addGap(0, 319, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnEditar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnSalir)))
+                                        .addComponent(rbtnRol)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(rbtnCI)))
+                                .addGap(0, 253, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -302,7 +349,8 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(rbtnNombre)
-                    .addComponent(rbtnRol))
+                    .addComponent(rbtnRol)
+                    .addComponent(rbtnCI))
                 .addGap(19, 19, 19)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalir)
@@ -326,6 +374,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
         jLabel8.setText("Contraseña");
 
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Upload.png"))); // NOI18N
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -333,6 +382,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -353,6 +403,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
         jLabel11.setText("Id usuario");
 
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Undo.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -379,6 +430,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         lblFoto.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lblFoto.setPreferredSize(new java.awt.Dimension(225, 220));
 
+        btnIniciarCam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132207_camera_camera.png"))); // NOI18N
         btnIniciarCam.setText("Iniciar camara");
         btnIniciarCam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -386,6 +438,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnApagarCam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Turn off.png"))); // NOI18N
         btnApagarCam.setText("Apagar camara");
         btnApagarCam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -393,6 +446,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnCapturaFoto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Record.png"))); // NOI18N
         btnCapturaFoto.setText("Capturar");
         btnCapturaFoto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -455,10 +509,10 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
                                 .addComponent(lblFoto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(btnIniciarCam)
                                     .addComponent(btnApagarCam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnCapturaFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(btnCapturaFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(btnIniciarCam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 140, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -508,7 +562,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
                         .addComponent(btnApagarCam)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnCapturaFoto)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 13, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
                     .addComponent(btnGuardar)
@@ -547,7 +601,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_tblUsuarioMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+        this.listado(txtBuscar.getText(), this.filtro);        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -764,6 +818,18 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         rutaWebCam = webcam.getImage();
     }//GEN-LAST:event_btnCapturaFotoActionPerformed
 
+    private void rbtnNombreStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnNombreStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnNombreStateChanged
+
+    private void rbtnRolStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnRolStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnRolStateChanged
+
+    private void rbtnCIStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnCIStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnCIStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnApagarCam;
@@ -796,6 +862,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup rbtgEstado;
     private javax.swing.ButtonGroup rbtgOpcionBusqueda;
     private javax.swing.JRadioButton rbtnActivo;
+    private javax.swing.JRadioButton rbtnCI;
     private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.JRadioButton rbtnNombre;
     private javax.swing.JRadioButton rbtnRol;
