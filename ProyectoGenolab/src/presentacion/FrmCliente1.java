@@ -74,7 +74,7 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
 
     private void aplicarFiltros() {
         FiltrosDeTexto.applyNumericFilter(txtNumeroDocumento);
-        FiltrosDeTexto.applyNumericFilter(txtTelefono);        
+        FiltrosDeTexto.applyNumericFilter(txtTelefono);
     }
 
     @SuppressWarnings("unchecked")
@@ -402,6 +402,11 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
         if (!emailEsValido) {
             mensajeAlerta("Debe introducir un email valido");
             txtEmail.requestFocus();
+            return;
+        }
+        if (txtNombre.getText().isEmpty() || txtNumeroDocumento.getText().isEmpty() || txtTelefono.getText().isEmpty()) {
+            mensajeAlerta("Debe datos en todos los campos necesarios");
+            txtNombre.requestFocus();
             return;
         }
         String respuesta = "";

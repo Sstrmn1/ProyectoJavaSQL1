@@ -19,8 +19,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import org.apache.commons.validator.EmailValidator;
+import clases.FiltrosDeTexto;
 
-public class FrmUsuario1 extends javax.swing.JInternalFrame{
+public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
     //atributos
     private final UsuarioControl CONTROL;
@@ -57,6 +59,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
         pnlCamara.add(webcamPanel);
 
         desactiva();
+        aplicarFiltros();
     }
 
     private void activa() {
@@ -156,6 +159,10 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
         }
     }
 
+    private void aplicarFiltros() {
+        FiltrosDeTexto.applyNumericFilter(txtCi);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -208,6 +215,9 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setPreferredSize(new java.awt.Dimension(800, 631));
 
         jLabel2.setText("Buscar usuario");
 
@@ -276,7 +286,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
                                         .addComponent(rbtnNombre)
                                         .addGap(32, 32, 32)
                                         .addComponent(rbtnRol)))
-                                .addGap(0, 214, Short.MAX_VALUE))
+                                .addGap(0, 319, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnEditar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -430,7 +440,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
                                         .addComponent(rbtnInactivo))
                                     .addComponent(jLabel10)
                                     .addComponent(jLabel7)
-                                    .addComponent(cboRol, 0, 233, Short.MAX_VALUE))
+                                    .addComponent(cboRol, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel11)
@@ -448,7 +458,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
                                     .addComponent(btnIniciarCam)
                                     .addComponent(btnApagarCam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(btnCapturaFoto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 63, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -541,7 +551,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -753,7 +763,6 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame{
         lblFoto.setIcon(iconoFoto);
         rutaWebCam = webcam.getImage();
     }//GEN-LAST:event_btnCapturaFotoActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
