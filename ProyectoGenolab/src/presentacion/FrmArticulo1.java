@@ -4,16 +4,20 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.ArticuloControl;
 import entidades.FormaFarmaceutica;
+import clases.ValidacionDeTexto;
 
 public class FrmArticulo1 extends javax.swing.JInternalFrame {
 
     //atributos
     public final ArticuloControl CONTROL;
+    private String filtro;
 
     public FrmArticulo1() {
         initComponents();
+        this.filtro = "a.descripcion";
         this.CONTROL = new ArticuloControl();
-        this.listado("");
+//        this.listado("");
+        this.listado("", this.filtro);
         this.listarCombobox();
 
         txtId.setEnabled(false);
@@ -21,10 +25,16 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     }
 
     //metodos
-    private void listado(String texto) {
-        tblArticulo.setModel(this.CONTROL.listar(texto));
-        TableRowSorter orden = new TableRowSorter(tblArticulo.getModel());
-        tblArticulo.setRowSorter(orden);
+//    private void listado(String texto) {
+//        tblArticulo.setModel(this.CONTROL.listar(texto));
+//        TableRowSorter orden = new TableRowSorter(tblArticulo.getModel());
+//        tblArticulo.setRowSorter(orden);
+//    }
+    private void listado(String texto, String campo) {
+        tblListado.setModel(this.CONTROL.listar(texto, campo));
+        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+        tblListado.setRowSorter(orden);
+        ocultarColumnas();
     }
 
     private void listarCombobox() {
@@ -34,11 +44,33 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     private void activar() {
         btnGuardar.setEnabled(true);
         btnRegistrar.setEnabled(false);
+        btnLimpiar.setEnabled(false);
     }
 
     private void desactivar() {
         btnGuardar.setEnabled(false);
         btnRegistrar.setEnabled(true);
+        btnLimpiar.setEnabled(true);
+    }
+
+    private void seleccionarFiltro() {
+        if (rbtnDescripcion.isSelected()) {
+            this.filtro = "a.descripcion";
+        }
+        if (rbtnCodigo.isSelected()) {
+            this.filtro = "a.codigo";
+        }
+    }
+
+    private void ocultarColumnas() {
+        tblListado.getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(0).setMinWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(1).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
     }
 
     private void mensajeError(String mensaje) {
@@ -57,7 +89,6 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         txtDescripcion.setText("");
         txtId.setText("");
         txtCodigo.setText("");
-        txtConcentracion.setText("");
         cboFFarmaceutica.setSelectedItem(null);
         rbtnActivo.setSelected(true);
         txtDescripcion.requestFocus();
@@ -86,7 +117,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         btnEditar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblArticulo = new javax.swing.JTable();
+        tblListado = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         txtDescripcion = new javax.swing.JTextField();
@@ -94,8 +125,6 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         txtId = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         cboFFarmaceutica = new javax.swing.JComboBox<>();
-        jLabel6 = new javax.swing.JLabel();
-        txtConcentracion = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -107,6 +136,8 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setResizable(true);
+        setTitle("Articulos");
 
         jLabel1.setText("Buscar articulo");
 
@@ -119,11 +150,23 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         jLabel2.setText("Campo de busqueda");
 
         rbtngCampoBusqueda.add(rbtnDescripcion);
+        rbtnDescripcion.setSelected(true);
         rbtnDescripcion.setText("Descripcion");
+        rbtnDescripcion.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnDescripcionStateChanged(evt);
+            }
+        });
 
         rbtngCampoBusqueda.add(rbtnCodigo);
         rbtnCodigo.setText("Codigo");
+        rbtnCodigo.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnCodigoStateChanged(evt);
+            }
+        });
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -131,6 +174,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Exit.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -138,7 +182,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
             }
         });
 
-        tblArticulo.setModel(new javax.swing.table.DefaultTableModel(
+        tblListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -146,7 +190,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(tblArticulo);
+        jScrollPane1.setViewportView(tblListado);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -208,24 +252,20 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
 
         jLabel5.setText("Forma farmaceutica");
 
-        jLabel6.setText("Concentracion");
-
-        txtConcentracion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtConcentracionActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("Codigo");
+
+        txtCodigo.setEnabled(false);
 
         jLabel8.setText("Estado");
 
         rbtngEstado.add(rbtnActivo);
+        rbtnActivo.setSelected(true);
         rbtnActivo.setText("Activo");
 
         rbtngEstado.add(rbtnInactivo);
         rbtnInactivo.setText("Inactivo");
 
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/OK.png"))); // NOI18N
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -240,6 +280,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
             }
         });
 
+        btnGuardar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Save.png"))); // NOI18N
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -277,10 +318,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
                                         .addComponent(jLabel5)
                                         .addGap(0, 0, Short.MAX_VALUE))
                                     .addComponent(cboFFarmaceutica, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtConcentracion))))
+                                .addGap(96, 96, 96)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 198, Short.MAX_VALUE)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel4)
@@ -303,12 +341,10 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jLabel6)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cboFFarmaceutica, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtConcentracion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -318,7 +354,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
                 .addGap(52, 52, 52)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRegistrar)
-                    .addComponent(btnLimpiar)
+                    .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar))
                 .addContainerGap(231, Short.MAX_VALUE))
         );
@@ -345,10 +381,6 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtConcentracionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtConcentracionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtConcentracionActionPerformed
-
     private void txtIdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIdActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIdActionPerformed
@@ -357,13 +389,14 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         if (mensajeConfirmacion("Desea editar este registro?") == 0) {
             String respuesta = "";
 
-            String articuloDescripcion = txtDescripcion.getText();
-            String articuloConcentracion = txtConcentracion.getText();
-            String articuloCodigo = txtCodigo.getText();
+            String articuloDescripcion = txtDescripcion.getText().toUpperCase();
+//            String articuloCodigo = txtCodigo.getText();
+
             int articuloId = Integer.parseInt(txtId.getText());
             FormaFarmaceutica fFarmaceuticaSeleccionada = (FormaFarmaceutica) cboFFarmaceutica.getSelectedItem();
-            String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion();
+            String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion().toUpperCase();
             int fFarmaceuticaId = fFarmaceuticaSeleccionada.getIdFFarmaceutica();
+            String articuloCodigo = ValidacionDeTexto.generarCodigo(fFarmaceuticaDescripcion, articuloDescripcion);
 
             boolean estado;
             if (rbtnActivo.isSelected()) {
@@ -372,7 +405,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
                 estado = false;
             }
 
-            respuesta = this.CONTROL.actualizar(articuloId,fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloConcentracion, articuloCodigo, estado);
+            respuesta = this.CONTROL.actualizar(articuloId, fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloCodigo, estado);
             if (respuesta.equals("OK")) {
                 mensajeInformacion("Registro actualizado");
             } else {
@@ -380,7 +413,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
             }
             limpiar();
             tabbArticulo.setSelectedIndex(0);
-            this.listado("");
+            this.listado("", this.filtro);
         } else {
             limpiar();
             desactivar();
@@ -389,30 +422,28 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+        this.listado(txtBuscar.getText(), this.filtro);        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        System.exit(0);        // TODO add your handling code here:
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblArticulo.getSelectedRowCount() == 1) {
-            int fila = tblArticulo.getSelectedRow();
+        if (tblListado.getSelectedRowCount() == 1) {
+            int fila = tblListado.getSelectedRow();
 
-            String articuloId = String.valueOf(tblArticulo.getValueAt(fila, 0));
-            String ffarmaceuticaId = String.valueOf(tblArticulo.getValueAt(fila, 1));
-            String articuloCodigo = String.valueOf(tblArticulo.getValueAt(fila, 2));
-            String articuloDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 3));
-            String articuloConcentracion = String.valueOf(tblArticulo.getValueAt(fila, 4));
-            String ffarmaceuticaDescripcion = String.valueOf(tblArticulo.getValueAt(fila, 5));
-            String estado = String.valueOf(tblArticulo.getValueAt(fila, 6));
+            String articuloId = String.valueOf(tblListado.getValueAt(fila, 0));
+            String ffarmaceuticaId = String.valueOf(tblListado.getValueAt(fila, 1));
+            String articuloCodigo = String.valueOf(tblListado.getValueAt(fila, 2));
+            String articuloDescripcion = String.valueOf(tblListado.getValueAt(fila, 3));
+            String ffarmaceuticaDescripcion = String.valueOf(tblListado.getValueAt(fila, 4));
+            String estado = String.valueOf(tblListado.getValueAt(fila, 5));
 
             FormaFarmaceutica ffarmaceuticaSeleccionada = new FormaFarmaceutica(Integer.parseInt(ffarmaceuticaId), ffarmaceuticaDescripcion);
 
             txtId.setText(articuloId);
             txtDescripcion.setText(articuloDescripcion);
-            txtConcentracion.setText(articuloConcentracion);
             txtCodigo.setText(articuloCodigo);
 
             cboFFarmaceutica.setSelectedItem(ffarmaceuticaSeleccionada);
@@ -437,13 +468,12 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         String respuesta = "";
 
-        String articuloDescripcion = txtDescripcion.getText();
-        String articuloConcentracion = txtConcentracion.getText();
-        String articuloCodigo = txtCodigo.getText();
+        String articuloDescripcion = txtDescripcion.getText().toUpperCase();
 
         FormaFarmaceutica fFarmaceuticaSeleccionada = (FormaFarmaceutica) cboFFarmaceutica.getSelectedItem();
-        String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion();
+        String fFarmaceuticaDescripcion = fFarmaceuticaSeleccionada.getDescripcion().toUpperCase();
         int fFarmaceuticaId = fFarmaceuticaSeleccionada.getIdFFarmaceutica();
+        String articuloCodigo = ValidacionDeTexto.generarCodigo(fFarmaceuticaDescripcion, articuloDescripcion);
 
         boolean estado;
         if (rbtnActivo.isSelected()) {
@@ -452,7 +482,7 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
             estado = false;
         }
 
-        respuesta = this.CONTROL.insertar(fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloConcentracion, articuloCodigo, estado);
+        respuesta = this.CONTROL.insertar(fFarmaceuticaId, articuloDescripcion, fFarmaceuticaDescripcion, articuloCodigo, estado);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Registro insertado");
         } else {
@@ -460,14 +490,21 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
         }
         limpiar();
         tabbArticulo.setSelectedIndex(0);
-        this.listado("");
+        this.listado("", this.filtro);
         // TODO add your handling code here:
     }//GEN-LAST:event_btnRegistrarActionPerformed
+
+    private void rbtnDescripcionStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnDescripcionStateChanged
+        seleccionarFiltro();        // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnDescripcionStateChanged
+
+    private void rbtnCodigoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnCodigoStateChanged
+        seleccionarFiltro();            // TODO add your handling code here:
+    }//GEN-LAST:event_rbtnCodigoStateChanged
 
     /**
      * @param args the command line arguments
      */
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEditar;
@@ -481,7 +518,6 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
@@ -494,10 +530,9 @@ public class FrmArticulo1 extends javax.swing.JInternalFrame {
     private javax.swing.ButtonGroup rbtngCampoBusqueda;
     private javax.swing.ButtonGroup rbtngEstado;
     private javax.swing.JTabbedPane tabbArticulo;
-    private javax.swing.JTable tblArticulo;
+    private javax.swing.JTable tblListado;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCodigo;
-    private javax.swing.JTextField txtConcentracion;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtId;
     // End of variables declaration//GEN-END:variables

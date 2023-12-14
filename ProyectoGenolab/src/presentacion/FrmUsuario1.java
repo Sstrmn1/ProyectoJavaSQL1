@@ -20,7 +20,7 @@ import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import org.apache.commons.validator.EmailValidator;
-import clases.FiltrosDeTexto;
+import clases.ValidacionDeTexto;
 
 public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
@@ -86,16 +86,16 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
     //metodos
     private void listado(String texto) {
-        tblUsuario.setModel(this.CONTROL.listar(texto));
-        TableRowSorter orden = new TableRowSorter(tblUsuario.getModel());
-        tblUsuario.setRowSorter(orden);
+        tblListado.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+        tblListado.setRowSorter(orden);
         ocultarColumnas();
     }
 
     private void listado(String texto, String campo) {
-        tblUsuario.setModel(this.CONTROL.listar(texto, campo));
-        TableRowSorter orden = new TableRowSorter(tblUsuario.getModel());
-        tblUsuario.setRowSorter(orden);
+        tblListado.setModel(this.CONTROL.listar(texto, campo));
+        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+        tblListado.setRowSorter(orden);
         ocultarColumnas();
     }
 
@@ -150,22 +150,22 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     }
 
     private void ocultarColumnas() {
-        tblUsuario.getColumnModel().getColumn(0).setMaxWidth(30);
-        tblUsuario.getColumnModel().getColumn(0).setMinWidth(30);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
-        tblUsuario.getColumnModel().getColumn(1).setMaxWidth(0);
-        tblUsuario.getColumnModel().getColumn(1).setMinWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
-        tblUsuario.getColumnModel().getColumn(5).setMaxWidth(0);
-        tblUsuario.getColumnModel().getColumn(5).setMinWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
-        tblUsuario.getColumnModel().getColumn(9).setMaxWidth(0);
-        tblUsuario.getColumnModel().getColumn(9).setMinWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
-        tblUsuario.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(0).setMinWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(30);
+        tblListado.getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(1).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(5).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(5).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(5).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(9).setMaxWidth(0);
+        tblListado.getColumnModel().getColumn(9).setMinWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
+        tblListado.getTableHeader().getColumnModel().getColumn(9).setMaxWidth(0);
     }
 
     private void subirImagenes() {
@@ -181,7 +181,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     }
 
     private void aplicarFiltros() {
-        FiltrosDeTexto.applyNumericFilter(txtCi);
+        ValidacionDeTexto.applyNumericFilter(txtCi);
     }
 
     @SuppressWarnings("unchecked")
@@ -198,7 +198,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
         rbtnNombre = new javax.swing.JRadioButton();
         rbtnRol = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblUsuario = new javax.swing.JTable();
+        tblListado = new javax.swing.JTable();
         btnSalir = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         rbtnCI = new javax.swing.JRadioButton();
@@ -273,7 +273,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
             }
         });
 
-        tblUsuario.setModel(new javax.swing.table.DefaultTableModel(
+        tblListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -281,12 +281,12 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
             }
         ));
-        tblUsuario.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblListado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblUsuarioMouseClicked(evt);
+                tblListadoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblUsuario);
+        jScrollPane1.setViewportView(tblListado);
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Exit.png"))); // NOI18N
         btnSalir.setText("Salir");
@@ -595,10 +595,10 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_txtBuscarActionPerformed
 
-    private void tblUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsuarioMouseClicked
+    private void tblListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListadoMouseClicked
 
 
-    }//GEN-LAST:event_tblUsuarioMouseClicked
+    }//GEN-LAST:event_tblListadoMouseClicked
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         this.listado(txtBuscar.getText(), this.filtro);        // TODO add your handling code here:
@@ -730,21 +730,21 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (tblUsuario.getSelectedRowCount() == 1) {
-            int fila = tblUsuario.getSelectedRow();
+        if (tblListado.getSelectedRowCount() == 1) {
+            int fila = tblListado.getSelectedRow();
 
-            String usuarioId = String.valueOf(tblUsuario.getValueAt(fila, 0));
-            String rolId = String.valueOf(tblUsuario.getValueAt(fila, 1));
-            String rolNombre = String.valueOf(tblUsuario.getValueAt(fila, 2));
-            String usuarioNombre = String.valueOf(tblUsuario.getValueAt(fila, 3));
-            String usuarioApellido = String.valueOf(tblUsuario.getValueAt(fila, 4));
-            String usuarioPassword = String.valueOf(tblUsuario.getValueAt(fila, 5));
-            String usuarioCI = String.valueOf(tblUsuario.getValueAt(fila, 6));
-            String usuarioEmail = String.valueOf(tblUsuario.getValueAt(fila, 7));
-            String usuarioFoto = String.valueOf(tblUsuario.getValueAt(fila, 9));
-            String estado = String.valueOf(tblUsuario.getValueAt(fila, 10));
+            String usuarioId = String.valueOf(tblListado.getValueAt(fila, 0));
+            String rolId = String.valueOf(tblListado.getValueAt(fila, 1));
+            String rolNombre = String.valueOf(tblListado.getValueAt(fila, 2));
+            String usuarioNombre = String.valueOf(tblListado.getValueAt(fila, 3));
+            String usuarioApellido = String.valueOf(tblListado.getValueAt(fila, 4));
+            String usuarioPassword = String.valueOf(tblListado.getValueAt(fila, 5));
+            String usuarioCI = String.valueOf(tblListado.getValueAt(fila, 6));
+            String usuarioEmail = String.valueOf(tblListado.getValueAt(fila, 7));
+            String usuarioFoto = String.valueOf(tblListado.getValueAt(fila, 9));
+            String estado = String.valueOf(tblListado.getValueAt(fila, 10));
 
-            Date usuarioFechaNac = Date.valueOf(tblUsuario.getValueAt(fila, 8).toString());
+            Date usuarioFechaNac = Date.valueOf(tblListado.getValueAt(fila, 8).toString());
 
             Rol rolSeleccionado = new Rol(Integer.parseInt(rolId), rolNombre);
 
@@ -867,7 +867,7 @@ public class FrmUsuario1 extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton rbtnNombre;
     private javax.swing.JRadioButton rbtnRol;
     private javax.swing.JTabbedPane tabbGeneral;
-    private javax.swing.JTable tblUsuario;
+    private javax.swing.JTable tblListado;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtCi;

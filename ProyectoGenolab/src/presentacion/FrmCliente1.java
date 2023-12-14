@@ -5,7 +5,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.ClienteControl;
 import org.apache.commons.validator.EmailValidator;
-import clases.FiltrosDeTexto;
+import clases.ValidacionDeTexto;
 
 public class FrmCliente1 extends javax.swing.JInternalFrame {
 
@@ -73,8 +73,8 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
     }
 
     private void aplicarFiltros() {
-        FiltrosDeTexto.applyNumericFilter(txtNumeroDocumento);
-        FiltrosDeTexto.applyNumericFilter(txtTelefono);
+        ValidacionDeTexto.applyNumericFilter(txtNumeroDocumento);
+        ValidacionDeTexto.longitudDeTelefono(txtTelefono, 8);
     }
 
     @SuppressWarnings("unchecked")
@@ -409,6 +409,7 @@ public class FrmCliente1 extends javax.swing.JInternalFrame {
             txtNombre.requestFocus();
             return;
         }
+
         String respuesta = "";
         String nombre = txtNombre.getText();
         String tipoDocumento = String.valueOf(cboTIpoDocumento.getSelectedItem());

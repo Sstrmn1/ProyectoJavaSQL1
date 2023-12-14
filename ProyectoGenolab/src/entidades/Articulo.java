@@ -7,7 +7,6 @@ public class Articulo {
     private int idFfarmaceutica;
     private String descripcion;
     private String ffDescripcion;
-    private String concentracion;
     private String codigo;
     private boolean activo;
 
@@ -20,12 +19,11 @@ public class Articulo {
         this.codigo = codigo;
     }   
 
-    public Articulo(int idArticulo, int idFfarmaceutica, String descripcion, String ffDescripcion, String concentracion, String codigo, boolean activo) {
+    public Articulo(int idArticulo, int idFfarmaceutica, String descripcion, String ffDescripcion, String codigo, boolean activo) {
         this.idArticulo = idArticulo;
         this.idFfarmaceutica = idFfarmaceutica;
         this.descripcion = descripcion;
         this.ffDescripcion = ffDescripcion;
-        this.concentracion = concentracion;
         this.codigo = codigo;
         this.activo = activo;
     }
@@ -62,14 +60,6 @@ public class Articulo {
         this.ffDescripcion = ffDescripcion;
     }
 
-    public String getConcentracion() {
-        return concentracion;
-    }
-
-    public void setConcentracion(String concentracion) {
-        this.concentracion = concentracion;
-    }
-
     public String getCodigo() {
         return codigo;
     }
@@ -93,14 +83,13 @@ public class Articulo {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + this.idArticulo;
-        hash = 59 * hash + this.idFfarmaceutica;
-        hash = 59 * hash + Objects.hashCode(this.descripcion);
-        hash = 59 * hash + Objects.hashCode(this.ffDescripcion);
-        hash = 59 * hash + Objects.hashCode(this.concentracion);
-        hash = 59 * hash + Objects.hashCode(this.codigo);
-        hash = 59 * hash + (this.activo ? 1 : 0);
+        int hash = 3;
+        hash = 83 * hash + this.idArticulo;
+        hash = 83 * hash + this.idFfarmaceutica;
+        hash = 83 * hash + Objects.hashCode(this.descripcion);
+        hash = 83 * hash + Objects.hashCode(this.ffDescripcion);
+        hash = 83 * hash + Objects.hashCode(this.codigo);
+        hash = 83 * hash + (this.activo ? 1 : 0);
         return hash;
     }
 
@@ -131,11 +120,9 @@ public class Articulo {
         if (!Objects.equals(this.ffDescripcion, other.ffDescripcion)) {
             return false;
         }
-        if (!Objects.equals(this.concentracion, other.concentracion)) {
-            return false;
-        }
         return Objects.equals(this.codigo, other.codigo);
     }
+
     
     
 }

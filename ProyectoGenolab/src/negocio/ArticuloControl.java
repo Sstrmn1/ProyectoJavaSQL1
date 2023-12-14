@@ -27,11 +27,11 @@ public class ArticuloControl {
     public DefaultTableModel listar(String texto) {
         List<Articulo> lista = new ArrayList();
         lista.addAll(DATOSARTICULO.listar(texto));
-        String[] titulos = {"ID", "IDFormaFarmaceutica", "Codigo", "Descripcion", "Concentracion", "FFarmaceutica", "Estado"};
+        String[] titulos = {"ID", "IDFormaFarmaceutica", "Codigo", "Descripcion", "FFarmaceutica", "Estado"};
         this.modeloTabla = new DefaultTableModel(null, titulos);
 
         String estado;
-        String[] registro = new String[11];
+        String[] registro = new String[6];
         this.registrosMostrados = 0;
 
         for (Articulo item : lista) {
@@ -45,9 +45,38 @@ public class ArticuloControl {
             registro[1] = Integer.toString(item.getIdFfarmaceutica());
             registro[2] = item.getCodigo();
             registro[3] = item.getDescripcion();
-            registro[4] = item.getConcentracion();
-            registro[5] = item.getFfDescripcion();
-            registro[6] = estado;
+            registro[4] = item.getFfDescripcion();
+            registro[5] = estado;
+
+            this.modeloTabla.addRow(registro);
+            registrosMostrados++;
+        }
+        return this.modeloTabla;
+    }
+    
+        public DefaultTableModel listar(String texto, String campo) {
+        List<Articulo> lista = new ArrayList();
+        lista.addAll(DATOSARTICULO.listar(texto, campo));
+        String[] titulos = {"ID", "IDFormaFarmaceutica", "Codigo", "Descripcion", "FFarmaceutica", "Estado"};
+        this.modeloTabla = new DefaultTableModel(null, titulos);
+
+        String estado;
+        String[] registro = new String[6];
+        this.registrosMostrados = 0;
+
+        for (Articulo item : lista) {
+            if (item.isActivo()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
+
+            registro[0] = Integer.toString(item.getIdArticulo());
+            registro[1] = Integer.toString(item.getIdFfarmaceutica());
+            registro[2] = item.getCodigo();
+            registro[3] = item.getDescripcion();
+            registro[4] = item.getFfDescripcion();
+            registro[5] = estado;
 
             this.modeloTabla.addRow(registro);
             registrosMostrados++;
@@ -65,8 +94,7 @@ public class ArticuloControl {
         return items;
     }
 
-    public String insertar(int idFFarmaceutica, String descripcion, String ffDescripcion,
-            String concentracion, String codigo,
+    public String insertar(int idFFarmaceutica, String descripcion, String ffDescripcion, String codigo,
             boolean estado) {
         if (DATOSARTICULO.existe(descripcion)) {
             return "El registro ya existe";
@@ -75,7 +103,6 @@ public class ArticuloControl {
             obj.setDescripcion(descripcion);
             obj.setFfDescripcion(ffDescripcion);
             obj.setCodigo(codigo);
-            obj.setConcentracion(concentracion);
             obj.setActivo(estado);
 
             if (DATOSARTICULO.insertar(obj)) {
@@ -88,13 +115,12 @@ public class ArticuloControl {
     }
 
     public String actualizar(int id, int idFFarmaceutica, String descripcion, String ffDescripcion,
-            String concentracion, String codigo, boolean estado) {
+             String codigo, boolean estado) {
         obj.setIdArticulo(id);
         obj.setIdFfarmaceutica(idFFarmaceutica);
         obj.setDescripcion(descripcion);
         obj.setFfDescripcion(ffDescripcion);
         obj.setCodigo(codigo);
-        obj.setConcentracion(concentracion);
         obj.setActivo(estado);
 
         if (DATOSARTICULO.actualizar(obj)) {
