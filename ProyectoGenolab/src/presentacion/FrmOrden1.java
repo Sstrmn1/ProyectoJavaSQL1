@@ -42,6 +42,28 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
 
         this.modeloTabla = new DefaultTableModel(null, titulos);
         this.listarDetalle();
+
+        cboArticulo.setSelectedItem(null);
+    }
+
+    private void limpiarOrden() {
+        txtSucursal.setText("");
+        txtCliente.setText("");
+        txtImporteTotal.setText("");
+        txtCantidad.setText("");
+        this.sucursal = new Sucursal();
+        this.cliente = new Cliente();
+        this.listaTransacciones = new ArrayList();
+        this.modeloTabla = new DefaultTableModel(null, titulos);
+        listarDetalle();
+
+    }
+
+    private void limpiarArticulo() {
+        cboLote.setSelectedItem(null);
+        cboArticulo.setSelectedItem(null);
+        txtCantidad.setText("");
+        cboArticulo.requestFocus();
     }
 
     private void listarComboboxArticulo() {
@@ -402,7 +424,10 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        limpiarOrden();
+        limpiarArticulo();
+        btnCliente.requestFocus();
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClienteActionPerformed
@@ -433,9 +458,12 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnSucursalActionPerformed
 
     private void cboArticuloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboArticuloActionPerformed
-        Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
-        int articuloId = articuloSeleccionado.getIdArticulo();
-        listarComboboxLote(articuloId);
+        if (!(cboArticulo.getSelectedItem() == null)) {
+            Articulo articuloSeleccionado = (Articulo) cboArticulo.getSelectedItem();
+            int articuloId = articuloSeleccionado.getIdArticulo();
+            listarComboboxLote(articuloId);
+        }
+
     }//GEN-LAST:event_cboArticuloActionPerformed
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
@@ -474,6 +502,7 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
             mensajeAdvertencia("Debe llenar todos los campos antes de proceder con esta operacion");
         }
         this.listarDetalle();
+        limpiarArticulo();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnQuitarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuitarActionPerformed
@@ -502,6 +531,10 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnQuitarActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
+        if (txtCliente.getText().isEmpty() || txtSucursal.getText().isEmpty()) {
+            mensajeAdvertencia("Debe seleccionar un cliente y sucursal");
+            return;
+        }
         String respuesta = "";
         ordenVenta.setIdSucursal(this.sucursal.getIdSucursal());
         ordenVenta.setIdUsuario(1);
@@ -510,9 +543,13 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
         respuesta = CONTROL.insertar(this.ordenVenta.getNumeroOrden(), this.ordenVenta.getIdSucursal(), this.ordenVenta.getIdUsuario(), this.listaTransacciones);
         if (respuesta.equals("OK")) {
             mensajeInformacion("Orden generada correctamente");
+            limpiarArticulo();
+            limpiarOrden();
         } else {
             mensajeError("Error generando orden");
         }
+//        limpiarArticulo();
+//        limpiarOrden();
     }//GEN-LAST:event_btnConfirmarActionPerformed
 
     private void txtImporteTotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtImporteTotalActionPerformed
