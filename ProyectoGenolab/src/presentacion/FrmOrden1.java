@@ -122,6 +122,8 @@ public class FrmOrden1 extends javax.swing.JInternalFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
         setMaximizable(true);
+        setResizable(true);
+        setTitle("Orden de venta");
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Generar orden"));
 

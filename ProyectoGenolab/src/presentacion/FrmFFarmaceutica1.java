@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.FormaFarmaceuticaControl;
 
-public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
+public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame {
 
     //atributos
     private final FormaFarmaceuticaControl CONTROL;
@@ -20,9 +20,10 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
 
     //metodos
     private void listado(String texto) {
-        tblFFarmeceutica.setModel(this.CONTROL.listar(texto));
-        TableRowSorter orden = new TableRowSorter(tblFFarmeceutica.getModel());
-        tblFFarmeceutica.setRowSorter(orden);
+        tblListado.setModel(this.CONTROL.listar(texto));
+        TableRowSorter orden = new TableRowSorter(tblListado.getModel());
+        tblListado.setRowSorter(orden);
+        ocultarColumnas();
     }
 
     private void limpiar() {
@@ -42,6 +43,17 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
     private void desactivar() {
         btnRegistrar.setEnabled(true);
         btnEditar.setEnabled(false);
+    }
+
+    private void ocultarColumnas() {
+        tblListado.getColumnModel().getColumn(0).setMaxWidth(50);
+        tblListado.getColumnModel().getColumn(0).setMinWidth(50);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(50);
+        tblListado.getTableHeader().getColumnModel().getColumn(0).setMaxWidth(50);
+        tblListado.getColumnModel().getColumn(1).setMaxWidth(250);
+        tblListado.getColumnModel().getColumn(1).setMinWidth(250);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(250);
+        tblListado.getTableHeader().getColumnModel().getColumn(1).setMaxWidth(250);
     }
 
     private void mensajeError(String mensaje) {
@@ -75,13 +87,16 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
         jPanel2 = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblFFarmeceutica = new javax.swing.JTable();
+        tblListado = new javax.swing.JTable();
         jLabel4 = new javax.swing.JLabel();
         txtBuscar = new javax.swing.JTextField();
 
         setClosable(true);
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconifiable(true);
+        setMaximizable(true);
+        setResizable(true);
+        setTitle("Formas farmaceuticas");
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Registrar forma farmaceutica"));
 
@@ -104,6 +119,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
         jLabel3.setText("Estado");
 
         rbtngEstado.add(rbtnActivo);
+        rbtnActivo.setSelected(true);
         rbtnActivo.setText("Activo");
         rbtnActivo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -114,6 +130,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
         rbtngEstado.add(rbtnInactivo);
         rbtnInactivo.setText("Inactivo");
 
+        btnRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/OK.png"))); // NOI18N
         btnRegistrar.setText("Registrar");
         btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -121,6 +138,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
             }
         });
 
+        btnLimpiar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Undo.png"))); // NOI18N
         btnLimpiar.setText("Limpiar");
         btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -128,6 +146,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
             }
         });
 
+        btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,55 +165,62 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(152, 152, 152))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(btnRegistrar)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnLimpiar)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(46, 46, 46))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(rbtnActivo)
+                                .addGap(18, 18, 18)
+                                .addComponent(rbtnInactivo))
+                            .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(6, 6, 6)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(btnEditar)
-                                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(rbtnActivo)
-                        .addGap(18, 18, 18)
-                        .addComponent(rbtnInactivo))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnRegistrar)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnLimpiar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(btnEditar))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(rbtnActivo)
-                    .addComponent(rbtnInactivo))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar)
-                    .addComponent(btnLimpiar)
-                    .addComponent(btnEditar))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(57, 57, 57)
+                        .addComponent(btnEditar))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(rbtnActivo)
+                            .addComponent(rbtnInactivo))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRegistrar)
+                            .addComponent(btnLimpiar))))
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Registros encontrados"));
 
+        btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132180_log_out_out_log.png"))); // NOI18N
         btnSalir.setText("Salir");
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -202,7 +228,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
             }
         });
 
-        tblFFarmeceutica.setModel(new javax.swing.table.DefaultTableModel(
+        tblListado.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -210,12 +236,12 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
 
             }
         ));
-        tblFFarmeceutica.addMouseListener(new java.awt.event.MouseAdapter() {
+        tblListado.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblFFarmeceuticaMouseClicked(evt);
+                tblListadoMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(tblFFarmeceutica);
+        jScrollPane1.setViewportView(tblListado);
 
         jLabel4.setText("Buscar");
 
@@ -237,13 +263,16 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSalir)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 158, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnSalir)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -252,11 +281,11 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalir)
-                .addContainerGap())
+                .addGap(67, 67, 67))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -265,7 +294,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
@@ -276,7 +305,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
                 .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 302, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -292,7 +321,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
     }//GEN-LAST:event_rbtnActivoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -307,22 +336,27 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
         this.listado(txtBuscar.getText());        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyReleased
 
-    private void tblFFarmeceuticaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblFFarmeceuticaMouseClicked
-        int fila = tblFFarmeceutica.getSelectedRow();
+    private void tblListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblListadoMouseClicked
+        int fila = tblListado.getSelectedRow();
         String estado;
 
-        txtId.setText(String.valueOf(tblFFarmeceutica.getValueAt(fila, 0)));
-        txtDescripcion.setText(String.valueOf(tblFFarmeceutica.getValueAt(fila, 1)));
-        estado = String.valueOf(tblFFarmeceutica.getValueAt(fila, 2));
+        txtId.setText(String.valueOf(tblListado.getValueAt(fila, 0)));
+        txtDescripcion.setText(String.valueOf(tblListado.getValueAt(fila, 1)));
+        estado = String.valueOf(tblListado.getValueAt(fila, 2));
         if (estado.equals("Activo")) {
             rbtnActivo.setSelected(true);
         } else {
             rbtnActivo.setSelected(false);
         }
         activar();
-    }//GEN-LAST:event_tblFFarmeceuticaMouseClicked
+    }//GEN-LAST:event_tblListadoMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (txtDescripcion.getText().isEmpty()) {
+            mensajeAdvertencia("Debe ingresar una descripcion");
+            txtDescripcion.requestFocus();
+            return;
+        }
         String respuesta = "";
         int id = Integer.parseInt(txtId.getText());
         String descripcion = txtDescripcion.getText();
@@ -341,7 +375,13 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        if (txtDescripcion.getText().isEmpty()) {
+            mensajeAdvertencia("Debe ingresar una descripcion");
+            txtDescripcion.requestFocus();
+            return;
+        }
         String respuesta = "";
+
         String descripcion = txtDescripcion.getText();
         boolean estado;
         if (rbtnActivo.isSelected()) {
@@ -380,7 +420,7 @@ public class FrmFFarmaceutica1 extends javax.swing.JInternalFrame  {
     private javax.swing.JRadioButton rbtnActivo;
     private javax.swing.JRadioButton rbtnInactivo;
     private javax.swing.ButtonGroup rbtngEstado;
-    private javax.swing.JTable tblFFarmeceutica;
+    private javax.swing.JTable tblListado;
     private javax.swing.JTextField txtBuscar;
     private javax.swing.JTextField txtDescripcion;
     private javax.swing.JTextField txtId;

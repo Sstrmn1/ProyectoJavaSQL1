@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableRowSorter;
 import negocio.DistritoControl;
 
-public class FrmDistrito1 extends javax.swing.JInternalFrame  {
+public class FrmDistrito1 extends javax.swing.JInternalFrame {
 
     //atributos
     private final DistritoControl CONTROL;
@@ -282,6 +282,11 @@ public class FrmDistrito1 extends javax.swing.JInternalFrame  {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (txtNombre.getText().isEmpty()) {
+            mensajeAdvertencia("Debe ingresar un nombre de distrito");
+            txtNombre.requestFocus();
+            return;
+        }
         String respuesta = "";
         int id = Integer.parseInt(txtId.getText());
         String nombre = txtNombre.getText();
@@ -308,10 +313,16 @@ public class FrmDistrito1 extends javax.swing.JInternalFrame  {
     }//GEN-LAST:event_rbtnInactivoActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
+        if (txtNombre.getText().isEmpty()) {
+            mensajeAdvertencia("Debe ingresar un nombre de distrito");
+            txtNombre.requestFocus();
+            return;
+        }
+
         String respuesta = "";
         String nombre = txtNombre.getText();
         boolean estado;
@@ -352,7 +363,6 @@ public class FrmDistrito1 extends javax.swing.JInternalFrame  {
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
         this.listado(txtBuscar.getText());        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarActionPerformed
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
