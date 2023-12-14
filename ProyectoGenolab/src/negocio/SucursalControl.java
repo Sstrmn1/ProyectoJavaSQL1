@@ -60,6 +60,38 @@ public class SucursalControl {
         return this.modeloTabla;
     }
 
+    public DefaultTableModel listar(String texto, String campo) {
+        List<Sucursal> lista = new ArrayList();
+        lista.addAll(DATOSSUCURSAL.listar(texto, campo));
+        String[] titulos = {"ID", "IDDistrito", "IDCliente", "Nom Cliente", "Nom Distrito", "Direccion",
+            "Estado"};
+        this.modeloTabla = new DefaultTableModel(null, titulos);
+
+        String estado;
+        String[] registro = new String[7];
+        this.registrosMostrados = 0;
+
+        for (Sucursal item : lista) {
+            if (item.isActivo()) {
+                estado = "Activo";
+            } else {
+                estado = "Inactivo";
+            }
+
+            registro[0] = Integer.toString(item.getIdSucursal());
+            registro[1] = Integer.toString(item.getIdDistrito());
+            registro[2] = Integer.toString(item.getIdCliente());
+            registro[3] = item.getNombreCliente();
+            registro[4] = item.getNombreDistrito();
+            registro[5] = item.getDireccion();
+            registro[6] = estado;
+
+            this.modeloTabla.addRow(registro);
+            registrosMostrados++;
+        }
+        return this.modeloTabla;
+    }
+
     public DefaultComboBoxModel listarDistritos() {
         DefaultComboBoxModel items = new DefaultComboBoxModel();
         List<Distrito> lista = new ArrayList();

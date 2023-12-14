@@ -10,12 +10,14 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
 
     //atributos
     private final SucursalControl CONTROL;
+    private String filtro;
 
     //constructor
     public FrmSucursal1() {
         initComponents();
+        this.filtro = "c.nombre";
         this.CONTROL = new SucursalControl();
-        this.listado("");
+        this.listado("", this.filtro);
         this.listarCombobox();
         limpiar();
 //        desactivar();
@@ -25,11 +27,20 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
     }
 
     //metodos
-    private void listado(String texto) {
-        tblListado.setModel(this.CONTROL.listar(texto));
+    private void listado(String texto, String campo) {
+        tblListado.setModel(this.CONTROL.listar(texto, campo));
         TableRowSorter orden = new TableRowSorter(tblListado.getModel());
         tblListado.setRowSorter(orden);
         ocultarColumnas();
+    }
+
+    private void seleccionarFiltro() {
+        if (rbtnCliente.isSelected()) {
+            this.filtro = "c.nombre";
+        }
+        if (rbtnDistrito.isSelected()) {
+            this.filtro = "d.nombre";
+        }
     }
 
     private void listarCombobox() {
@@ -167,6 +178,11 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
         rbtngCampoBusqueda.add(rbtnCliente);
         rbtnCliente.setSelected(true);
         rbtnCliente.setText("Cliente");
+        rbtnCliente.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnClienteStateChanged(evt);
+            }
+        });
         rbtnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rbtnClienteActionPerformed(evt);
@@ -175,6 +191,11 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
 
         rbtngCampoBusqueda.add(rbtnDistrito);
         rbtnDistrito.setText("Distrito");
+        rbtnDistrito.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                rbtnDistritoStateChanged(evt);
+            }
+        });
 
         btnEditar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/Notes.png"))); // NOI18N
         btnEditar.setText("Editar");
@@ -489,7 +510,7 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
             mensajeError("Error insertando el registro");
         }
         limpiar();
-        this.listado("");
+        this.listado("", this.filtro);
 
      }//GEN-LAST:event_btnRegistrarActionPerformed
 
@@ -538,7 +559,7 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtBuscarActionPerformed
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
-        this.listado(txtBuscar.getText());        // TODO add your handling code here:
+        this.listado(txtBuscar.getText(), this.filtro);        // TODO add your handling code here:
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -572,11 +593,19 @@ public class FrmSucursal1 extends javax.swing.JInternalFrame {
                 mensajeError("Error actualizando el registro");
             }
             limpiar();
-            this.listado("");
+            this.listado("", this.filtro);
         } else {
             limpiar();
         }        // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void rbtnClienteStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnClienteStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnClienteStateChanged
+
+    private void rbtnDistritoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_rbtnDistritoStateChanged
+        seleccionarFiltro();
+    }//GEN-LAST:event_rbtnDistritoStateChanged
 
     /**
      * @param args the command line arguments
