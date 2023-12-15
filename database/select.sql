@@ -103,6 +103,75 @@ o.fecha_hora,
 o.importe_total,
 s.
 c.nombre as cliente,
-c.id_cliente,
+c.id_cliente;
+ 
+select  t.fecha, t.id_transaccion as operacion, c.nombre as cliente, r.nombre as usuario, -t.cantidad as cantidad from
+transaccion t inner join lote l on t.id_lote = l.id_lote
+inner join orden_de_venta o on t.id_orden = o.id_orden 
+inner join sucursal s on o.id_sucursal = s.id_sucursal
+inner join cliente c on s.id_cliente = c.id_cliente
+inner join usuario u on o.id_usuario = u.id_usuario
+inner join rol r on u.id_rol = r.id_rol where l.id_lote = 27;
 
+SELECT
+    t.fecha,
+    t.id_transaccion AS operacion,
+    c.nombre AS cliente,
+    r.nombre AS usuario,
+    -t.cantidad AS cantidad,
+    (500 - COALESCE(SUM(t.cantidad) OVER (ORDER BY t.fecha, t.id_transaccion), 0)) AS saldo_stock
+FROM
+    transaccion t
+INNER JOIN lote l ON t.id_lote = l.id_lote
+INNER JOIN orden_de_venta o ON t.id_orden = o.id_orden 
+INNER JOIN sucursal s ON o.id_sucursal = s.id_sucursal
+INNER JOIN cliente c ON s.id_cliente = c.id_cliente
+INNER JOIN usuario u ON o.id_usuario = u.id_usuario
+INNER JOIN rol r ON u.id_rol = r.id_rol
+WHERE
+    l.id_lote = 27
+ORDER BY
+    t.fecha, t.id_transaccion;
+
+
+SELECT
+    t.fecha,
+    t.id_transaccion AS id_trans,
+    c.nombre AS cliente,
+    r.nombre AS rol,
+    -t.cantidad AS cantidad,
+    (total_cantidad_stock - COALESCE(SUM(t.cantidad) OVER (ORDER BY t.fecha, t.id_transaccion), 0)) AS saldo_stock
+FROM
+    transaccion t
+INNER JOIN lote l ON t.id_lote = l.id_lote
+INNER JOIN orden_de_venta o ON t.id_orden = o.id_orden 
+INNER JOIN sucursal s ON o.id_sucursal = s.id_sucursal
+INNER JOIN cliente c ON s.id_cliente = c.id_cliente
+INNER JOIN usuario u ON o.id_usuario = u.id_usuario
+INNER JOIN rol r ON u.id_rol = r.id_rol
+CROSS JOIN (SELECT SUM(t.cantidad) + l.stock AS total_cantidad_stock
+            FROM transaccion t
+            INNER JOIN lote l ON t.id_lote = l.id_lote
+            WHERE l.id_lote = 27
+            GROUP BY l.id_lote) AS total_stock
+WHERE
+    l.id_lote = 27
+ORDER BY
+    t.fecha;
+
+
+
+select * from lote where id_lote=27;
+
+select cantidad from transaccion where id_lote =27;
+
+SELECT
+    SUM(t.cantidad) + l.stock AS total_cantidad_stock
+FROM
+    transaccion t
+INNER JOIN lote l ON t.id_lote = l.id_lote
+WHERE
+    l.id_lote = 27
+GROUP BY
+    l.id_lote;
 
