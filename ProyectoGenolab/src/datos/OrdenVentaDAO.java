@@ -110,16 +110,24 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
     @Override
     public boolean insertar(OrdenVenta obj) {
         respuesta = false;
+        boolean ordenOk = false;
+        boolean transaccionesOk = false;
+//        boolean importeOk = false;
+        boolean loteOk = false;
         int idGenerado = -1; // Variable para almacenar la ID autogenerada
 
         try {
             if (CON.cadena.isClosed()) {
                 CON.conectar();
             }
+            if (CON.getMetadata(CON.cadena).supportsSavepoints()) {
+                System.out.println("Savepoint supported by the driver and database");
+            }
+            //Apagar autocommit
+            CON.setAutoCommit(false);
+
             // Establecer el savepoint antes de comenzar las operaciones
-            System.out.println("Estableciendo savepoint");
             CON.setSavepoint();
-            System.out.println("Savepoint establecido");
 
             // 1. Insertar en la tabla orden_de_venta
             String consultaOrdenVenta = "INSERT INTO orden_de_venta "
@@ -131,6 +139,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             ps.setInt(3, obj.getIdUsuario());
 
             if (ps.executeUpdate() > 0) {
+                ordenOk = true;
                 ResultSet generatedKeys = ps.getGeneratedKeys();
 
                 if (generatedKeys.next()) {
@@ -153,10 +162,10 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     // Verificar que todas las transacciones se hayan insertado correctamente
                     for (int res : result) {
                         if (res <= 0) {
-                            respuesta = false;
+                            transaccionesOk = false;
                             break;
                         } else {
-                            respuesta = true;
+                            transaccionesOk = true;
                         }
                     }
 
@@ -189,9 +198,11 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                         // Verificar si la cantidad de la transacción es mayor al stock actual
                         if (cantidad > stockActual) {
                             // La cantidad es mayor al stock, realizar un rollback y establecer respuesta como falsa
-                            CON.rollbackToSavepoint();
-                            respuesta = false;
+//                            CON.rollbackToSavepoint();
+                            loteOk = false;
                             break;  // Salir del bucle
+                        } else {
+                            loteOk = true;
                         }
 
                         // Configurar los parámetros
@@ -208,22 +219,28 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     // Verificar que todas las operaciones en lote de la tabla lote se hayan ejecutado correctamente
                     for (int res : resultLote) {
                         if (res <= 0) {
-                            respuesta = false;
+                            loteOk = false;
                             break;
                         } else {
-                            respuesta = true;
+                            loteOk = true;
                         }
                     }
                 }
                 generatedKeys.close();
             }
 
+            // Verificar que todas las operaciones se ejecutaron correctamente
+            if (ordenOk && transaccionesOk && loteOk) {
+                respuesta = true;
+            }
             // Verificar condiciones y establecer respuesta
             if (!respuesta) {
                 // Algo salió mal, deshacer hasta el savepoint
-                CON.rollbackToSavepoint();
-            }
+                CON.rollbackToSavepoint(CON.getSavepoint());
 
+            }
+            //Commit
+            CON.commit();
             // Liberar el savepoint
             CON.releaseSavepoint();
 
