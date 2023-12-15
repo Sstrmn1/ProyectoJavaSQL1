@@ -166,12 +166,10 @@ select * from lote where id_lote=27;
 select cantidad from transaccion where id_lote =27;
 
 SELECT
-    SUM(t.cantidad) + l.stock AS total_cantidad_stock
+    SUM(t.cantidad) + l.stock AS saldoInicial
 FROM
     transaccion t
 INNER JOIN lote l ON t.id_lote = l.id_lote
 WHERE
     l.id_lote = 27
-GROUP BY
-    l.id_lote;
 

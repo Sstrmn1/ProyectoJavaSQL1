@@ -285,6 +285,11 @@ public class FrmPrincipal extends javax.swing.JFrame {
 
         mnuiKardex.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132237_card_card_file_file.png"))); // NOI18N
         mnuiKardex.setText("Kardex");
+        mnuiKardex.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuiKardexActionPerformed(evt);
+            }
+        });
         mnuConsultas.add(mnuiKardex);
 
         mnuiInventario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/presentacion/imagenes/132332_clipboard_clipboard.png"))); // NOI18N
@@ -414,6 +419,12 @@ public class FrmPrincipal extends javax.swing.JFrame {
         escritorio.add(frm);
         frm.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_mnuiDistritosActionPerformed
+
+    private void mnuiKardexActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiKardexActionPerformed
+        FrmiKardex frm = new FrmiKardex();
+        escritorio.add(frm);
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuiKardexActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

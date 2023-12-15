@@ -15,24 +15,23 @@ import javax.swing.table.DefaultTableModel;
 
 public class KardexControl {
 
-    private final KardexDAO DATOSLOTE;
-    private final LoteDAO DATOSARTICULO;
-    private final LaboratorioDAO DATOSLABORATORIO;
+    private final KardexDAO DATOSKARDEX;
+    private final LoteDAO DATOSLOTE;
     private Kardex obj;
     private DefaultTableModel modeloTabla;
     public int registrosMostrados;
 
     public KardexControl() {
-        this.DATOSLOTE = new KardexDAO();
-        this.DATOSARTICULO = new LoteDAO();
-        this.DATOSLABORATORIO = new LaboratorioDAO();
+        this.DATOSKARDEX = new KardexDAO();
+        this.DATOSLOTE = new LoteDAO();
+        
         this.obj = new Kardex();
         this.registrosMostrados = 0;
     }
 
     public DefaultTableModel listar(int idLote) {
         List<Kardex> lista = new ArrayList();
-        lista.addAll(DATOSLOTE.listar(idLote));
+        lista.addAll(DATOSKARDEX.listar(idLote));
         String[] titulos = {"Fecha hora",
             "Operacion",
             "Cliente",
@@ -58,6 +57,19 @@ public class KardexControl {
         return this.modeloTabla;
     }
 
-  
+    public DefaultComboBoxModel cargarLote(int idArticulo) {
+        DefaultComboBoxModel items = new DefaultComboBoxModel();
+        List<Lote> lista = new ArrayList();
+        lista = DATOSLOTE.seleccionarLote(idArticulo);
+        for (Lote item : lista) {
+            items.addElement(new Lote(item.getIdLote(), item.getIdArticulo(), item.getLoteCodigo(), item.getPrecioUnitario()));
+        }
+        return items;
+    }
+    
+    public int selectSaldoInicial(int idLote){
+        int saldoInicial= DATOSKARDEX.selectSaldoInicial(idLote);
+        return saldoInicial;
+    }
 
 }

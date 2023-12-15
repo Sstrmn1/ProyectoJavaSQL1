@@ -47,6 +47,7 @@ public class KardexDAO {
                     + "ORDER BY\n"
                     + "    t.fecha;");
             ps.setInt(1, idLote);
+            ps.setInt(2, idLote);
             rs = ps.executeQuery();
             while (rs.next()) {
                 registros.add(new Kardex(
@@ -68,6 +69,35 @@ public class KardexDAO {
             CON.desconectar();
         }
         return registros;
+    }
+
+    public int selectSaldoInicial(int idLote) {
+        int saldoInicial = -1;
+        try {
+            ps = CON.conectar().prepareStatement("SELECT\n"
+                    + "SUM(t.cantidad) + l.stock AS saldoInicial\n"
+                    + "FROM\n"
+                    + "transaccion t\n"
+                    + "INNER JOIN lote l ON t.id_lote = l.id_lote\n"
+                    + "WHERE\n"
+                    + "l.id_lote = ?");
+            ps.setInt(1, idLote);
+
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                saldoInicial = rs.getInt(1);
+            }
+            ps.close();
+            rs.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            ps = null;
+            rs = null;
+            CON.desconectar();
+        }
+        return saldoInicial;
+
     }
 
 }
