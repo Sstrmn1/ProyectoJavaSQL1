@@ -26,87 +26,9 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
     @Override
     public List<OrdenVenta> listar(String texto) {
         List<OrdenVenta> registros = new ArrayList();
-//        try {
-//            ps = CON.conectar().prepareStatement("SELECT l.id_lote,\n"
-//                    + "l.id_articulo,\n"
-//                    + "l.id_laboratorio,\n"
-//                    + "a.codigo AS codigo,\n"
-//                    + "a.descripcion AS articulo,\n"
-//                    + "l.codigo AS lote,\n"
-//                    + "l.fecha_fabricacion,\n"
-//                    + "l.fecha_expiracion,\n"
-//                    + "l.stock,\n"
-//                    + "l.precio_unitario,\n"
-//                    + "lab.nombre as laboratorio,\n"
-//                    + "l.activo\n"
-//                    + "FROM lote l \n"
-//                    + "INNER JOIN articulo a\n"
-//                    + "ON l.id_articulo = a.id_articulo\n"
-//                    + "INNER JOIN laboratorio lab\n"
-//                    + "ON l.id_laboratorio = lab.id_laboratorio\n"
-//                    + "WHERE a.codigo LIKE ?");
-//            ps.setString(1, "%" + texto + "%");
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                registros.add(new OrdenVenta(
-//                        rs.getInt(1),
-//                        rs.getInt(2),
-//                        rs.getInt(3),
-//                        rs.getString(4),
-//                        rs.getString(5),
-//                        rs.getString(6),
-//                        rs.getDate(7),
-//                        rs.getDate(8),
-//                        rs.getInt(9),
-//                        rs.getFloat(10),
-//                        rs.getString(11),
-//                        rs.getBoolean(12)
-//                ));
-//            }
-//            ps.close();
-//            rs.close();
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        } finally {
-//            ps = null;
-//            rs = null;
-//            CON.desconectar();
-//        }
         return registros;
     }
 
-//    @Override
-//    public boolean insertar(OrdenVenta obj) {
-//        respuesta = false;
-//        try {
-//            String consulta = "insert into orden_de_venta\n"
-//                    + "(numero_orden,\n"
-//                    + "id_sucursal,\n"
-//                    + "id_usuario,\n"
-//                    + "fecha_hora,\n"
-//                    + "importe_total)\n"
-//                    + "values\n"
-//                    + "(?,?,?,now(),0)";
-//            ps = CON.conectar().prepareStatement(consulta);
-//            ps.setInt(1, obj.getNumeroOrden());
-//            ps.setInt(2, obj.getIdSucursal());
-//            ps.setInt(3, obj.getIdUsuario());
-//
-//            if (ps.executeUpdate() > 0) {
-//                respuesta = true;
-////                rs = ps.executeQuery();
-//
-////                System.out.println(ps.getGeneratedKeys().getInt(1));
-//            }
-//            ps.close();
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        } finally {
-//            ps = null;
-//            CON.desconectar();
-//        }
-//        return respuesta;
-//    }
     @Override
     public boolean insertar(OrdenVenta obj) {
         respuesta = false;
@@ -298,31 +220,6 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         return respuesta;
     }
 
-    public boolean insertarTransaccion(Transaccion obj) {
-        respuesta = false;
-        try {
-            ps = CON.conectar().prepareStatement("insert into transaccion\n"
-                    + "(id_lote,\n"
-                    + "id_orden,\n"
-                    + "cantidad,\n"
-                    + "fecha\n"
-                    + "values(?,?,?,now())");
-            ps.setInt(1, obj.getIdLote());
-            ps.setInt(2, obj.getIdOrden());
-            ps.setInt(3, obj.getCantidad());
-
-            if (ps.executeUpdate() > 0) {
-                respuesta = true;
-            }
-            ps.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            ps = null;
-            CON.desconectar();
-        }
-        return respuesta;
-    }
 
     public List<Transaccion> listarTransacciones(int idOrden) {
         List<Transaccion> registros = new ArrayList();
@@ -376,21 +273,6 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
     @Override
     public int total() {
         int totalRegistros = 0;
-//        try {
-//            ps = CON.conectar().prepareStatement("SELECT COUNT(id_lote) from lote");
-//            rs = ps.executeQuery();
-//            while (rs.next()) {
-//                totalRegistros = rs.getInt("COUNT(id_lote)");
-//            }
-//            ps.close();
-//            rs.close();
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, e.getMessage());
-//        } finally {
-//            ps = null;
-//            rs = null;
-//            CON.desconectar();
-//        }
         return totalRegistros;
     }
 
