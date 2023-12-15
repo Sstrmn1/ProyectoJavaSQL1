@@ -47,7 +47,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                 System.out.println("Savepoint supported by the driver and database");
             }
             //Apagar autocommit
-            CON.cadena.setAutoCommit(false);
+//            CON.cadena.setAutoCommit(false);
 
             // Establecer el savepoint antes de comenzar las operaciones
             CON.cadena.setSavepoint();
@@ -138,7 +138,6 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 
                     // Ejecutar todas las operaciones en lote
                     int[] resultLote = ps.executeBatch();
-                    
 
                     // Verificar que todas las operaciones en lote de la tabla lote se hayan ejecutado correctamente
                     for (int res : resultLote) {
@@ -172,7 +171,9 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         } finally {
+
             try {
+                CON.cadena.setAutoCommit(true);
                 if (ps != null) {
                     ps.close();
                 }
@@ -222,7 +223,6 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
         }
         return respuesta;
     }
-
 
     public List<Transaccion> listarTransacciones(int idOrden) {
         List<Transaccion> registros = new ArrayList();
