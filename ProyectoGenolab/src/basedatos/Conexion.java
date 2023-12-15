@@ -30,6 +30,8 @@ public class Conexion {
         try {
             Class.forName(DRIVER);
             this.cadena = DriverManager.getConnection(URL + BD, USUARIO, PASSWORD);
+            // Desactivar autocommit
+//            this.cadena.setAutoCommit(false);
         } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.exit(0);

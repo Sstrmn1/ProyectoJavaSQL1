@@ -42,20 +42,21 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
             if (CON.cadena.isClosed()) {
                 CON.conectar();
             }
+//            System.out.println(CON.cadena.isClosed());
             if (CON.getMetadata(CON.cadena).supportsSavepoints()) {
                 System.out.println("Savepoint supported by the driver and database");
             }
             //Apagar autocommit
-            CON.setAutoCommit(false);
+            CON.cadena.setAutoCommit(false);
 
             // Establecer el savepoint antes de comenzar las operaciones
-            CON.setSavepoint();
+            CON.cadena.setSavepoint();
 
             // 1. Insertar en la tabla orden_de_venta
             String consultaOrdenVenta = "INSERT INTO orden_de_venta "
                     + "(numero_orden, id_sucursal, id_usuario, fecha_hora, importe_total) "
                     + "VALUES (?, ?, ?, NOW(), 0)";
-            ps = CON.conectar().prepareStatement(consultaOrdenVenta, Statement.RETURN_GENERATED_KEYS);
+            ps = CON.cadena.prepareStatement(consultaOrdenVenta, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, obj.getNumeroOrden());
             ps.setInt(2, obj.getIdSucursal());
             ps.setInt(3, obj.getIdUsuario());
@@ -71,7 +72,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                     String consultaTransaccion = "INSERT INTO transaccion "
                             + "(id_lote, id_orden, cantidad, fecha) "
                             + "VALUES (?, ?, ?, NOW())";
-                    ps = CON.conectar().prepareStatement(consultaTransaccion);
+                    ps = CON.cadena.prepareStatement(consultaTransaccion);
 
                     for (Transaccion transaccion : obj.getTransacciones()) {
                         ps.setInt(1, transaccion.getIdLote());
@@ -98,7 +99,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                             + "INNER JOIN lote AS l ON t.id_lote = l.id_lote "
                             + "WHERE t.id_orden = o.id_orden) "
                             + "WHERE o.id_orden = ?";
-                    ps = CON.conectar().prepareStatement(consultaUpdateImporte);
+                    ps = CON.cadena.prepareStatement(consultaUpdateImporte);
                     ps.setInt(1, idGenerado);
                     ps.executeUpdate();
 
@@ -107,7 +108,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                             + "JOIN transaccion AS t ON l.id_lote = t.id_lote "
                             + "SET l.stock = l.stock - t.cantidad "
                             + "WHERE t.id_orden = ? AND l.id_lote = ?";
-                    ps = CON.conectar().prepareStatement(consultaUpdateStockBase);
+                    ps = CON.cadena.prepareStatement(consultaUpdateStockBase);
 
                     for (Transaccion transaccion : obj.getTransacciones()) {
                         // Obtener el id de lote de la transacción
@@ -137,6 +138,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
 
                     // Ejecutar todas las operaciones en lote
                     int[] resultLote = ps.executeBatch();
+                    
 
                     // Verificar que todas las operaciones en lote de la tabla lote se hayan ejecutado correctamente
                     for (int res : resultLote) {
@@ -147,6 +149,7 @@ public class OrdenVentaDAO implements CrudSimpleInterface<OrdenVenta> {
                             loteOk = true;
                         }
                     }
+//                    ps.close();
                 }
                 generatedKeys.close();
             }
